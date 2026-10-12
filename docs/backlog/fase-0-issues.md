@@ -64,6 +64,10 @@ Identificar no mínimo três lojas que permitam expressamente, nos termos aplic�
 - Guardar URL e data dos termos, política de coleta, `robots.txt` e resposta da loja, quando necessária.
 - Não usar páginas que exijam login, não automatizar API/feed, nem contornar CAPTCHA, bloqueio ou limite técnico.
 
+### Situação atual
+
+A revisão manual de oito candidatos não comprovou três fontes elegíveis. Carrefour e Fast Shop têm proibições explícitas nos termos consultados; para os demais, há falta de autorização comprovada ou incerteza sobre o escopo dos documentos. O relatório registra evidências e três caminhos para revisão de viabilidade. Há também um [modelo de solicitação de autorização escrita](../research/modelo-solicitacao-autorizacao-coleta.md), ainda não enviado. Este issue permanece aberto até obter três autorizações válidas ou revisar com o usuário os critérios de cobertura/fontes.
+
 ### Critérios de conclusão
 
 - [ ] Existe uma ficha de evidências para cada candidato, classificando-o como elegível, aguardando autorização ou descartado.

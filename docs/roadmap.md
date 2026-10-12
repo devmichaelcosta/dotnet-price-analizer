@@ -42,6 +42,7 @@
 - Lista piloto de pelo menos três domínios de compras, não codificada como fonte única.
 - Inventariar por domínio sitemaps, páginas HTML de busca/catálogo acessíveis, dados `schema.org/Product`/`Offer`, campos de preço/moeda/disponibilidade, frequência e termos que permitam coleta automatizada.
 - Registrar achados e evidências por fonte em [`docs/research/validacao-fontes-fase-0.md`](research/validacao-fontes-fase-0.md); não considerar um domínio piloto elegível sem permissão expressa nos termos ou autorização escrita para coleta automatizada de HTML público, e sem confirmar que a retenção está dentro dos limites.
+- Situação da pesquisa manual: oito lojas candidatas foram revisadas e nenhuma tem autorização comprovada para este projeto; duas têm proibição explícita nos termos consultados. Manter a Fase 0 aberta enquanto se buscam autorizações escritas ou o usuário revisa a meta de cobertura e as restrições de fonte.
 - Analisar manualmente páginas de exemplo em pelo menos três domínios: registrar como URLs podem ser descobertas, se as páginas são acessíveis, quais campos estruturados/visíveis existem, se o parser genérico parece suficiente e que exceções exigiriam adaptador. Guardar URLs de referência e evidências/documentação, sem escrever crawler ou parser nesta fase.
 - Estimar custo e escala de crawler, indexação própria e atualização a cada seis horas, sem fonte de dados por API ou feed.
 - Fechar fronteiras dos módulos, convenção das fatias verticais e regras de dependência entre Domain, Application/Features e Infrastructure.
@@ -145,7 +146,7 @@
 - Comparação: preço do item, sem frete.
 - Coleta: intervalo-alvo de seis horas, a confirmar com as cotas reais.
 - Privacidade e retenção: acompanhamentos/históricos privados por conta; apagar observações e dados do acompanhamento junto com sua remoção, respeitando condições mais restritivas da fonte.
-- Fontes: nenhum domínio está aprovado ainda; a validação manual preliminar está registrada em `docs/research/validacao-fontes-fase-0.md`. Exigir permissão expressa nos termos ou autorização escrita para automatizar o acesso ao HTML público antes de habilitar cada domínio.
+- Fontes: nenhum domínio está aprovado ainda; a revisão de oito candidatos e as opções para revisar a viabilidade estão em `docs/research/validacao-fontes-fase-0.md`. Exigir permissão expressa nos termos ou autorização escrita para automatizar o acesso ao HTML público antes de habilitar cada domínio.
 - Interface: Blazor Web App Interactive Server com MudBlazor; tema e padrões de UI centralizados, providers configurados no modo interativo e componentes sem lógica de negócio.
 - UI e Web API ficam no mesmo host ASP.NET Core e na mesma origem no MVP; o Worker é um processo separado.
 - Estrutura: monólito modular organizado por módulo de negócio e fatias verticais; Clean Architecture/DDD/SOLID guiam dependências, sem lógica de negócio nos componentes Blazor.

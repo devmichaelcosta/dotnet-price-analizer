@@ -46,9 +46,17 @@ Esta revisão consultou documentos oficiais dos oito candidatos da triagem. Algu
 - Revalidar por fonte: termos aplicáveis ao caso de uso; `robots.txt` para o User-Agent identificado; disponibilidade de páginas e meios de descoberta; campos de preço/variante/vendedor; frequência e concorrência; armazenamento, atribuição e retenção; contato para pedir esclarecimento ou permissão.
 - Não contornar login, CAPTCHA, bloqueios, limites técnicos ou restrições do site. A retenção decidida para o produto (apagar dados ao remover o acompanhamento) não substitui limites de retenção da fonte; se as condições da fonte forem incompatíveis, não habilitar essa fonte.
 
+## Opções para revisão de viabilidade
+
+1. **Manter o escopo aprovado:** enviar solicitações formais às lojas com termos silenciosos ou escopo incerto e aguardar autorização escrita de pelo menos três domínios. O modelo de solicitação está em [`modelo-solicitacao-autorizacao-coleta.md`](modelo-solicitacao-autorizacao-coleta.md). Esta é a opção compatível com as decisões atuais.
+2. **Reduzir a promessa de cobertura do MVP:** revisar com o usuário a meta de três lojas e a forma de descoberta, documentando claramente a cobertura limitada. Isso altera o critério de saída atual.
+3. **Revisar a restrição de fontes:** avaliar, somente se o usuário mudar essa decisão, fontes oficiais como APIs ou feeds autorizados e suas condições, dependências e custos. Isso altera o requisito atual de não depender de integrações de terceiros.
+
+Nenhuma opção de mudança de escopo está aprovada. A Fase 0 e a implementação permanecem pendentes até que a viabilidade ou os critérios do MVP sejam revisados com o usuário.
+
 ## Próximas verificações manuais
 
-1. Obter as condições de uso atuais diretamente para cada loja candidata, incluindo regras para comparação de preços e uso comercial; pedir esclarecimento quando os termos forem silenciosos ou ambíguos.
+1. Usar o [modelo de solicitação de autorização](modelo-solicitacao-autorizacao-coleta.md) para pedir às lojas candidatas os termos aplicáveis e uma resposta escrita quando houver silêncio ou ambiguidade.
 2. Confirmar acesso permitido a página de busca/catálogo e página de produto, sem autenticação e sem contornar mecanismos técnicos.
 3. Inspecionar manualmente exemplos representativos e registrar URL, data, campos visíveis/estruturados e variantes/vendedor, sem automatizar requisições.
 4. Somente então classificar cada domínio como elegível para coleta automatizada de HTML público ou descartado; escolher pelo menos três elegíveis antes de aprovar a saída da Fase 0. Se não houver três, rever a viabilidade do MVP antes de qualquer implementação.
