@@ -1,11 +1,11 @@
-# Rascunhos de GitHub Issues — Fase 0
+# GitHub Issues — Fase 0
 
-**Estado:** conteúdo pronto para revisão/publicação; ainda não criado no GitHub.  
-**Épico:** `PLAN-000` — Concluir planejamento e aprovar as specs do MVP.
+**Estado:** os issues foram publicados no GitHub e estão indexados em [`README.md`](README.md).
+**Épico:** [`PLAN-000` — Concluir planejamento e aprovar as specs do MVP](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/1).
 
 ---
 
-## PLAN-000 — [type:epic] Concluir planejamento e aprovar as specs do MVP
+## PLAN-000 — [type:epic] Concluir planejamento e aprovar as specs do MVP ([#1](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/1))
 
 **Milestone:** Fase 0 — Planejamento e validação de fontes  
 **Prioridade:** P0  
@@ -48,7 +48,7 @@ O roadmap exige análise manual de páginas, validação de fontes, decisões de
 
 ---
 
-## PLAN-001 — [type:research] Comprovar fontes HTML elegíveis e selecionar o piloto
+## PLAN-001 — [type:research] Comprovar fontes HTML elegíveis e selecionar o piloto ([#2](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/2))
 
 **Milestone:** Fase 0  
 **Prioridade:** P0  
@@ -87,7 +87,7 @@ A revisão manual de oito candidatos não comprovou três fontes elegíveis. Car
 
 ---
 
-## PLAN-002 — [type:research] Analisar manualmente páginas das fontes elegíveis
+## PLAN-002 — [type:research] Analisar manualmente páginas das fontes elegíveis ([#3](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/3))
 
 **Milestone:** Fase 0  
 **Prioridade:** P0  
@@ -118,7 +118,7 @@ Avaliar como descobrir produtos e extrair preço, moeda, disponibilidade, identi
 
 ---
 
-## PLAN-003 — [type:decision] Fechar regras de produto, correspondência e observações
+## PLAN-003 — [type:decision] Fechar regras de produto, correspondência e observações ([#4](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/4))
 
 **Milestone:** Fase 0  
 **Prioridade:** P0  
@@ -155,7 +155,7 @@ Definir os comportamentos de domínio que determinam se uma oferta pode entrar n
 
 ---
 
-## PLAN-004 — [type:decision] Definir política de autenticação, conta e autorização
+## PLAN-004 — [type:decision] Definir política de autenticação, conta e autorização ([#5](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/5))
 
 **Milestone:** Fase 0  
 **Prioridade:** P0  
@@ -192,7 +192,7 @@ Definir os fluxos de ASP.NET Core Identity local e controles de autorização pa
 
 ---
 
-## PLAN-005 — [type:task] Fechar arquitetura modular, contratos, dados e fluxos
+## PLAN-005 — [type:task] Fechar arquitetura modular, contratos, dados e fluxos ([#6](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/6))
 
 **Milestone:** Fase 0  
 **Prioridade:** P0  
@@ -224,7 +224,7 @@ Produzir um desenho revisável do monólito modular, módulos, dependências, pe
 
 ---
 
-## PLAN-006 — [type:decision] Definir estratégia SDD, testes e rastreabilidade
+## PLAN-006 — [type:decision] Definir estratégia SDD, testes e rastreabilidade ([#7](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/7))
 
 **Milestone:** Fase 0  
 **Prioridade:** P0  
@@ -255,7 +255,7 @@ Definir como critérios de aceite das specs e regras de domínio serão cobertos
 
 ---
 
-## PLAN-007 — [type:spec] Escrever e revisar as specs do MVP
+## PLAN-007 — [type:spec] Escrever e revisar as specs do MVP ([#8](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/8))
 
 **Milestone:** Fase 0  
 **Prioridade:** P0  
@@ -287,7 +287,7 @@ Criar uma especificação aprovada para cada use case incluído no MVP, co-local
 
 ---
 
-## PLAN-008 — [type:task] Estimar carga, frequência, armazenamento e custo
+## PLAN-008 — [type:task] Estimar carga, frequência, armazenamento e custo ([#9](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/9))
 
 **Milestone:** Fase 0  
 **Prioridade:** P1  
@@ -323,7 +323,7 @@ Estimar se um intervalo-alvo de seis horas é viável para as fontes elegíveis 
 
 ---
 
-## PLAN-009 — [type:decision] Revisar e aprovar o gate da Fase 0
+## PLAN-009 — [type:decision] Revisar e aprovar o gate da Fase 0 ([#10](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/10))
 
 **Milestone:** Fase 0  
 **Prioridade:** P0  

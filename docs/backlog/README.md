@@ -77,4 +77,19 @@ Um item fica **Done** quando os critérios foram conferidos, a evidência/artefa
 
 Os documentos de planejamento estão publicados na branch `main` do repositório indicado pelo usuário.
 
-Os dez issues da Fase 0 continuam sem publicação. Em 12/10/2026, a integração GitHub permitiu consultar o repositório e listar issues, mas recusou `create_issue` com `403 Resource not accessible by integration`. O push Git funciona por SSH; o GitHub CLI local continua sem autenticação. O backlog está pronto em `fase-0-issues.md`. Para publicar os issues, é necessário habilitar permissão de escrita em Issues na integração GitHub ou autenticar o GitHub CLI.
+O marco [Fase 0 — Planejamento e validação de fontes](https://github.com/devmichaelcosta/dotnet-price-analizer/milestone/1) e as labels da taxonomia foram criados. Os dez issues foram publicados, organizados pelo marco e vinculados ao épico:
+
+| ID | Issue |
+|---|---|
+| PLAN-000 | [Concluir planejamento e aprovar as specs do MVP](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/1) |
+| PLAN-001 | [Comprovar fontes HTML elegíveis e selecionar o piloto](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/2) |
+| PLAN-002 | [Analisar manualmente páginas das fontes elegíveis](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/3) |
+| PLAN-003 | [Fechar regras de produto, correspondência e observações](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/4) |
+| PLAN-004 | [Definir política de autenticação, conta e autorização](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/5) |
+| PLAN-005 | [Fechar arquitetura modular, contratos, dados e fluxos](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/6) |
+| PLAN-006 | [Definir estratégia SDD, testes e rastreabilidade](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/7) |
+| PLAN-007 | [Escrever e revisar as specs do MVP](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/8) |
+| PLAN-008 | [Estimar carga, frequência, armazenamento e custo](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/9) |
+| PLAN-009 | [Revisar e aprovar o gate da Fase 0](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/10) |
+
+Cada issue contém critérios de conclusão, labels de tipo/prioridade/área, dependências e links para os artefatos relacionados. O épico mantém o checklist das tarefas filhas. A publicação não aprova o roadmap nem autoriza implementação; esse gate continua dependendo de decisão explícita do usuário.
