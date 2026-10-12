@@ -172,12 +172,13 @@ Definir os fluxos do ASP.NET Core Identity para uma aplicação local com vário
 - MFA: obrigatório ou opcional; recuperação de segundo fator.
 - Política de senha compatível com Identity, lockout, sessão/cookie e encerramento de sessão.
 - Exclusão/desativação de conta e dos acompanhamentos/históricos privados.
-- Política padrão dos endpoints locais, eventual acesso pela rede local, proteção antifalsificação e autorização por proprietário.
+- Política padrão dos endpoints locais, proteção antifalsificação e autorização por proprietário; acesso limitado à máquina hospedeira por loopback/localhost.
 
 ### Critérios de conclusão
 
 - [ ] O administrador provisiona contas; não há cadastro público, e os fluxos de login, gestão, redefinição e desativação estão descritos.
 - [ ] Defaults de segurança têm justificativa e usam os mecanismos suportados do ASP.NET Core Identity.
+- [ ] Host e API aceitam conexões somente por loopback/localhost e não ficam acessíveis pela rede local.
 - [ ] Decisões estão registradas no contexto/ADR adequado e são referenciadas pelas specs de conta.
 - [ ] Nenhum emissor JWT/OIDC foi incluído no escopo sem cliente externo aprovado.
 
@@ -209,6 +210,7 @@ Produzir um desenho revisável do monólito modular, módulos, dependências, pe
 - [ ] Diagramas mostram caminho principal de consulta, descoberta, confirmação, observação, histórico e autorização.
 - [ ] Modelo conceitual preserva Produto, Página, Oferta, Acompanhamento e Observação como conceitos distintos.
 - [ ] Ownership/isolamento por usuário local, estados de job, retentativas e idempotência estão representados.
+- [ ] A topologia executa Server, Worker e PostgreSQL localmente; host/API ficam restritos a loopback/localhost e não aceitam acesso pela rede local.
 - [ ] A fatia vertical mantém juntos os arquivos específicos de cada use case; dependências respeitam as decisões Clean Architecture/DDD.
 - [ ] Contratos e modelo foram atualizados após as decisões de domínio/fontes.
 

@@ -50,7 +50,7 @@
 - Definir padrões visuais compartilhados do MudBlazor (tema, tipografia, responsividade, acessibilidade, comportamento de formulários, feedback, loading/empty/error states) sem colocar regras de negócio nos componentes.
 - Definir a estrutura dos projetos de teste e selecionar o framework priorizando tooling Microsoft; cada classe de domínio e cada caso de uso terão arquivos de teste organizados pela própria unidade funcional no projeto de testes.
 - Definir o bootstrap seguro do administrador local, provisionamento de usuários e recuperação de credenciais, sem cadastro público.
-- Definir políticas locais de autenticação e sessão, MFA, lockout, antifalsificação, autorização dos endpoints e proteção das chaves Data Protection; determinar se o host aceitará conexões só da máquina ou também da rede local.
+- Definir políticas locais de autenticação e sessão, MFA, lockout, antifalsificação, autorização dos endpoints e proteção das chaves Data Protection; configurar e verificar que host/API aceitam conexões somente por loopback/localhost.
 - Registrar como decisão futura que qualquer cliente externo (mobile, frontend separado ou integração de terceiro) exige reavaliar OAuth/OIDC e emissão/validação de JWT; priorizar opções Microsoft e só adotar emissor de terceiros quando houver justificativa. Não criar emissor JWT caseiro nem tratar os tokens proprietários da Identity API como JWT padrão.
 - Documentar como a UI Blazor e endpoints internos usam a identidade autenticada e cookies, aplicando antifalsificação quando requisições por cookie alterarem dados.
 - Verificar, por domínio piloto, se os termos/limites permitem a retenção prevista: observações permanecem enquanto o acompanhamento existir e são apagadas junto com ele.
@@ -164,7 +164,6 @@
 
 1. Quais domínios devem compor a amostra piloto de validação? Escolher vários sites com volume e formatos variados, sem torná-los dependência exclusiva do sistema e com permissão expressa nos termos públicos aplicáveis.
 2. Como será inicializada e recuperada a conta administradora local, e como ocorrerá a redefinição de credenciais dos usuários provisionados?
-3. O app será acessível apenas na máquina hospedeira ou também na rede local?
 
 ## Próxima etapa recomendada
 
