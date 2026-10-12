@@ -1,6 +1,6 @@
 # GitHub Issues — Fase 0
 
-**Estado:** PLAN-000 a PLAN-009 existem no GitHub. O usuário escolheu a direção C em 2026-10-12. A integração agora confirma permissão administrativa; as revisões locais e PLAN-010 a PLAN-012 ainda aguardam sincronização. O próximo número de issue será confirmado pela resposta do GitHub.
+**Estado:** os drafts revisados para C estão na branch publicada `docs/phase-0-hybrid` (commit `a7a592f`). A leitura do repositório funciona, mas `create_issue`, `update_issue` e `create_pull_request` retornaram HTTP 403; o `gh` local tem token inválido. PLAN-000 a PLAN-009 continuam com os corpos remotos antigos; PLAN-010 a PLAN-012 não foram criados. O PR pode ser aberto por [esta página](https://github.com/devmichaelcosta/dotnet-price-analizer/pull/new/docs/phase-0-hybrid).
 **Épico:** [`PLAN-000` — Concluir planejamento e aprovar as specs do MVP](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/1).
 
 ---

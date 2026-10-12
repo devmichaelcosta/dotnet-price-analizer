@@ -1,9 +1,9 @@
 # Backlog de planejamento
 
-**Estado:** PLAN-000 a PLAN-009 existem no GitHub. O backlog local foi revisado após o usuário escolher C; as revisões e PLAN-010 a PLAN-012 ainda não foram sincronizadas. A integração havia retornado `403 Resource not accessible by integration` para escrita. Não há tarefas de implementação.
+**Estado:** o pacote de planejamento para o escopo C foi publicado na branch [`docs/phase-0-hybrid`](https://github.com/devmichaelcosta/dotnet-price-analizer/tree/docs/phase-0-hybrid), ainda sem PR. O conector GitHub permite leitura, mas as tentativas de escrita em issues/PR retornaram `403 Resource not accessible by integration`; o `gh` local está com token inválido. Os issues #1–#10 permanecem desatualizados e PLAN-010 a PLAN-012 ainda não foram publicados. Não há tarefas de implementação.
 **Situação atual:** núcleo manual escolhido; nenhum domínio HTML foi aprovado. As decisões manuais restantes estão no [registro da Fase 0](../decisions/registro-fase-0.md), e a direção consta no [documento de revisão do MVP](../research/revisao-escopo-mvp.md). Consulte o [relatório de fontes](../research/validacao-fontes-fase-0.md) como pesquisa histórica.
 **Fonte de verdade:** roadmap, contexto do domínio e specs aprovadas.<br>
-**Repositório:** [devmichaelcosta/dotnet-price-analizer](https://github.com/devmichaelcosta/dotnet-price-analizer), branch `main`.
+**Repositório:** [devmichaelcosta/dotnet-price-analizer](https://github.com/devmichaelcosta/dotnet-price-analizer), branch de revisão `docs/phase-0-hybrid`.
 
 ## Organização no GitHub
 
@@ -77,9 +77,9 @@ Um item fica **Done** quando os critérios foram conferidos, a evidência/artefa
 
 ## Estado do GitHub
 
-Os documentos de planejamento iniciais foram publicados na branch `main` do repositório indicado pelo usuário. O espelho local contém atualizações posteriores da pesquisa e da revisão de escopo, ainda não sincronizadas no GitHub.
+Os documentos de planejamento iniciais foram publicados na branch `main`. A revisão completa para a opção C está publicada na branch [`docs/phase-0-hybrid`](https://github.com/devmichaelcosta/dotnet-price-analizer/tree/docs/phase-0-hybrid), commit `a7a592f`, mas não foi possível abrir o PR porque a integração recusou escrita em pull requests com HTTP 403. O `gh` local informa token inválido.
 
-O marco [Fase 0 — Planejamento e validação de fontes](https://github.com/devmichaelcosta/dotnet-price-analizer/milestone/1) e as labels da taxonomia foram criados. Os dez issues originais foram publicados, organizados pelo marco e vinculados ao épico. Os títulos/corpos listados abaixo refletem a versão remota original; a revisão para C está local até a integração permitir atualização:
+O marco [Fase 0 — Planejamento e validação de fontes](https://github.com/devmichaelcosta/dotnet-price-analizer/milestone/1) e as labels da taxonomia foram criados. Os dez issues originais existem e estão vinculados ao marco. As tentativas atuais de atualizar/criar issues pela integração retornaram HTTP 403; a revisão de conteúdo segue no arquivo local de issue drafts e na branch acima. Use [esta página do GitHub](https://github.com/devmichaelcosta/dotnet-price-analizer/pull/new/docs/phase-0-hybrid) para abrir o PR quando o owner estiver autenticado.
 
 | ID | Issue |
 |---|---|
