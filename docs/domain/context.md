@@ -51,7 +51,7 @@ Permitir que uma pessoa acompanhe um produto, encontre ofertas públicas em dife
 - Aplicação de uso próprio em implantação local, sem hospedagem pública; há várias contas locais autenticadas.
 - Acesso restrito à máquina hospedeira: host e API não devem aceitar conexões pela rede local ou pela Internet.
 - O administrador local provisiona contas e redefine a senha de outro usuário pelo app, definindo uma senha temporária e entregando-a diretamente ao usuário. No próximo login, o usuário precisa escolher uma nova senha antes de continuar. A aplicação não deve expor nem manter a senha temporária em texto puro. A primeira conta administradora é criada por comando local de uso único, executado no host, com senha informada sem valor padrão. Se perder acesso, o administrador recupera a conta por comando local no host, sem depender de e-mail.
-- MFA é obrigatória para administradores e opcional para os demais usuários, com TOTP em app autenticador e códigos de recuperação de uso único, sem depender de e-mail. Cada código é consumido quando usado. A recuperação se a pessoa perder o app autenticador e todos os códigos ainda precisa ser definida.
+- MFA é obrigatória para administradores e opcional para os demais usuários, com TOTP em app autenticador e códigos de recuperação de uso único, sem depender de e-mail. Cada código é consumido quando usado. Se alguém perder o autenticador e todos os códigos, a recuperação de MFA de qualquer conta é feita exclusivamente por comando local no host; não existe redefinição de MFA pelo app ou por e-mail. Após o reset, a conta precisa cadastrar novamente o TOTP antes do acesso normal quando MFA for obrigatória ou estiver habilitada.
 - API privada, usada pelo próprio sistema; sem cliente terceiro ou aplicativo externo neste momento.
 - Autenticação com ASP.NET Core Identity para contas locais e cookie protegido no navegador. Contas são provisionadas pelo administrador local; JWT/OIDC não são necessários para o escopo atual.
 - Acompanhamentos e históricos são privados por conta local; observações e dados do acompanhamento são removidos ao excluir o acompanhamento, observadas as restrições aplicáveis da fonte.
@@ -61,7 +61,7 @@ Permitir que uma pessoa acompanhe um produto, encontre ofertas públicas em dife
 
 Estes itens não devem ser tratados como regras confirmadas até serem resolvidos nas especificações ou decisões de produto:
 
-- Como recuperar com segurança o segundo fator se a pessoa perder o app autenticador e todos os códigos de uso único.
+- Quais precondições, controles de acesso operacional e registros de auditoria o comando local de recuperação de MFA deve exigir.
 - Como lidar com GTIN/EAN inválido, ausente, duplicado ou conflitante entre páginas.
 - Qual nível de confiança exige confirmação explícita da oferta e quais campos participam da correspondência.
 - Retenção de dados coletados por domínio: a regra do produto é apagar observações e dados do acompanhamento junto com sua remoção; cada domínio ainda precisa ser verificado para limites ou requisitos adicionais.
