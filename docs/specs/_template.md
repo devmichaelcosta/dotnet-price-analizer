@@ -1,8 +1,8 @@
 # Especificação — <nome do caso de uso>
 
-**Estado:** Rascunho  
-**Módulo:** <módulo dono>  
-**Responsável pelo domínio:** <papel ou pessoa>  
+**Estado:** Rascunho<br>
+**Módulo:** <módulo dono><br>
+**Responsável pelo domínio:** <papel ou pessoa><br>
 **Atualizado em:** <AAAA-MM-DD>
 
 ## Problema e objetivo
@@ -37,16 +37,16 @@ Descrever fluxo normal, alternativas, estados e efeitos observáveis. Não presc
 
 ## Cenários de aceite
 
-### AC-001 — <resultado esperado>
+### AC-<SIGLA-DO-USE-CASE>-001 — <resultado esperado>
 
-**Dado** <contexto inicial>  
-**Quando** <ação>  
+**Dado** <contexto inicial><br>
+**Quando** <ação><br>
 **Então** <resultado observável>
 
-### AC-002 — <falha esperada>
+### AC-<SIGLA-DO-USE-CASE>-002 — <falha esperada>
 
-**Dado** <contexto inicial>  
-**Quando** <ação que falha>  
+**Dado** <contexto inicial><br>
+**Quando** <ação que falha><br>
 **Então** <resposta segura e estado esperado>
 
 ## Regras de domínio aplicáveis
@@ -61,11 +61,14 @@ Descrever fluxo normal, alternativas, estados e efeitos observáveis. Não presc
 
 ## Rastreabilidade dos testes
 
-| Critério/regra | Classe(s) ou caso de uso relacionado | Teste(s) automatizado(s) | Estado |
-|---|---|---|---|
-| `AC-001` / `DR-...` | <domínio/caso de uso> | <nome do teste e caminho no projeto de testes> | Pendente |
+| Critério/regra | Classe/caso de uso | Nome(s) planejado(s) do teste/display name | Caminho no projeto de testes | Estado |
+|---|---|---|---|---|
+| `AC-XXX-001` | <caso de uso> | `AC-XXX-001 — <título do critério>`; método `AC_XXX_001_<Behavior>` | `tests/Modules/<Modulo>.Tests/Features/<UseCase>/` | Planejado |
+| `AC-XXX-001` / `DR-...` | <classe de domínio> | `AC-XXX-001_<Class>_<Behavior>` | `tests/Modules/<Modulo>.Tests/Domain/<Classe>/` | Planejado |
 
-Todo critério `AC-...` e toda regra de domínio aplicável devem apontar para teste(s). Cada classe de domínio afetada deve aparecer na tabela e ter teste(s) cobrindo os critérios/regras que lhe cabem e seus comportamentos/invariantes.
+Todo critério `AC-...` e toda regra de domínio aplicável devem apontar para teste(s) planejados com nome identificável. Cada classe de domínio afetada deve aparecer numa linha própria e ter teste(s) cobrindo os critérios/regras que lhe cabem e seus comportamentos/invariantes. IDs agrupados numa linha correspondem a testes planejados individuais, salvo justificativa explícita de cobertura conjunta.
+
+O display name do teste de caso de uso deve carregar o ID `AC-...` correspondente. Testes de domínio também incluem o AC relacionado e a classe testada. Se um teste cobrir vários critérios, liste todos no nome/matriz e justifique a cobertura conjunta. O estado só passa a aprovado depois de implementar e executar os testes.
 
 ## Dados e integrações
 

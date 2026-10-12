@@ -1,14 +1,14 @@
 # GitHub Issues — Fase 0
 
-**Estado:** os issues foram publicados no GitHub e estão indexados em [`README.md`](README.md).
+**Estado:** PLAN-000 a PLAN-009 existem no GitHub. O usuário escolheu a direção C em 2026-10-12. A integração agora confirma permissão administrativa; as revisões locais e PLAN-010 a PLAN-012 ainda aguardam sincronização. O próximo número de issue será confirmado pela resposta do GitHub.
 **Épico:** [`PLAN-000` — Concluir planejamento e aprovar as specs do MVP](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/1).
 
 ---
 
 ## PLAN-000 — [type:epic] Concluir planejamento e aprovar as specs do MVP ([#1](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/1))
 
-**Milestone:** Fase 0 — Planejamento e validação de fontes  
-**Prioridade:** P0  
+**Milestone:** Fase 0 — Planejamento e validação de fontes
+**Prioridade:** P0
 **Labels:** `type:epic`, `priority:P0`, `area:product`
 
 ### Objetivo
@@ -17,27 +17,30 @@ Concluir a definição do MVP antes de criar aplicação ou código de produçã
 
 ### Contexto
 
-O roadmap exige análise manual de páginas, validação de fontes, decisões de domínio, arquitetura e segurança, estratégia de testes e especificações aprovadas. A coleta usará somente HTML público cuja automação seja permitida expressamente nos termos públicos aplicáveis. O projeto não contatará lojas; APIs, feeds e integrações de terceiros não serão fontes de dados.
+O roadmap exige fechar as decisões do MVP manual, arquitetura e segurança, estratégia de testes e specs aprovadas. O usuário escolheu o núcleo manual primeiro e automação HTML futura condicionada a gate por domínio. APIs, feeds e integrações de terceiros não são fontes de dados. O projeto não contatará lojas por mensagens, formulários, chamados ou pedidos.
 
 ### Critérios de conclusão
 
-- [ ] Pelo menos três fontes elegíveis foram comprovadas, ou a inviabilidade dessa meta foi registrada e o escopo foi revisto com o usuário.
+- [x] A falta de fontes elegíveis foi registrada e o usuário escolheu o escopo C; fontes automáticas não bloqueiam o MVP manual.
 - [ ] As regras abertas do domínio, segurança, arquitetura, privacidade e escala foram resolvidas ou explicitamente mantidas fora do MVP.
-- [ ] Todas as specs de casos de uso do MVP estão revisadas e aprovadas, com IDs `AC-...`, regras `DR-...` aplicáveis e matriz de rastreabilidade.
+- [ ] Todas as specs do MVP manual estão revisadas e aprovadas, com IDs `AC-...`, regras `DR-...` aplicáveis e matriz de rastreabilidade; automação HTML está classificada como futura/condicional.
 - [ ] Roadmap, contexto do domínio e estratégia SDD/testes foram atualizados.
 - [ ] O usuário aprovou o gate de planejamento antes de qualquer implementação.
 
 ### Tarefas filhas
 
-- [ ] PLAN-001 — Comprovar fontes HTML elegíveis e selecionar o piloto.
-- [ ] PLAN-002 — Analisar manualmente páginas das fontes elegíveis.
+- [x] PLAN-001 — Concluir triagem HTML e registrar o gate documental futuro; nenhum domínio elegível foi aprovado.
+- [x] PLAN-002 — Encerrar a análise de páginas HTML de fontes inelegíveis; não há amostra de produto aprovada para inspecionar.
 - [ ] PLAN-003 — Fechar regras de produto, correspondência e observações.
 - [ ] PLAN-004 — Definir política de autenticação, conta e autorização.
 - [ ] PLAN-005 — Fechar arquitetura modular, contratos, dados e fluxos.
 - [ ] PLAN-006 — Definir estratégia de specs, testes e rastreabilidade.
 - [ ] PLAN-007 — Escrever e revisar as specs do MVP.
-- [ ] PLAN-008 — Estimar carga, frequência, armazenamento e custo.
+- [ ] PLAN-008 — Estimar volume e armazenamento do fluxo manual; adiar carga de automação até haver fonte elegível.
 - [ ] PLAN-009 — Revisar e aprovar o gate Fase 0.
+- [x] PLAN-010 — Estratégia API-first substituída por núcleo manual e futura automação HTML condicionada.
+- [ ] PLAN-011 — Registrar escolha C e alinhar roadmap/specs/backlog; decisão de direção tomada, alinhamento ainda em curso.
+- [ ] PLAN-012 — Fechar campos manuais, proveniência, atualidade e comparabilidade de ofertas.
 
 ### Referências
 
@@ -48,33 +51,31 @@ O roadmap exige análise manual de páginas, validação de fontes, decisões de
 
 ---
 
-## PLAN-001 — [type:research] Comprovar fontes HTML elegíveis e selecionar o piloto ([#2](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/2))
+## PLAN-001 — [type:research] Concluir triagem HTML e registrar o gate futuro ([#2](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/2))
 
-**Milestone:** Fase 0  
-**Prioridade:** P0  
+**Milestone:** Fase 0
+**Prioridade:** P0
 **Labels:** `type:research`, `priority:P0`, `area:discovery`
 
 ### Objetivo
 
-Identificar no mínimo três lojas cujos termos públicos aplicáveis permitam expressamente o acesso automatizado a páginas HTML públicas para comparação de preços.
+Concluir a avaliação inicial de páginas HTML públicas e registrar o gate para um eventual conector futuro, sem bloquear o MVP manual. Nenhum domínio HTML foi aprovado.
 
 ### Escopo
 
-- Revisar candidatos com formatos e categorias variados, incluindo os já registrados no relatório de pesquisa.
-- Guardar URL e data dos termos, política de coleta e `robots.txt`; não contatar lojas nem solicitar autorização ou esclarecimento.
-- Não usar páginas que exijam login, não automatizar API/feed, nem contornar CAPTCHA, bloqueio ou limite técnico.
+- A pesquisa manual já consultou os candidatos registrados no relatório; ela não executou crawler, parser, navegador automatizado nem coleta de produto.
+- Manter a classificação por domínio baseada nos termos aplicáveis, nos campos e na retenção pretendida. `robots.txt` isoladamente não comprova permissão.
+- Não usar APIs, feeds, agregadores ou provedores de terceiros como fontes; não autenticar, contatar lojas, criar contas, obter credenciais ou fazer crawler.
 
 ### Situação atual
 
-A revisão manual de oito candidatos não comprovou três fontes elegíveis. Carrefour e Fast Shop têm proibições explícitas nos termos consultados; para os demais, não foi encontrada permissão expressa nos termos. Em 12/10/2026, canais de atendimento chegaram a ser mapeados, mas a decisão atual é não contatar lojas; esses canais e o modelo de solicitação estão arquivados e não devem ser usados. O [relatório de fontes](../research/validacao-fontes-fase-0.md) registra a decisão e as evidências. Este issue permanece aberto até identificar fontes cujos termos públicos autorizem expressamente a coleta ou registrar inviabilidade e revisar o escopo com o usuário.
+O usuário escolheu o MVP híbrido: entrada e análise manuais primeiro; automação somente em páginas HTML que passem gate individual. A pesquisa registrada não aprovou domínio. A pesquisa exploratória de APIs foi preservada no relatório de fontes, mas APIs não são fontes no escopo vigente. Nenhuma loja foi contatada.
 
 ### Critérios de conclusão
 
-- [ ] Existe uma ficha de evidências para cada candidato, classificando-o como elegível, desabilitado por falta de permissão expressa ou descartado por proibição.
-- [ ] Para cada elegível, os termos públicos aplicáveis permitem expressamente a coleta automatizada e a retenção pretendida.
-- [ ] A regra `robots.txt`, limites técnicos e retenção da fonte foram registrados separadamente da evidência de autorização.
-- [ ] Foram selecionados pelo menos três domínios elegíveis; se isso não for possível, a limitação e opções de revisão do escopo foram documentadas.
-- [ ] `docs/research/validacao-fontes-fase-0.md` e `docs/roadmap.md` refletem os resultados.
+- [x] A triagem documental registra os candidatos e distingue proibição explícita, evidência inconclusiva e falta de permissão expressa; nenhum domínio foi aprovado.
+- [x] Ambiguidade, falta de permissão expressa ou incompatibilidade mantém o domínio desabilitado; `robots.txt` não é tratado como autorização.
+- [x] O relatório de fontes, roadmap, contexto e ADR distinguem o MVP manual dos conectores HTML condicionais futuros.
 
 ### Dependências
 
@@ -87,24 +88,21 @@ A revisão manual de oito candidatos não comprovou três fontes elegíveis. Car
 
 ---
 
-## PLAN-002 — [type:research] Analisar manualmente páginas das fontes elegíveis ([#3](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/3))
+## PLAN-002 — [type:research] Encerrar análise de páginas sem fontes elegíveis ([#3](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/3))
 
-**Milestone:** Fase 0  
-**Prioridade:** P0  
+**Milestone:** Fase 0
+**Prioridade:** P0
 **Labels:** `type:research`, `priority:P0`, `area:discovery`
 
 ### Objetivo
 
-Avaliar como descobrir produtos e extrair preço, moeda, disponibilidade, identificadores, variante e vendedor nas fontes autorizadas, sem escrever crawler ou parser.
+Avaliar manualmente páginas de produto e de busca apenas em domínios HTML elegíveis. Como a triagem não aprovou nenhum domínio, não há páginas de produto que possam ser analisadas para o MVP atual; encerrar a atividade sem automação.
 
 ### Critérios de conclusão
 
-- [ ] Para cada uma das fontes piloto, foram registradas páginas de busca/categoria e exemplos de páginas de produto, com URL e data de consulta manual.
-- [ ] Campos visíveis e estruturados (`schema.org/Product`/`Offer`, quando presentes) foram inventariados.
-- [ ] Foram documentados preço anunciado, preço promocional/PIX/parcelado, variante, vendedor e disponibilidade, incluindo ambiguidades.
-- [ ] Foi registrada a estratégia de descoberta por HTML público e quais exceções parecem exigir adaptador de domínio.
-- [ ] Nenhuma automação, crawler ou parser foi implementado nesta tarefa.
-- [ ] O relatório de fontes foi atualizado.
+- [x] A triagem documental não aprovou nenhum domínio HTML para coleta automatizada no escopo pretendido.
+- [x] A ausência de fonte elegível foi registrada e a opção C foi escolhida; amostras de páginas de produto ficam fora do MVP manual.
+- [x] Nenhum crawler, parser, navegador automatizado, acesso autenticado ou contato com loja foi usado; a análise manual já registrada permanece documental.
 
 ### Dependências
 
@@ -114,27 +112,29 @@ Avaliar como descobrir produtos e extrair preço, moeda, disponibilidade, identi
 ### Referências
 
 - `docs/research/validacao-fontes-fase-0.md`
-- `docs/domain/context.md`
+- `docs/research/revisao-escopo-mvp.md`
 
 ---
 
 ## PLAN-003 — [type:decision] Fechar regras de produto, correspondência e observações ([#4](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/4))
 
-**Milestone:** Fase 0  
-**Prioridade:** P0  
+**Milestone:** Fase 0
+**Prioridade:** P0
 **Labels:** `type:decision`, `priority:P0`, `area:domain`
 
 ### Objetivo
 
-Definir os comportamentos de domínio que determinam se uma oferta pode entrar no acompanhamento e como o histórico registra leituras.
+Definir a identidade de produto e oferta manual, proveniência de observações e regras para comparar preços entre lojas e ao longo do tempo.
 
 ### Decisões a documentar
 
 - Regras para EAN/GTIN inválido, ausente, duplicado ou conflitante.
-- Como identificar variantes, kits, condição do produto e vendedor; quando exigir confirmação da pessoa.
+- Campos mínimos de produto/oferta manual, loja/URL, variante, condição e tratamento de duplicatas.
+- Como identificar a autoria e o instante de uma observação informada pelo usuário; mostrar claramente que não foi verificada pela loja.
+- Regras para comparar ofertas de lojas distintas e determinar a atualidade do último preço.
 - **Decisão aprovada pelo usuário:** para a mesma oferta, criar observação somente quando preço ou disponibilidade mudarem; leituras idênticas não criam duplicatas. Regra registrada como `DR-016` em `docs/domain/context.md`.
-- Como tratar preço PIX, parcelamento, preço promocional, faixas de preço e indisponibilidade.
-- O que acontece ao remover um acompanhamento e os dados associados, inclusive falhas de exclusão por limites da fonte.
+- Como tratar preço PIX, parcelamento, preço promocional, faixas de preço, moeda e indisponibilidade na entrada manual.
+- O que acontece ao remover um acompanhamento e os dados manuais associados.
 
 ### Critérios de conclusão
 
@@ -157,8 +157,8 @@ Definir os comportamentos de domínio que determinam se uma oferta pode entrar n
 
 ## PLAN-004 — [type:decision] Definir política de autenticação, conta e autorização ([#5](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/5))
 
-**Milestone:** Fase 0  
-**Prioridade:** P0  
+**Milestone:** Fase 0
+**Prioridade:** P0
 **Labels:** `type:decision`, `priority:P0`, `area:security`
 
 ### Objetivo
@@ -204,23 +204,24 @@ Definir os fluxos do ASP.NET Core Identity para uma aplicação local com vário
 
 ## PLAN-005 — [type:task] Fechar arquitetura modular, contratos, dados e fluxos ([#6](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/6))
 
-**Milestone:** Fase 0  
-**Prioridade:** P0  
+**Milestone:** Fase 0
+**Prioridade:** P0
 **Labels:** `type:task`, `priority:P0`, `area:architecture`
 
 ### Objetivo
 
-Produzir um desenho revisável do monólito modular, módulos, dependências, persistência e comunicação entre Blazor, Web API interna e Worker.
+Produzir um desenho revisável do monólito modular, módulos, dependências, persistência e comunicação entre Blazor, Web API interna e PostgreSQL. Worker/fila ficam condicionais à automação HTML futura.
 
 ### Critérios de conclusão
 
 - [ ] Fronteiras e responsabilidades dos módulos foram definidas.
-- [ ] Diagramas mostram caminho principal de consulta, descoberta, confirmação, observação, histórico e autorização.
+- [ ] Diagramas mostram cadastro manual de produto/oferta, observação, comparação, histórico, remoção e autorização.
 - [ ] Modelo conceitual preserva Produto, Página, Oferta, Acompanhamento e Observação como conceitos distintos.
-- [ ] Ownership/isolamento por usuário local, estados de job, retentativas e idempotência estão representados.
-- [ ] A topologia executa Server, Worker e PostgreSQL localmente; host/API ficam restritos a loopback/localhost e não aceitam acesso pela rede local.
+- [ ] Ownership/isolamento por usuário local está representado; estados de job, retentativas e idempotência são tratados como condicionais à automação futura.
+- [ ] A topologia manual executa Server e PostgreSQL localmente; host/API ficam restritos a loopback/localhost e não aceitam acesso pela rede local. Worker é condicional.
 - [ ] A fatia vertical mantém juntos os arquivos específicos de cada use case; dependências respeitam as decisões Clean Architecture/DDD.
 - [ ] Contratos e modelo foram atualizados após as decisões de domínio/fontes.
+- [ ] Fontes e Worker condicionais estão separados do MVP manual; API/feed/agregador não aparece como origem de dados.
 
 ### Dependências
 
@@ -237,8 +238,8 @@ Produzir um desenho revisável do monólito modular, módulos, dependências, pe
 
 ## PLAN-006 — [type:decision] Definir estratégia SDD, testes e rastreabilidade ([#7](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/7))
 
-**Milestone:** Fase 0  
-**Prioridade:** P0  
+**Milestone:** Fase 0
+**Prioridade:** P0
 **Labels:** `type:decision`, `priority:P0`, `area:testing`
 
 ### Objetivo
@@ -248,6 +249,7 @@ Definir como critérios de aceite das specs e regras de domínio serão cobertos
 ### Critérios de conclusão
 
 - [ ] Framework e tooling de testes foram escolhidos priorizando suporte oficial/Microsoft, com justificativa para eventuais dependências externas.
+- [ ] A proposta MSTest + `MSTest.Sdk`/`Microsoft.Testing.Platform` em `docs/decisions/ADR-001-framework-de-testes.md` foi revisada no gate da Fase 0.
 - [ ] A convenção está definida para testes unitários de domínio, testes de use case e testes de integração.
 - [ ] A matriz liga `AC-...`/`DR-...` a classes de domínio, use cases e testes esperados.
 - [ ] A localização dos testes espelha módulo/use case/classe e permanece em projetos separados.
@@ -268,8 +270,8 @@ Definir como critérios de aceite das specs e regras de domínio serão cobertos
 
 ## PLAN-007 — [type:spec] Escrever e revisar as specs do MVP ([#8](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/8))
 
-**Milestone:** Fase 0  
-**Prioridade:** P0  
+**Milestone:** Fase 0
+**Prioridade:** P0
 **Labels:** `type:spec`, `priority:P0`, `area:product`
 
 ### Objetivo
@@ -278,7 +280,8 @@ Criar uma especificação aprovada para cada use case incluído no MVP, co-local
 
 ### Critérios de conclusão
 
-- [ ] O inventário de use cases foi reduzido e aprovado após fechar domínio, fontes e arquitetura.
+- [ ] O inventário separa specs do MVP manual de specs condicionais de automação HTML.
+- [ ] Specs do MVP cobrem cadastro de produto/oferta, autoria/proveniência, atualidade e comparação de preços entre ofertas.
 - [ ] Cada spec define objetivo, atores, autorização, regras, validações, cenários de sucesso/alternativos/falha e dados observáveis.
 - [ ] Cada critério tem ID estável `AC-...`, critérios usam Given/When/Then quando adequado, e apontam para `DR-...` relevantes.
 - [ ] A matriz de rastreabilidade identifica classes de domínio, use case e testes derivados.
@@ -298,28 +301,28 @@ Criar uma especificação aprovada para cada use case incluído no MVP, co-local
 
 ---
 
-## PLAN-008 — [type:task] Estimar carga, frequência, armazenamento e custo ([#9](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/9))
+## PLAN-008 — [type:task] Estimar carga manual e armazenamento; automação condicional ([#9](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/9))
 
-**Milestone:** Fase 0  
-**Prioridade:** P1  
+**Milestone:** Fase 0
+**Prioridade:** P1
 **Labels:** `type:task`, `priority:P1`, `area:architecture`
 
 ### Objetivo
 
-Estimar se um intervalo-alvo de seis horas é viável para as fontes elegíveis e volume inicial pretendido.
+Estimar o volume local de acompanhamentos/ofertas/observações manuais para o primeiro MVP. Não estimar coleta externa até um domínio HTML passar pelo gate.
 
 ### Entradas necessárias
 
 - Número de usuários locais previstos.
 - Acompanhamentos médios e máximos por usuário local.
-- Número de ofertas confirmadas por acompanhamento e páginas a verificar.
-- Limites por domínio comprovados no PLAN-001.
+- Número de ofertas manuais e observações registradas por conta.
+- Para futura automação: limites/frequência do domínio documentados em spec individual aprovada.
 
 ### Critérios de conclusão
 
 - [ ] Foram calculadas requisições e armazenamento de observações por dia/mês em cenários baixo, esperado e alto.
-- [ ] Frequência e concorrência são compatíveis com limites de cada fonte e custo estimado.
-- [ ] Se seis horas não couber, nova frequência e impacto de produto são propostos para decisão.
+- [ ] A estimativa manual informa volume e retenção no banco local.
+- [ ] Frequência, concorrência e custo de crawler são explicitamente adiados até existir fonte aprovada; o alvo de seis horas não é requisito do MVP manual.
 - [ ] Premissas e fórmulas estão registradas e ligadas ao roadmap.
 
 ### Dependências
@@ -336,8 +339,8 @@ Estimar se um intervalo-alvo de seis horas é viável para as fontes elegíveis 
 
 ## PLAN-009 — [type:decision] Revisar e aprovar o gate da Fase 0 ([#10](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/10))
 
-**Milestone:** Fase 0  
-**Prioridade:** P0  
+**Milestone:** Fase 0
+**Prioridade:** P0
 **Labels:** `type:decision`, `priority:P0`, `area:product`
 
 ### Objetivo
@@ -361,3 +364,127 @@ Verificar se planejamento, fontes, regras, arquitetura, estratégia de testes e 
 
 - `docs/roadmap.md`
 - `docs/specs/README.md`
+
+---
+
+## PLAN-010 — [type:decision] Estratégia API-first substituída por HTML condicionado (publicação pendente)
+
+**Milestone:** Fase 0
+**Prioridade:** P0
+**Labels:** `type:decision`, `priority:P0`, `area:discovery`
+
+### Objetivo
+
+Manter o registro histórico da decisão API-first e documentar sua substituição: núcleo manual no MVP; automação futura somente por HTML público com permissão expressa por domínio.
+
+### Contexto
+
+O ADR-002 registra a decisão API-first anterior e está substituído pelo ADR-003. A pesquisa de APIs é histórica e nenhuma API ficou autorizada. O usuário escolheu C; o núcleo manual vem primeiro e automação HTML fica condicionada ao gate. Não foram criadas contas, aceitos termos, obtidas credenciais ou contatadas lojas.
+
+### Escopo
+
+- Manter a pesquisa API apenas como histórico; não usar API, feed, agregador ou integração de terceiros como fonte sem nova decisão explícita do usuário.
+- Garantir que o roadmap e as specs indiquem HTML público expressamente permitido como única forma de automação considerada, somente em etapa futura.
+
+### Critérios de conclusão
+
+- [x] A estratégia API-first foi substituída por ADR-003; APIs, feeds e agregadores não são fontes vigentes.
+- [x] Núcleo manual primeiro e coleta HTML futura condicionada foram registrados.
+- [ ] Contexto, `AGENTS.md`, roadmap, specs e backlog local estão consistentes; sincronização GitHub ainda depende de escrita da integração.
+
+### Dependências
+
+- Depends on: PLAN-001 e PLAN-005
+- Part of: PLAN-000
+
+### Referências
+
+- `docs/research/validacao-fontes-fase-0.md`
+- `docs/domain/context.md`
+- `docs/decisions/ADR-002-fontes-oficiais-api-first.md` (histórico)
+- `docs/decisions/ADR-003-mvp-hibrido-e-fontes-html.md`
+
+---
+
+## PLAN-011 — [type:decision] Registrar opção C e alinhar os artefatos do MVP (publicação pendente)
+
+**Milestone:** Fase 0
+**Prioridade:** P0
+**Labels:** `type:decision`, `priority:P0`, `area:product`
+
+### Objetivo
+
+Registrar a escolha explícita do MVP híbrido e alinhar roadmap, contexto, arquitetura, specs e backlog com a entrada manual inicial e automação HTML condicionada.
+
+### Contexto
+
+A triagem de HTML não aprovou domínio; a pesquisa de APIs é histórica e APIs não são fontes permitidas no escopo vigente. O usuário escolheu a opção C. A decisão está em `docs/research/revisao-escopo-mvp.md` e ADR-003; detalhes do fluxo manual e outras propostas continuam pendentes.
+
+### Escopo
+
+- Manter registrada a escolha C sem inferir aprovação das specs detalhadas.
+- Definir campos manuais, proveniência, horário de observação, atualidade e comparabilidade.
+- Atualizar roadmap, contexto, specs e issues afetados, preservando como pendentes as escolhas ainda não confirmadas.
+- Manter coleta automatizada desabilitada até cada fonte passar pelo gate individual de termos, uso, acesso e retenção.
+
+### Critérios de conclusão
+
+- [x] O usuário escolheu a opção C e a direção está registrada.
+- [ ] Detalhes de produto/oferta/observação manual e comparação dos últimos preços informados estão resolvidos ou explicitamente adiados.
+- [ ] Roadmap, contexto, arquitetura, inventário de specs e backlog descrevem o mesmo escopo.
+- [x] Nenhum domínio HTML ou permissão de coleta foi presumido; nenhum domínio está habilitado.
+- [ ] Roadmap e specs revisados recebem aprovação explícita antes da implementação.
+
+### Dependências
+
+- Depends on: PLAN-001 e PLAN-010
+- Part of: PLAN-000
+
+### Referências
+
+- `docs/research/revisao-escopo-mvp.md`
+- `docs/research/validacao-fontes-fase-0.md`
+- `docs/decisions/registro-fase-0.md`
+- `docs/roadmap.md`
+
+---
+
+## PLAN-012 — [type:decision] Fechar regras de oferta e observação manual (publicação pendente)
+
+**Milestone:** Fase 0
+**Prioridade:** P0
+**Labels:** `type:decision`, `priority:P0`, `area:domain`
+
+### Objetivo
+
+Definir os dados e as regras observáveis para cadastrar uma oferta manual, registrar preços e compará-los entre lojas e ao longo do tempo.
+
+### Contexto
+
+O usuário escolheu o núcleo manual primeiro. A spec `AddManualOffer` e a comparação `CompareCurrentOffers` estão em rascunho; campos, proveniência temporal, preço comparável e atualidade ainda aparecem como questões abertas. Uma URL é somente referência no MVP e não será acessada.
+
+### Decisões a documentar
+
+- Campos obrigatórios/opcionais para produto e oferta (loja, título, URL, vendedor, variante e condição).
+- Horário que representa observação manual e autoria/proveniência exibida.
+- Regras para preço, moeda, disponibilidade, promoções e deduplicação.
+- Atualidade do preço e agrupamento de ofertas comparáveis por moeda, variante e condição.
+- Tratamento de observação sem preço, indisponível e sem dados suficientes.
+
+### Critérios de conclusão
+
+- [ ] Propostas são aceitas, ajustadas ou adiadas com clareza, sem hipóteses descritas como decisão.
+- [ ] `docs/domain/context.md` recebe apenas regras compartilhadas confirmadas e IDs `DR-...` estáveis.
+- [ ] Specs `StartTracking`, `ResolveCanonicalProduct`, `AddManualOffer`, `RecordPriceObservation`, `GetPriceHistory`, `CompareCurrentOffers` e `ComparePriceVariation` refletem as decisões.
+- [ ] ACs e matrizes de rastreabilidade cobrem sucessos, autorização, validação, duplicação e dados incompatíveis.
+
+### Dependências
+
+- Depends on: PLAN-003, PLAN-005 e PLAN-007
+- Part of: PLAN-000
+
+### Referências
+
+- `docs/decisions/registro-fase-0.md` — F0-05 a F0-08 e F0-16/F0-17
+- `docs/specs/PriceTracking/AddManualOffer/spec.md`
+- `docs/specs/PriceAnalysis/CompareCurrentOffers/spec.md`

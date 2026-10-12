@@ -1,27 +1,27 @@
 # Planejamento e arquitetura inicial — Analisador de preços
 
-**Estado:** planejamento; nenhuma aplicação foi criada.  
-**Nota de escopo:** o usuário definiu o produto como uma aplicação local para uso próprio, sem hospedagem pública, com vários usuários autenticados e contas provisionadas pelo administrador local. O acesso é restrito à máquina hospedeira; host e API devem escutar somente em loopback/localhost, sem acesso pela rede local ou Internet. O primeiro administrador será criado por comando local de uso único, com senha informada sem valor padrão; a recuperação administrativa será por comando local no host, sem depender de e-mail. O sistema não contata lojas: as únicas chamadas externas previstas são requisições HTTP GET de leitura a páginas públicas elegíveis.
-**Data da pesquisa:** 11/10/2026.  
+**Estado:** planejamento; nenhuma aplicação foi criada.<br>
+**Nota de escopo:** aplicação local para várias contas provisionadas pelo administrador, acessível somente na máquina hospedeira. O usuário escolheu um núcleo manual para o primeiro MVP; não haverá consulta automática à Internet nesse fluxo. Em evolução futura, somente HTML público expressamente permitido nos termos poderá ser fonte automatizada. Não usar APIs, feeds, agregadores ou integrações de terceiros como fonte de dados. O sistema não contata lojas nem altera contas, anúncios, pedidos ou transações.
+**Data da pesquisa:** 11–12/10/2026.
 **Região inicial considerada:** Brasil; idioma pt-BR; moeda BRL.
-**Direção do MVP:** buscar por texto ou EAN/GTIN em páginas públicas de vários sites de compras. O sistema manterá seu próprio índice de páginas e ofertas normalizadas, usando crawler e parsers; nenhuma API comercial de busca nem marketplace específico será requisito. Comparar apenas o preço do item; atualização desejada a cada seis horas, sujeita às regras de cada site.
-**Limite do primeiro corte:** cobertura inicial de vários domínios de compras configuráveis e elegíveis para coleta. Não prometer busca exaustiva em toda a Internet: ampliar a cobertura depende de descobrir e indexar mais domínios, além de respeitar bloqueios, termos, limites e diferenças técnicas de cada site.
+**Direção do MVP:** cadastrar produto e ofertas manualmente por texto e/ou EAN/GTIN, registrar observações informadas pelo usuário, comparar ofertas compatíveis e analisar a variação temporal. Observações devem ser rotuladas como manuais; uma URL é somente referência e não será acessada pelo aplicativo. Nenhum domínio HTML passou pelo gate. A automação futura fica condicionada à aprovação individual do domínio e dos campos/retensão pretendidos.
+**Limite do primeiro corte:** não haverá busca, crawler, chamadas a sites nem atualização automática. O sistema compara apenas o preço do item, sem frete. A frequência desejada de seis horas só se aplica a uma futura coleta aprovada. Não prometer busca exaustiva na Internet.
 
 ## 1. Objetivo do produto
 
-O administrador local provisiona contas. Cada usuário entra no app local, informa um produto por nome ou EAN/GTIN, escolhe os anúncios correspondentes e acompanha preços em diferentes lojas. O sistema preserva leituras datadas para mostrar comparação atual e variação de preço. URL não faz parte da entrada inicial.
+O administrador local provisiona contas. Cada usuário entra no app local, informa um produto por nome ou EAN/GTIN, cadastra ofertas de diferentes lojas e registra preços manualmente. O sistema preserva observações datadas para comparar os últimos preços informados e analisar a variação por oferta. Uma URL pode ser guardada como referência, sem ser acessada pelo app.
 
 A unidade acompanhada é o **produto**; a unidade que tem preço e vendedor é a **oferta/anúncio**. Um produto pode ter várias ofertas, em vários vendedores e sites. Cada oferta tem seu próprio histórico.
 
 ## 2. Stack e forma de implantação recomendadas
 
-- **Frontend:** Blazor com MudBlazor, responsável pelas telas de conta, busca, seleção, acompanhamento, comparação e histórico.
-- **Backend:** ASP.NET Core Web API em .NET 10 LTS.
+- **Frontend:** Blazor com MudBlazor, responsável pelas telas de conta, cadastro manual, acompanhamento, comparação e histórico.
+- **Backend:** ASP.NET Core Web API em .NET 10 LTS; revalidar versão e patches suportados quando a implementação começar.
 - **Persistência:** PostgreSQL via EF Core 10 e provider Npgsql compatível.
-- **Coleta e busca:** processo Worker .NET separado, que descobre páginas por sitemaps/catálogos públicos, coleta páginas elegíveis e alimenta um índice próprio; executa jobs persistidos sem deixar uma requisição HTTP aberta.
-- **Organização:** solução modular, inicialmente um monólito modular com um host Server (Blazor + API) e um processo Worker. Não iniciar com microserviços.
+- **Automação futura:** Worker .NET separado poderá executar jobs persistidos de descoberta/atualização HTML quando uma fonte elegível e uma spec incremental forem aprovadas. Não há Worker nem fila de coleta no MVP manual.
+- **Organização:** monólito modular com host Server (Blazor + API privada); adicionar Worker como segundo processo somente quando houver automação aprovada. Não iniciar com microserviços.
 - **Interface Blazor:** Blazor Web App com renderização interativa no servidor (Interactive Server), conforme escolha do usuário.
-- **Hospedagem inicial:** um host ASP.NET Core e PostgreSQL são executados localmente; o Worker também roda localmente. O host ASP.NET Core escuta somente em loopback/localhost; PostgreSQL não é exposto à rede. A aplicação não aceita conexões de outros dispositivos da rede local.
+- **Hospedagem inicial:** host ASP.NET Core e PostgreSQL são executados localmente; host/API escutam somente em loopback/localhost e PostgreSQL não é exposto à rede. A aplicação não aceita conexões de outros dispositivos da rede local.
 - **Seleção de bibliotecas:** priorizar bibliotecas e componentes oficiais/suportados pela Microsoft quando atenderem aos requisitos. MudBlazor é uma escolha explícita do usuário para a camada de UI e uma exceção aprovada a essa preferência geral; acompanhar sua compatibilidade, manutenção e licença. Para outras dependências de terceiros, exigir uma lacuna concreta, justificativa e avaliação de suporte, manutenção, segurança e licença.
 
 Com Interactive Server, eventos e componentes interativos são executados no servidor através de um circuito em tempo real. No MVP, os componentes Blazor chamam os casos de uso no servidor; não fazem uma chamada HTTP de volta ao próprio host. A Web API REST é parte privada do sistema e não será oferecida a clientes terceiros neste momento. Essa organização mantém uma única origem e uma sessão ASP.NET Core Identity baseada em cookie. Todos os endpoints REST ainda validam autenticação, autorização e propriedade dos dados. Se futuramente houver clientes externos ou a UI for separada do host, reavaliar OIDC/JWT e proteção CSRF/CORS antes de mudar a implantação.
@@ -52,19 +52,15 @@ Referências técnicas para o planejamento do segundo fator: [MFA no ASP.NET Cor
 
 ## 3. Módulos de negócio e plataforma
 
-1. **Identidade e acesso** — login, provisionamento administrativo de usuários, recuperação de acesso e autorização. Todo produto acompanhado pertence ao usuário que o criou.
-2. **Catálogo canônico** — identidade do produto: EAN/GTIN quando disponível, marca, modelo, categoria e características que distinguem versões.
-3. **Acompanhamento** — vínculo entre usuário e produto, consulta de origem, frequência, status ativo/pausado e preferências básicas. O intervalo desejado no MVP é de seis horas, sujeito às regras e limites do domínio.
-4. **Descoberta e índice web próprio** — aceita texto ou EAN/GTIN e pesquisa o índice local alimentado pelo crawler; não depende de provedores externos de busca.
-5. **Cadastro de domínios e conectores** — configura vários sites de compras, políticas de coleta, sitemaps, limites, capacidades e exceções específicas de cada site. A arquitetura não presume um marketplace único.
-6. **Crawler e extração** — descobre URLs por sitemaps, catálogos, páginas de busca públicas dos próprios sites e links públicos; lê páginas elegíveis; extrai dados estruturados (`Product`/`Offer` em JSON-LD, Microdata ou RDFa) e usa parsers específicos por domínio como fallback.
-7. **Correspondência e confirmação** — associa páginas e ofertas ao produto canônico. Prioriza GTIN/EAN e identificadores estáveis; correspondência apenas por título é sugestão e deve ser confirmada quando houver dúvida.
-8. **Jobs e agendamento** — persiste buscas, varreduras e atualizações; controla estado, tentativas, limites por domínio e próximos horários. A frequência deve respeitar as políticas de cada site.
-9. **Normalização** — converte os dados extraídos para um formato comum, mantendo moeda, preço do item, condição, variante, disponibilidade, URL e origem. Frete não participa das comparações do MVP.
-10. **Ofertas e histórico** — mantém o anúncio/página de origem e grava cada coleta como observação histórica. Uma nova leitura cria um registro novo; não apaga a anterior.
-11. **Comparação e análise** — preço atual por oferta, menor preço válido, diferença em R$ e percentual, mínimo/máximo do período e série temporal.
-12. **Alertas** — fora do escopo local atual; qualquer alerta externo ou canal de notificação exige nova decisão do usuário.
-13. **Operação e administração** — saúde do crawler e parsers, erros e latência por domínio, jobs atrasados, métricas, configuração segura e política de retenção.
+1. **Identidade e acesso** — login, provisionamento administrativo, recuperação e autorização; dados de produto e preço são privados por conta.
+2. **Catálogo de produto** — identidade do item informado manualmente: texto, EAN/GTIN e atributos de variante decididos na spec.
+3. **Acompanhamento** — vínculo privado entre conta e produto; não cria busca ou job no MVP manual.
+4. **Ofertas manuais** — cadastro pelo usuário de uma referência de oferta/loja, sem consultar ou validar a página pela rede.
+5. **Observações** — entrada manual de preço, moeda, disponibilidade, autoria e horário; manter histórico e deduplicar estado sem mudança segundo DR-016.
+6. **Comparação e análise** — comparar preços entre ofertas compatíveis e calcular a variação de cada oferta no período.
+7. **WebDiscovery condicional** — futura descoberta e extração de páginas HTML públicas de domínios aprovados; não faz parte do MVP manual.
+8. **Operations condicional** — gestão e estado de conectores HTML/jobs, somente quando um incremento automatizado for aprovado.
+9. **Alertas** — fora do escopo local atual; qualquer canal de notificação exige nova decisão do usuário.
 
 ## 4. Monólito modular, Clean Architecture e vertical slices
 
@@ -72,11 +68,11 @@ Organizar primeiro por capacidade de negócio, não por um conjunto global de pa
 
 - **Accounts/Identity:** usuários, sessão, autenticação e políticas de acesso.
 - **ProductCatalog:** produto canônico, EAN/GTIN, marca, modelo e variantes.
-- **WebDiscovery:** domínios, crawler, índice próprio, extração e adaptadores por domínio.
-- **PriceTracking:** acompanhamentos, ofertas confirmadas e observações de preço.
+- **WebDiscovery:** fora do MVP manual. Em fase futura, somente conectores HTML para páginas públicas de domínios cuja coleta automatizada seja expressamente permitida. APIs, feeds e agregadores não são fontes.
+- **PriceTracking:** acompanhamentos, ofertas manuais, proveniência e observações de preço.
 - **PriceAnalysis:** comparação, métricas e séries históricas.
 - **Notifications:** não incluído no MVP local; só adicionar mediante decisão futura do usuário.
-- **Operations:** estado do crawler, jobs, saúde e configuração operacional.
+- **Operations:** operações da instalação; gestão de conectores/jobs fica condicional à automação futura.
 
 Dentro de cada módulo, organizar a aplicação por fatias verticais (casos de uso), mantendo o domínio e a infraestrutura sob a fronteira do módulo. Exemplo ilustrativo:
 
@@ -103,21 +99,21 @@ Modules/PriceTracking/
 
 - **Domain:** regras invariantes e linguagem do negócio; não referencia EF Core, ASP.NET Core, Blazor, PostgreSQL nem HTTP.
 - **Features/Application:** cada slice orquestra um caso de uso, valida entrada, aplica políticas de autorização pertinentes e coordena transação/saída. Interfaces ficam no módulo que precisa delas.
-- **Infrastructure:** implementa persistência, crawler, parsers e clientes externos por meio das abstrações do módulo; detalhes técnicos não vazam para UI ou domínio.
+- **Infrastructure:** implementa persistência do núcleo manual. Um cliente HTTP/parser de domínio só é criado em uma fatia de automação aprovada e fica isolado da UI e do domínio.
 - **Server/API:** endpoints REST finos traduzem HTTP para um slice; não contêm regras de negócio. O host compõe módulos, autenticação e autorização.
 - **Blazor:** componentes cuidam de apresentação, estado de tela e validação de experiência. Chamam casos de uso Application no servidor; não contêm regras do produto, cálculos de preço, acesso a `DbContext` ou coleta HTTP.
 - **Coesão da fatia:** mudanças em um caso de uso devem ser localizáveis e revisáveis na pasta dele; código compartilhado permanece fora apenas quando houver reutilização real, nunca para criar uma pasta genérica por tipo.
-- **Worker:** recebe jobs duráveis e invoca os slices/capacidades de aplicação apropriados; não duplica regras de negócio.
+- **Worker futuro:** se necessário para um conector HTML aprovado, recebe jobs duráveis e invoca os mesmos slices/capacidades; não duplica regras. Não compõe o primeiro MVP manual.
 - **Comunicação entre módulos:** usar contratos explícitos ou eventos de integração/outbox. Um módulo não consulta diretamente as tabelas, entidades internas ou `DbContext` de outro. Um único PostgreSQL pode hospedar os dados, com propriedade das tabelas definida por módulo.
 - **DDD/SOLID:** definir agregados e value objects onde protegem invariantes reais; manter o shared kernel pequeno; usar abstrações nas fronteiras necessárias, sem interface/classe genérica para cada tipo por padrão.
 
 ### Componentes de implantação previstos
 
 - `PriceAnalyzer.Server` — host ASP.NET Core que serve Blazor Interactive Server e endpoints REST versionados; composition root dos módulos, Identity e políticas.
-- `PriceAnalyzer.Worker` — descoberta/crawl, atualização de páginas/ofertas, retentativas e processamento de jobs.
+- `PriceAnalyzer.Worker` — componente futuro condicional para descoberta HTML aprovada, atualização de ofertas e jobs; não criar no primeiro corte manual.
 - `Modules/*` — módulos co-localizados na solução, cada um com Domain, Features, Infrastructure e contratos próprios. Podem ser assemblies separados para reforçar fronteiras, mantendo a implantação como monólito modular.
 
-No MVP, `Server` é um host de UI e API e `Worker` é outro processo. Ambos podem operar sobre uma base PostgreSQL compartilhada; isso não transforma os módulos em microserviços nem permite acesso cruzado às tabelas internas.
+No MVP manual, somente `Server` e PostgreSQL são necessários. Um `Worker` poderá ser adicionado após gate e spec de automação; compartilhar a base PostgreSQL não transforma os módulos em microserviços nem permite acesso cruzado às tabelas internas.
 
 ### 4.1. Spec-Driven Development e artefatos de domínio
 
@@ -138,19 +134,20 @@ O projeto seguirá Spec-Driven Development (SDD): especificações aprovadas, co
 - Testes de domínio verificam invariantes e transições; testes de caso de uso verificam resultados e efeitos observáveis; testes de integração cobrem fronteiras reais de persistência, fila, HTTP e autorização quando aplicável. A estratégia exata fica no plano da fatia.
 - A matriz de rastreabilidade da spec deve apontar cada `AC-...` e `DR-...` aplicável para um ou mais testes automatizados aprovados. Evitar testes tautológicos de detalhes internos; testar o comportamento e a regra que justificam a classe.
 - A implementação de uma fatia só está concluída quando seus testes relacionados passam e os critérios de aceite estão cobertos. Não definir um percentual global arbitrário de cobertura como substituto para essa rastreabilidade.
+- **Proposta de framework:** MSTest com `MSTest.Sdk` e `Microsoft.Testing.Platform` como runner inicial. A documentação oficial da Microsoft recomenda `MSTest.Sdk`, apresenta configuração para .NET 10 e descreve MSTest como framework multiplataforma suportado. Fixar versões e extensões por teste de compatibilidade na implementação; não adicionar bibliotecas de assertions de terceiros sem necessidade demonstrada.
+- **Estado:** proposta registrada em [`ADR-001`](decisions/ADR-001-framework-de-testes.md), ainda sujeita à revisão no gate da Fase 0.
 
 ## 5. Modelo de dados conceitual
 
 | Entidade | Finalidade | Campos relevantes |
 |---|---|---|
 | `User` | Conta local provisionada pelo administrador e gerenciada pelo Identity | ID, identificador de login e estado |
-| `Product` | Produto canônico | GTIN/EAN, marca, modelo, atributos/variante |
-| `TrackedProduct` | Produto seguido por uma conta | UserId, ProductId, texto ou EAN/GTIN da busca, frequência, ativo |
-| `WebSource` | Site/domínio de compras e política de coleta | domínio, nome, sitemap, estado, frequência/limites, última coleta |
-| `IndexedProductPage` | Página de produto localizada e indexada | WebSourceId, URL canônica, GTIN/EAN, título normalizado, hash, descoberta/coleta |
-| `Offer` | Oferta extraída de uma página | WebSourceId, ID externo se existir, URL, vendedor se disponível, ProductId, condição/variante |
-| `PriceObservation` | Uma leitura histórica da oferta | OfferId, coletadoEmUtc, preço do item, moeda, disponibilidade |
-| `CollectionJob` | Descoberta, crawl ou atualização a processar | tipo, domínio/URL/produto, estado, tentativas, agendadoEmUtc, erro resumido |
+| `Product` | Produto informado pela pessoa e privado por conta | OwnerId, descrição, GTIN/EAN, atributos/variante decididos na spec |
+| `TrackedProduct` | Relação de acompanhamento entre uma conta e um produto | OwnerId, ProductId, estado e datas |
+| `Offer` | Referência de anúncio/loja criada manualmente | ProductId, nome da loja, título, URL opcional, vendedor/condição/variante conforme spec |
+| `PriceObservation` | Observação histórica manual no primeiro MVP | OfferId, origem manual, usuário autor, instante UTC, preço do item, moeda, disponibilidade |
+| `SourceConnector` | Futuro conector de domínio HTML aprovado | domínio, evidência/revisão, campos, limites e estado de habilitação |
+| `CollectionJob` | Futuro trabalho automatizado, somente se aprovado | tipo, conector/produto/oferta, estado, tentativas, agenda e erro resumido |
 | `PriceAlert` / `Notification` | Conceitos futuros, fora do escopo atual | Só serão detalhados após nova decisão do usuário |
 
 ### Regras importantes dos dados
@@ -161,21 +158,22 @@ O projeto seguirá Spec-Driven Development (SDD): especificações aprovadas, co
 - O MVP compara apenas o preço anunciado do item. Não solicitar CEP nem somar frete; frete pode ser reavaliado numa fase futura.
 - Não misturar variantes, tamanhos, capacidade, cor, novo/usado ou kits incompatíveis na mesma comparação.
 - Anúncio fora de estoque é um estado, nunca um preço zero.
-- Armazenar no MVP os campos normalizados e uma referência à fonte; só guardar payload bruto de forma temporária se for necessário para depuração e permitido pela fonte.
-- Manter no índice próprio apenas campos necessários para localizar e comparar produtos; a retenção de texto, imagens ou HTML integral deve ser avaliada por domínio e não é requisito do MVP.
+- Marcar claramente observações como manuais, guardar a autoria e a proveniência acordadas e não alegar validação pela loja.
+- Uma URL informada manualmente é texto de referência; o MVP não faz requisição para ela.
+- Para futura coleta HTML, guardar somente os campos autorizados e necessários; não armazenar HTML bruto sem necessidade e permissão documentadas.
 
 ## 6. Contratos da Web API previstos
 
 Rotas preliminares, não finais:
 
-- `POST /api/v1/tracked-products` — cadastrar uma consulta/produto para acompanhar.
+- `POST /api/v1/tracked-products` — cadastrar produto e acompanhamento para a conta atual.
 - `GET /api/v1/tracked-products` e `GET /api/v1/tracked-products/{id}` — listar e consultar itens do usuário.
-- `POST /api/v1/tracked-products/{id}/search` — solicitar busca inicial; retorna identificador/estado do job.
-- `GET /api/v1/tracked-products/{id}/offers` — listar anúncios encontrados e confirmados.
-- `POST /api/v1/tracked-products/{id}/offers/{offerId}/confirm` — confirmar correspondência se necessário.
-- `POST /api/v1/tracked-products/{id}/refresh` — solicitar atualização manual.
+- `POST /api/v1/tracked-products/{id}/offers` — cadastrar oferta manual associada ao acompanhamento.
+- `POST /api/v1/offers/{offerId}/observations` — registrar observação manual de preço/disponibilidade.
+- `GET /api/v1/tracked-products/{id}/offers` — listar ofertas manuais do acompanhamento.
 - `GET /api/v1/tracked-products/{id}/history?from=...&to=...` — série histórica.
-- `GET /api/v1/jobs/{id}` — acompanhar uma operação assíncrona.
+- `GET /api/v1/tracked-products/{id}/comparison` — comparar ofertas compatíveis do produto.
+- `DELETE /api/v1/tracked-products/{id}` — remover acompanhamento e os dados privados associados.
 - Rotas de alerta e preferências entram depois do MVP básico.
 
 A API deve conferir propriedade do recurso pelo usuário autenticado em cada leitura e alteração; ocultar botão na interface não é controle de acesso.
@@ -185,48 +183,49 @@ A API deve conferir propriedade do recurso pelo usuário autenticado em cada lei
 ### Adicionar produto
 
 1. Usuário informa texto ou GTIN/EAN.
-2. API valida e cria o acompanhamento e jobs de busca/crawl.
-3. O índice local encontra páginas já conhecidas; o Worker descobre novas páginas em vários domínios configurados por sitemaps, catálogos ou páginas de busca pública dos próprios sites, respeitando a política de cada domínio.
-4. Parsers extraem nome, identificadores, preço, moeda, disponibilidade e URL. O sistema deduplica candidatos e apresenta a origem e a hora da coleta.
-5. Usuário confirma ofertas correspondentes; o sistema guarda a relação entre produto canônico e páginas/anúncios.
-6. Primeira observação de preço fica visível com fonte e horário.
+2. O backend valida os dados e cria produto/acompanhamento privado, sem job de busca.
+3. Usuário cadastra uma ou mais ofertas de lojas e informa os dados definidos na spec.
+4. Usuário registra preço, moeda, disponibilidade e demais campos aprovados; o sistema marca a observação como manual e guarda sua autoria/proveniência.
 
 ### Acompanhar preço
 
-1. O agendador cria jobs por página/oferta acompanhada. A busca ampla no índice ocorre ao adicionar/atualizar a consulta; atualização de preço usa URLs já confirmadas, sem recrawlear toda a web a cada ciclo.
-2. Worker atualiza páginas conforme a política configurada para cada domínio e grava uma observação ou registra indisponibilidade/falha. O intervalo-alvo de seis horas é configurável e pode variar por domínio.
-3. A tela mostra preço atual do item, data/hora da coleta, moeda e disponibilidade.
-4. A página do produto plota o histórico da oferta e compara somente ofertas compatíveis.
+1. Usuário atualiza manualmente o preço observado da oferta.
+2. O backend valida propriedade, comparabilidade e regras de duplicação do histórico.
+3. A tela mostra os últimos preços informados que sejam comparáveis, com data e proveniência, e o histórico/variação temporal de cada oferta. Não afirma que um valor manual continua vigente na loja.
+4. Em etapa futura, um conector HTML aprovado poderá produzir observações de origem automatizada, sempre identificadas separadamente.
 
 ## 8. Estratégia de descoberta e limites
 
 | Mecanismo | O que permite | Plano |
 |---|---|---|
-| Crawler e índice próprios | Descobrir páginas públicas de vários domínios e pesquisar localmente por texto/EAN/GTIN. Sitemaps, páginas de busca dos próprios sites, catálogos, links e dados estruturados ajudam a localizar e interpretar páginas. A cobertura depende dos domínios conhecidos, das regras de acesso e da capacidade de atualização. | Caminho principal do MVP; meta de piloto em pelo menos três domínios, expansível por configuração e adaptadores. Nenhum serviço pago de busca é requisito. |
-| Dados estruturados `schema.org` | `Product` e `Offer` podem expor identificadores, preço, moeda e disponibilidade em JSON-LD/Microdata/RDFa. Nem todo site publica esses dados e a presença deles não garante que sejam completos ou atuais. | Usar parser genérico primeiro; adaptar por domínio quando necessário e validar os valores extraídos contra a página visível. |
-| APIs de busca web | Podem ajudar a descobrir URLs fora dos domínios já indexados, mas criam custo, dependência e condições de armazenamento. | Fora do escopo atual; a cobertura usa o índice próprio e não depende de provedores externos. |
-| APIs de marketplace e feeds de lojistas | Podem oferecer dados estruturados, mas têm condições, cotas e dependências próprias. | Fora do escopo atual; não usar como fonte de dados sem nova decisão aprovada do usuário. |
-| Google Merchant API | Gerencia produtos da própria conta Merchant Center; não é uma busca geral de preços entre lojas. | Não usar como índice da web. |
+| Entrada manual | Usuário informa ofertas e observações, que ficam marcadas como manuais e privadas por conta. | Caminho do MVP; nenhuma requisição de rede é feita para lojas ou URLs informadas. |
+| Crawler/HTML público | Poderá extrair campos de páginas públicas do próprio domínio se os termos permitirem expressamente coleta automatizada, apresentação e retenção. | Única forma de automação considerada; futura e condicionada a gate individual. Nenhum domínio está aprovado. |
+| APIs, feeds, agregadores e integrações de terceiros | Fontes técnicas externas para obter dados de ofertas. | Fora do escopo vigente; exigem mudança explícita de requisito. |
 
-APIs públicas de busca mudam e não são uma base segura para o produto: a Custom Search JSON API do Google está fechada para novos clientes e a Microsoft encerrou as Bing Search APIs em 11/08/2025. A arquitetura deve operar sem essas APIs. Um índice próprio também não cobre automaticamente a Internet inteira: o produto deve comunicar quais domínios foram pesquisados e permitir expandir a cobertura.
+No MVP, a interface informa que preços foram inseridos manualmente. Se automação HTML vier a ser aprovada, a interface identifica o domínio consultado e comunica que a cobertura se limita às fontes habilitadas; nunca promete busca em toda a Internet.
 
-### Gate obrigatório por domínio
+### Gate obrigatório por conector
 
-Antes de habilitar crawling em um domínio, registrar: forma de descoberta (sitemap, catálogo ou busca pública); estrutura e campos; frequência/limites; termos de uso e política de coleta; `robots.txt`; dados que podem ser armazenados; sinais de bloqueio; comportamento em erro; e forma de desabilitar/reprocessar. Só habilitar se os termos públicos aplicáveis permitirem expressamente a coleta automatizada; se forem silenciosos ou ambíguos, manter desabilitado. Não contatar lojas por mensagens, formulários, chamados ou pedidos. As únicas chamadas externas da aplicação serão requisições HTTP GET de leitura a páginas HTML públicas elegíveis. Identificar o crawler com User-Agent informativo, limitar concorrência, respeitar recusas e não contornar login, CAPTCHA ou controles de acesso. O Robots Exclusion Protocol orienta crawlers, mas não substitui autorização ou controles de acesso.
+Antes de implementar ou habilitar um conector HTML, registrar a evidência dos termos públicos, domínio/caminhos permitidos, campos, frequência, concorrência, exibição, retenção, atribuição, falhas e processo de desabilitação. `robots.txt` isoladamente não prova autorização; página acessível não significa permissão. Termos silenciosos/ambíguos mantêm o domínio desabilitado. Não contatar lojas, não usar APIs ou feeds, não alterar dados e não contornar autenticação, CAPTCHA, limites ou controles de acesso.
 
 ## 9. Requisitos não funcionais
 
-- **Segurança:** senha e sessão tratadas por Identity; acesso por usuário conferido na API; segredos fora do código e protegidos; HTTPS; limites de requisição; logs sem tokens.
+- **Segurança:** senha e sessão tratadas por Identity; acesso por usuário conferido no backend; HTTPS, limites de requisição e logs sem segredos. O MVP manual não exige credenciais de fontes. Se uma spec futura demonstrar necessidade de segredo para domínio HTML, definir armazenamento protegido fora do repositório antes de coletá-lo; nunca incluir valores em GitHub, argumentos, logs, telemetria ou UI após salvar.
+- **Proteção do repositório:** manter regras de `.gitignore` para arquivos locais de configuração/segredos e incluir verificação de segredos antes de alterações serem commitadas; ignorar arquivos não é a única barreira de proteção.
 - **Privacidade:** coletar apenas dados pessoais necessários, proteger o isolamento entre contas locais, permitir exclusão de dados e revisar requisitos aplicáveis antes da distribuição.
-- **Resiliência:** chamadas HTTP com timeout, limite de concorrência por domínio, retentativas com espera crescente e circuit breaker quando apropriado; erro ou bloqueio de um domínio não derruba a busca inteira.
-- **Consistência:** jobs duráveis e idempotentes; não perder coletas se a API ou Worker reiniciar.
+- **Resiliência futura:** para crawler HTML aprovado, usar timeouts, limites de concorrência, backoff e isolamento por domínio; respeitar bloqueios e não contornar controles de acesso.
+- **Consistência futura:** se o conector exigir processamento assíncrono, jobs persistidos e idempotentes; o MVP manual não precisa de fila ou Worker.
 - **Rastreabilidade:** cada preço apresentado inclui fonte e instante da última leitura.
-- **Manutenibilidade:** contrato comum para descoberta, crawling e parsing, com configuração/adaptador próprio por domínio.
+- **Manutenibilidade:** contrato comum para consultas de descoberta e normalização, com adaptador independente por fonte e isolamento de falhas/cotas.
 
 ## 10. Referências oficiais consultadas
 
 - [.NET: política oficial de suporte](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core)
 - [Microsoft Learn: ASP.NET Core Identity](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity)
+- [Microsoft Learn: opções de senha, lockout e sessão do Identity no .NET 10](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-10.0)
+- [Microsoft Learn: TOTP e MFA do ASP.NET Core Identity no .NET 10](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/mfa?view=aspnetcore-10.0)
+- [Microsoft Learn: autenticação, circuitos e antifalsificação do Blazor no .NET 10](https://learn.microsoft.com/en-us/aspnet/core/blazor/security/?view=aspnetcore-10.0)
+- [Microsoft Learn: endpoints de Identity API e tokens proprietários no .NET 10](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-10.0)
 - [Microsoft Learn: modos de renderização do Blazor no .NET 10](https://learn.microsoft.com/en-us/aspnet/core/blazor/components/render-modes?view=aspnetcore-10.0)
 - [Microsoft Learn: segurança e Identity no Blazor no .NET 10](https://learn.microsoft.com/en-us/aspnet/core/blazor/security/?view=aspnetcore-10.0)
 - [Microsoft Learn: autorização por política](https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-10.0)

@@ -10,34 +10,59 @@ O projeto seguirá Spec-Driven Development (SDD): comportamento e regras aprovad
 - `docs/specs/<Modulo>/<CasoDeUso>/tasks.md` decompõe a especificação aceita em entregas implementáveis e revisáveis.
 - Decisões transversais devem ser registradas separadamente como ADRs em `docs/decisions/`, com contexto, alternativas, decisão, estado e consequências.
 - Testes ficam em projetos separados dos assemblies de produção, mas espelham módulo e caso de uso. Exemplo: `tests/Modules/PriceTracking.Tests/Features/StartTracking/`; todos os testes daquele caso de uso ficam juntos nessa pasta. Cada classe de domínio tem testes associados, agrupados por módulo sob `Domain/`.
+- Planejar um teste por critério `AC-...` como padrão. O display name segue `AC-XXX-001 — <título do critério>` e o método usa `AC_XXX_001_<Behavior>`; assim, o ID permite localizar a cobertura sem depender da ordem dos testes.
+- Cada linha da matriz de rastreabilidade deve apontar o nome/display name planejado e o caminho do teste. É permitido agrupar IDs numa linha somente quando houver um teste planejado por ID no mesmo diretório, conforme a convenção acima. Se um teste cobrir vários critérios, listar todos os IDs no nome e justificar a cobertura conjunta.
+- Cada classe concreta de domínio aparece numa linha própria de matriz com seus AC/DR, nomes planejados de testes e pasta `tests/Modules/<Modulo>.Tests/Domain/<Classe>/` do módulo proprietário. Classes de outro módulo são cobertas no projeto de testes do módulo dono, não por cópia de classe.
+- Uma spec em rascunho pode ter testes apenas planejados. O status deve continuar pendente até os testes serem implementados e aprovados; critérios substituídos são explicitamente marcados como tais e não geram teste de comportamento.
+- Nomes de classes de domínio nas specs podem ser conceitos/propostas até aprovação do desenho; se uma classe concreta for introduzida, seus testes ficam em `tests/Modules/<Modulo>.Tests/Domain/<Classe>/`.
 
 Os arquivos `plan.md` e `tasks.md` só são criados quando a especificação os exigir. Não criar documentação vazia para cumprir um ritual.
 
-## Inventário preliminar de specs do MVP
+## Inventário preliminar de specs
 
-**Estado:** proposta para decomposição; ainda precisa de revisão e aprovação. Os nomes são identificadores provisórios de pastas/use cases.
+**Estado:** proposta para decomposição; ainda precisa de revisão e aprovação. A direção C foi escolhida pelo usuário em 2026-10-12: MVP manual primeiro, automação condicionada a uma aprovação individual de domínio. Os nomes são identificadores provisórios de pastas/use cases.
+
+### Núcleo do MVP manual
 
 | Módulo | Spec/caso de uso proposto | Resultado esperado |
 |---|---|---|
-| Accounts/Identity | `BootstrapLocalAdministrator` | Inicializar com segurança o administrador da instalação local. |
-| Accounts/Identity | `ProvisionLocalUser` | Administrador cria/desativa contas locais; não há cadastro público. |
-| Accounts/Identity | `SignIn` | Autenticar um usuário provisionado e estabelecer sessão segura do Blazor. |
-| Accounts/Identity | `ResetLocalUserCredentials` | Administrador redefine credenciais usando fluxos suportados pelo Identity. |
-| Accounts/Identity | `ManageMfa` | Configurar, validar e recuperar segundo fator, se a política MFA do MVP o exigir. |
-| PriceTracking | `StartTracking` | Criar acompanhamento a partir de texto ou EAN/GTIN e solicitar busca assíncrona. |
-| WebDiscovery | `FindProductCandidates` | Pesquisar o índice próprio e devolver candidatos com origem, dados observados e estado da busca. |
-| PriceTracking | `ReviewAndConfirmOffers` | Exibir candidatos e associar à consulta somente as ofertas confirmadas pelo usuário. |
-| PriceTracking | `ListTrackedProducts` | Listar acompanhamentos da conta autenticada, respeitando propriedade. |
-| PriceTracking | `PauseOrResumeTracking` | Pausar ou reativar atualizações de um acompanhamento. |
-| WebDiscovery | `DiscoverAndIndexPages` | Descobrir e indexar páginas elegíveis nos domínios habilitados. |
-| WebDiscovery | `ExtractAndNormalizeOffer` | Extrair e normalizar produto/oferta sem misturar variantes ou vendedores. |
-| PriceTracking | `RequestManualRefresh` | Enfileirar atualização manual de ofertas confirmadas e retornar o estado do job. |
-| PriceTracking | `RecordPriceObservation` | Registrar leitura datada, fonte, moeda, preço do item e disponibilidade. |
-| PriceAnalysis | `GetPriceHistory` | Consultar histórico de uma oferta autorizada em um intervalo. |
-| PriceAnalysis | `ComparePriceVariation` | Calcular diferença absoluta/percentual entre observações comparáveis. |
-| Operations | `GetCollectionJobStatus` | Consultar estado e falhas de jobs sem revelar dados de outra conta. |
+| Accounts/Identity | `BootstrapLocalAdministrator` | Inicializar com segurança o administrador local por comando de uso único. |
+| Accounts/Identity | `RecoverLocalAdministratorCredential` | Recuperar credencial administrativa por comando no host, sem e-mail. |
+| Accounts/Identity | `ProvisionLocalUser` | Administrador provisiona contas locais, sem cadastro público. |
+| Accounts/Identity | `SignIn` | Autenticar conta provisionada e estabelecer sessão segura do Blazor. |
+| Accounts/Identity | `ResetLocalUserCredentials` | Administrador define senha temporária pelo Identity e exige troca no próximo login. |
+| Accounts/Identity | `ManageMfa` | Administrar TOTP e códigos de recuperação conforme política aprovada. |
+| Accounts/Identity | `ResetMfaFromHost` | Recuperar MFA de qualquer conta por comando local auditado. |
+| ProductCatalog | `ResolveCanonicalProduct` | Registrar/resolver identidade do produto com dados informados pelo usuário, sem candidato externo. |
+| PriceTracking | `StartTracking` | Criar acompanhamento privado por texto e/ou EAN/GTIN, sem job de busca. |
+| PriceTracking | `AddManualOffer` **(nova)** | Registrar oferta de loja manualmente e a observação inicial, sem acessar a URL. |
+| PriceTracking | `RecordPriceObservation` | Registrar alteração manual de preço/disponibilidade, com autoria e origem identificadas. |
+| PriceTracking | `ListTrackedProducts` | Listar acompanhamentos, ofertas e preço resumido da conta autenticada. |
+| PriceTracking | `RemoveTracking` | Remover acompanhamento e dados privados vinculados. |
+| PriceAnalysis | `GetPriceHistory` | Consultar histórico manual de uma oferta em intervalo. |
+| PriceAnalysis | `ComparePriceVariation` | Calcular variação temporal de uma oferta. |
+| PriceAnalysis | `CompareCurrentOffers` **(nova)** | Comparar os últimos preços informados de ofertas compatíveis, sempre com data e sem alegar atualidade na loja. |
+
+### Automação futura condicionada
+
+| Módulo | Spec/caso de uso proposto | Condição |
+|---|---|---|
+| WebDiscovery | `FindProductCandidates` | Desabilitado até uma spec de busca HTML e gate aprovado por domínio. |
+| PriceTracking | `ReviewAndConfirmOffers` | Necessário quando uma fonte HTML aprovada devolver candidatos. |
+| PriceTracking | `PauseOrResumeTracking` | Reavaliar quando houver atualização automática agendada. |
+| PriceTracking | `RequestManualRefresh` | Reavaliar quando houver um conector HTML aprovado para consulta manual. |
+| WebDiscovery | `DiscoverAndIndexPages` | Somente HTML público com permissão expressa; nenhum domínio aprovado atualmente. |
+| WebDiscovery | `ExtractAndNormalizeOffer` | Somente para domínio HTML individual aprovado; sem APIs/feed como fallback. |
+| PriceTracking | `RecordPriceObservation` | Reuso futuro para dados coletados só após spec aprovada; origem automática deve ficar distinta da manual. |
+| Operations | `GetCollectionJobStatus` | Apenas quando existirem jobs automatizados aprovados. |
+| Operations | `ManageSourceConnectors` | Apenas conectores HTML aprovados e instalados; sem fontes API/feed/terceiro. |
+| Operations | `ConfigureSourceCredentials` | Fora do escopo vigente; só reabrir após mudança explícita que permita fontes autenticadas. |
+
+Notificações seguem fora do escopo. O Worker e a fila de coleta também são condicionais à necessidade de uma fonte HTML aprovada. A classificação das specs não é autorização para implementar: o usuário precisa aprovar o roadmap e o conjunto de specs do MVP.
 
 O inventário será reduzido, dividido ou ampliado durante a análise das regras, fronteiras dos módulos e fluxos. Especificações são necessárias antes de implementar; esta tabela, sozinha, não é autorização para codificar.
+
+Cada spec usa IDs estáveis no formato `AC-<SIGLA-DO-USE-CASE>-###` (por exemplo, `AC-SLI-001` para `SignIn`) para evitar colisões entre arquivos. IDs publicados não devem ser renumerados; critérios removidos ficam marcados como substituídos.
 
 ## Ciclo de mudança
 

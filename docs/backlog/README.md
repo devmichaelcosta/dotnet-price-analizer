@@ -1,7 +1,8 @@
 # Backlog de planejamento
 
-**Estado:** backlog da Fase 0 preparado; issues ainda não publicados. Não há tarefas de implementação.  
-**Fonte de verdade:** roadmap, contexto do domínio e specs aprovadas.  
+**Estado:** PLAN-000 a PLAN-009 existem no GitHub. O backlog local foi revisado após o usuário escolher C; as revisões e PLAN-010 a PLAN-012 ainda não foram sincronizadas. A integração havia retornado `403 Resource not accessible by integration` para escrita. Não há tarefas de implementação.
+**Situação atual:** núcleo manual escolhido; nenhum domínio HTML foi aprovado. As decisões manuais restantes estão no [registro da Fase 0](../decisions/registro-fase-0.md), e a direção consta no [documento de revisão do MVP](../research/revisao-escopo-mvp.md). Consulte o [relatório de fontes](../research/validacao-fontes-fase-0.md) como pesquisa histórica.
+**Fonte de verdade:** roadmap, contexto do domínio e specs aprovadas.<br>
 **Repositório:** [devmichaelcosta/dotnet-price-analizer](https://github.com/devmichaelcosta/dotnet-price-analizer), branch `main`.
 
 ## Organização no GitHub
@@ -15,11 +16,12 @@
 
 ## Marcos e ordem de trabalho
 
-1. **Fase 0 — Planejamento e validação de fontes:** resolver elegibilidade de fontes, regras de domínio, segurança, arquitetura e teste; escrever e aprovar as specs do MVP.
+1. **Fase 0 — Planejamento do MVP manual:** fechar regras de domínio, proveniência, comparação, segurança, arquitetura e testes; aprovar as specs antes de codificar.
 2. **MVP — Fundação e identidade:** milestone criado quando as specs forem aprovadas e a implementação autorizada.
-3. **MVP — Descoberta e acompanhamento:** dependente da validação das fontes e da fundação.
-4. **MVP — Histórico e análise:** dependente de acompanhamento e observações.
-5. **Pós-MVP — Monitoramento e alertas:** só detalhar quando o escopo dessas capacidades for aprovado.
+3. **MVP — Cadastro manual e acompanhamento:** dependente da fundação.
+4. **MVP — Ofertas, histórico e análise:** depende de cadastro manual e observações.
+5. **Futuro condicional — Coleta HTML:** exige gate e spec aprovada por domínio; Worker/fila só quando necessário.
+6. **Futuro — Alertas:** só detalhar mediante decisão explícita.
 
 Por enquanto, publicar apenas issues da Fase 0. Os outros marcos são agrupadores do roadmap, não autorização para começar implementação.
 
@@ -75,15 +77,15 @@ Um item fica **Done** quando os critérios foram conferidos, a evidência/artefa
 
 ## Estado do GitHub
 
-Os documentos de planejamento estão publicados na branch `main` do repositório indicado pelo usuário.
+Os documentos de planejamento iniciais foram publicados na branch `main` do repositório indicado pelo usuário. O espelho local contém atualizações posteriores da pesquisa e da revisão de escopo, ainda não sincronizadas no GitHub.
 
-O marco [Fase 0 — Planejamento e validação de fontes](https://github.com/devmichaelcosta/dotnet-price-analizer/milestone/1) e as labels da taxonomia foram criados. Os dez issues foram publicados, organizados pelo marco e vinculados ao épico:
+O marco [Fase 0 — Planejamento e validação de fontes](https://github.com/devmichaelcosta/dotnet-price-analizer/milestone/1) e as labels da taxonomia foram criados. Os dez issues originais foram publicados, organizados pelo marco e vinculados ao épico. Os títulos/corpos listados abaixo refletem a versão remota original; a revisão para C está local até a integração permitir atualização:
 
 | ID | Issue |
 |---|---|
 | PLAN-000 | [Concluir planejamento e aprovar as specs do MVP](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/1) |
-| PLAN-001 | [Comprovar fontes HTML elegíveis e selecionar o piloto](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/2) |
-| PLAN-002 | [Analisar manualmente páginas das fontes elegíveis](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/3) |
+| PLAN-001 | [Comprovar APIs oficiais elegíveis e selecionar o piloto](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/2) — conteúdo remoto desatualizado |
+| PLAN-002 | [Analisar documentação e respostas de APIs elegíveis](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/3) — pesquisa histórica, conteúdo remoto desatualizado |
 | PLAN-003 | [Fechar regras de produto, correspondência e observações](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/4) |
 | PLAN-004 | [Definir política de autenticação, conta e autorização](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/5) |
 | PLAN-005 | [Fechar arquitetura modular, contratos, dados e fluxos](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/6) |
@@ -91,5 +93,8 @@ O marco [Fase 0 — Planejamento e validação de fontes](https://github.com/dev
 | PLAN-007 | [Escrever e revisar as specs do MVP](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/8) |
 | PLAN-008 | [Estimar carga, frequência, armazenamento e custo](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/9) |
 | PLAN-009 | [Revisar e aprovar o gate da Fase 0](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/10) |
+| PLAN-010 | Estratégia API-first substituída por HTML condicionado — publicação pendente |
+| PLAN-011 | Registrar opção C e alinhar artefatos — publicação pendente |
+| PLAN-012 | Fechar regras de oferta e observação manual — publicação pendente |
 
 Cada issue contém critérios de conclusão, labels de tipo/prioridade/área, dependências e links para os artefatos relacionados. O épico mantém o checklist das tarefas filhas. A publicação não aprova o roadmap nem autoriza implementação; esse gate continua dependendo de decisão explícita do usuário.
