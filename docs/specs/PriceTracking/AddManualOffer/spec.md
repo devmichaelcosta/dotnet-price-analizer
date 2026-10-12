@@ -87,15 +87,15 @@ O usuário informa os campos de oferta aprovados por F0-06/F0-16 e os dados da o
 
 | Classe/conceito | Responsabilidade/invariante | Critérios/regras |
 |---|---|---|
-| `Offer` (proposta) | Referência manual de oferta vinculada ao produto e proprietário | `AC-AMO-001` a `AC-AMO-006`, `DR-001`, `DR-011`, `DR-012`, `DR-019` |
+| `Offer` (proposta) | Referência manual de oferta vinculada ao produto/acompanhamento | `AC-AMO-001`/`AC-AMO-002`/`AC-AMO-003`, `DR-001` |
 | `PriceObservation` (proposta) | Primeiro preço manual, moeda, disponibilidade, instante e proveniência | `AC-AMO-001` a `AC-AMO-003`, `DR-003` a `DR-005`, `DR-018` |
 
 ## Rastreabilidade dos testes
 
 | Critério/regra | Caso de uso relacionado | Nome(s) planejado(s) do teste/display name | Caminho no projeto de testes | Estado |
 |---|---|---|---|---|
-| `AC-AMO-001` a `AC-AMO-006` | Cadastro manual de oferta | `AC-AMO-001 — Cadastrar oferta e primeira observação`<br>`AC-AMO-002 — Identificar a origem manual`<br>`AC-AMO-003 — Rejeitar dados inválidos sem gravação parcial`<br>`AC-AMO-004 — Impedir acesso a acompanhamento de outra conta`<br>`AC-AMO-005 — Não acessar URL informada`<br>`AC-AMO-006 — Exigir autenticação` | `tests/Modules/PriceTracking.Tests/Features/AddManualOffer/` | Pendente da implementação |
-| `AC-AMO-001`/`AC-AMO-002`/`AC-AMO-003`, `DR-001`/`DR-003`/`DR-004`/`DR-005`/`DR-018`/`DR-019` | `Offer` | `AC-AMO-001 — Offer — Cadastrar oferta e primeira observação`<br>`AC-AMO-002 — Offer — Identificar a origem manual`<br>`AC-AMO-003 — Offer — Rejeitar dados inválidos sem gravação parcial` | `tests/Modules/PriceTracking.Tests/Domain/Offer/` | Pendente da implementação |
+| `AC-AMO-001` a `AC-AMO-006`; `DR-011`/`DR-012`/`DR-017`/`DR-019` | Cadastro manual de oferta | `AC-AMO-001 — Cadastrar oferta e primeira observação`<br>`AC-AMO-002 — Identificar a origem manual`<br>`AC-AMO-003 — Rejeitar dados inválidos sem gravação parcial`<br>`AC-AMO-004 — Impedir acesso a acompanhamento de outra conta`<br>`AC-AMO-005 — Não acessar URL informada`<br>`AC-AMO-006 — Exigir autenticação` | `tests/Modules/PriceTracking.Tests/Features/AddManualOffer/` | Pendente da implementação |
+| `AC-AMO-001`/`AC-AMO-002`, `DR-001` | `Offer` | `AC-AMO-001 — Offer — Cadastrar oferta e primeira observação`<br>`AC-AMO-002 — Offer — Identificar a origem manual` | `tests/Modules/PriceTracking.Tests/Domain/Offer/` | Pendente da implementação |
 | `AC-AMO-001`/`AC-AMO-002`/`AC-AMO-003`, `DR-003`/`DR-004`/`DR-005`/`DR-018` | `PriceObservation` | `AC-AMO-001 — PriceObservation — Cadastrar oferta e primeira observação`<br>`AC-AMO-002 — PriceObservation — Identificar a origem manual`<br>`AC-AMO-003 — PriceObservation — Rejeitar dados inválidos sem gravação parcial` | `tests/Modules/PriceTracking.Tests/Domain/PriceObservation/` | Pendente da implementação |
 
 ## Dados e integrações

@@ -58,17 +58,23 @@ O backend valida a entrada e cria ou associa o produto e acompanhamento à conta
 **Quando** o usuário solicita acompanhamento<br>
 **Então** a operação é recusada sem criar produto ou acompanhamento
 
-### AC-STT-004 — Isolar por conta
+### AC-STT-004 — Associar à conta autenticada
 
-**Dado** que o usuário A inicia um acompanhamento<br>
-**Quando** o usuário B consulta sua lista<br>
-**Então** o acompanhamento de A não é exibido nem acessível a B
+**Dado** que a solicitação é feita por uma conta autenticada<br>
+**Quando** o acompanhamento é criado<br>
+**Então** o proprietário é derivado do principal autenticado no backend
 
 ### AC-STT-005 — Exigir autenticação
 
 **Dado** que a requisição não possui usuário autenticado<br>
 **Quando** solicita acompanhamento<br>
 **Então** a operação é recusada e nenhum dado é criado
+
+### AC-STT-006 — Não consultar fontes externas
+
+**Dado** que o usuário informa texto e/ou GTIN/EAN para o produto<br>
+**Quando** inicia o acompanhamento<br>
+**Então** o sistema não consulta a Internet e não cria job de descoberta ou atualização
 
 ## Regras de domínio aplicáveis
 
@@ -78,15 +84,15 @@ O backend valida a entrada e cria ou associa o produto e acompanhamento à conta
 
 | Classe/conceito | Responsabilidade/invariante | Critérios/regras |
 |---|---|---|
-| `TrackedProduct` (proposta) | Acompanhamento e proprietário local | `AC-STT-001` a `AC-STT-005`, `DR-011`, `DR-012` |
+| `TrackedProduct` (proposta) | Acompanhamento associado à conta proprietária | `AC-STT-001`/`AC-STT-002`/`AC-STT-004`, `DR-011` |
 | `Product` (proposta) | Identidade baseada nos dados informados | `AC-STT-001` a `AC-STT-003`, `DR-006` |
 
 ## Rastreabilidade dos testes
 
 | Critério/regra | Caso de uso relacionado | Nome(s) planejado(s) do teste/display name | Caminho no projeto de testes | Estado |
 |---|---|---|---|---|
-| `AC-STT-001` a `AC-STT-005` | Início de acompanhamento | `AC-STT-001 — Iniciar por texto`<br>`AC-STT-002 — Iniciar por GTIN/EAN`<br>`AC-STT-003 — Validar entrada vazia ou inválida`<br>`AC-STT-004 — Isolar por conta`<br>`AC-STT-005 — Exigir autenticação` | `tests/Modules/PriceTracking.Tests/Features/StartTracking/` | Pendente da implementação |
-| `AC-STT-001` a `AC-STT-005`, `DR-011`/`DR-012` | `TrackedProduct` | `AC-STT-001 — TrackedProduct — Iniciar por texto`<br>`AC-STT-002 — TrackedProduct — Iniciar por GTIN/EAN`<br>`AC-STT-003 — TrackedProduct — Validar entrada vazia ou inválida`<br>`AC-STT-004 — TrackedProduct — Isolar por conta`<br>`AC-STT-005 — TrackedProduct — Exigir autenticação` | `tests/Modules/PriceTracking.Tests/Domain/TrackedProduct/` | Pendente da implementação |
+| `AC-STT-001` a `AC-STT-006`; `DR-008`/`DR-009`/`DR-011`/`DR-012`/`DR-017` | Início de acompanhamento | `AC-STT-001 — Iniciar por texto`<br>`AC-STT-002 — Iniciar por GTIN/EAN`<br>`AC-STT-003 — Validar entrada vazia ou inválida`<br>`AC-STT-004 — Associar à conta autenticada`<br>`AC-STT-005 — Exigir autenticação`<br>`AC-STT-006 — Não consultar fontes externas` | `tests/Modules/PriceTracking.Tests/Features/StartTracking/` | Pendente da implementação |
+| `AC-STT-001`/`AC-STT-002`/`AC-STT-004`, `DR-011` | `TrackedProduct` | `AC-STT-001 — TrackedProduct — Iniciar por texto`<br>`AC-STT-002 — TrackedProduct — Iniciar por GTIN/EAN`<br>`AC-STT-004 — TrackedProduct — Associar à conta autenticada` | `tests/Modules/PriceTracking.Tests/Domain/TrackedProduct/` | Pendente da implementação |
 | `AC-STT-001` a `AC-STT-003`, `DR-006` | `Product` (propriedade de ProductCatalog) | `AC-STT-001 — Product — Iniciar por texto`<br>`AC-STT-002 — Product — Iniciar por GTIN/EAN`<br>`AC-STT-003 — Product — Validar entrada vazia ou inválida` | `tests/Modules/ProductCatalog.Tests/Domain/Product/` | Pendente da implementação |
 
 ## Dados e integrações

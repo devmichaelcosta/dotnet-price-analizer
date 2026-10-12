@@ -76,6 +76,12 @@ Para uma mesma oferta e moeda, o sistema seleciona duas observações manuais v�
 **Quando** o usuário solicita comparação<br>
 **Então** o acesso é recusado sem revelar os valores
 
+### AC-CPV-007 — Identificar observações manuais
+
+**Dado** que as observações comparadas foram inseridas manualmente<br>
+**Quando** o resultado da variação é apresentado<br>
+**Então** a proveniência é identificada como informada pelo usuário e não como verificada pela loja
+
 ## Regras de domínio aplicáveis
 
 - `DR-002`, `DR-003`, `DR-004`, `DR-005`, `DR-006`, `DR-007`, `DR-012`, `DR-018`.
@@ -92,9 +98,9 @@ Para uma mesma oferta e moeda, o sistema seleciona duas observações manuais v�
 
 | Critério/regra | Caso de uso relacionado | Nome(s) planejado(s) do teste/display name | Caminho no projeto de testes | Estado |
 |---|---|---|---|---|
-| `AC-CPV-001` a `AC-CPV-006` | Comparação de variação | `AC-CPV-001 — Identificar aumento`<br>`AC-CPV-002 — Identificar redução`<br>`AC-CPV-003 — Identificar estabilidade`<br>`AC-CPV-004 — Recusar observações incompatíveis`<br>`AC-CPV-005 — Tratar ausência de preço-base válido`<br>`AC-CPV-006 — Isolar histórico por conta` | `tests/Modules/PriceAnalysis.Tests/Features/ComparePriceVariation/` | Pendente da implementação |
+| `AC-CPV-001` a `AC-CPV-007`; `DR-012`/`DR-018` | Comparação de variação | `AC-CPV-001 — Identificar aumento`<br>`AC-CPV-002 — Identificar redução`<br>`AC-CPV-003 — Identificar estabilidade`<br>`AC-CPV-004 — Recusar observações incompatíveis`<br>`AC-CPV-005 — Tratar ausência de preço-base válido`<br>`AC-CPV-006 — Isolar histórico por conta`<br>`AC-CPV-007 — Identificar observações manuais` | `tests/Modules/PriceAnalysis.Tests/Features/ComparePriceVariation/` | Pendente da implementação |
 | `AC-CPV-001` a `AC-CPV-005`, `DR-003`/`DR-007` | `PriceVariation` | `AC-CPV-001 — PriceVariation — Identificar aumento`<br>`AC-CPV-002 — PriceVariation — Identificar redução`<br>`AC-CPV-003 — PriceVariation — Identificar estabilidade`<br>`AC-CPV-004 — PriceVariation — Recusar observações incompatíveis`<br>`AC-CPV-005 — PriceVariation — Tratar ausência de preço-base válido` | `tests/Modules/PriceAnalysis.Tests/Domain/PriceVariation/` | Pendente da implementação |
-| `AC-CPV-001` a `AC-CPV-005`, `DR-002`/`DR-003`/`DR-004`/`DR-005`/`DR-018` | `PriceObservation` (propriedade de PriceTracking) | `AC-CPV-001 — PriceObservation — Identificar aumento`<br>`AC-CPV-002 — PriceObservation — Identificar redução`<br>`AC-CPV-003 — PriceObservation — Identificar estabilidade`<br>`AC-CPV-004 — PriceObservation — Recusar observações incompatíveis`<br>`AC-CPV-005 — PriceObservation — Tratar ausência de preço-base válido` | `tests/Modules/PriceTracking.Tests/Domain/PriceObservation/` | Pendente da implementação |
+| `AC-CPV-001` a `AC-CPV-005`/`AC-CPV-007`, `DR-002`/`DR-003`/`DR-004`/`DR-005`/`DR-018` | `PriceObservation` (propriedade de PriceTracking) | `AC-CPV-001 — PriceObservation — Identificar aumento`<br>`AC-CPV-002 — PriceObservation — Identificar redução`<br>`AC-CPV-003 — PriceObservation — Identificar estabilidade`<br>`AC-CPV-004 — PriceObservation — Recusar observações incompatíveis`<br>`AC-CPV-005 — PriceObservation — Tratar ausência de preço-base válido`<br>`AC-CPV-007 — PriceObservation — Identificar observações manuais` | `tests/Modules/PriceTracking.Tests/Domain/PriceObservation/` | Pendente da implementação |
 | `AC-CPV-004`, `DR-006` | `Offer` (propriedade de PriceTracking) | `AC-CPV-004 — Offer — Recusar observações incompatíveis` | `tests/Modules/PriceTracking.Tests/Domain/Offer/` | Pendente da implementação |
 
 ## Dados e integrações

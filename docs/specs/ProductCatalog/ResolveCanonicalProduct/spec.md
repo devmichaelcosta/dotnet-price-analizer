@@ -65,6 +65,12 @@ O caso de uso recebe campos fornecidos pela pessoa, aplica as regras aprovadas d
 **Quando** o produto local é resolvido<br>
 **Então** o identificador informado fica preservado como dado de identidade
 
+### AC-RCP-005 — Manter catálogo privado por conta
+
+**Dado** que outra conta possui um produto com os mesmos identificadores informados<br>
+**Quando** o produto é resolvido para a conta atual<br>
+**Então** o sistema não revela nem reutiliza o registro privado da outra conta
+
 ## Regras de domínio aplicáveis
 
 - `DR-001`, `DR-006`, `DR-011`, `DR-012`.
@@ -79,7 +85,7 @@ O caso de uso recebe campos fornecidos pela pessoa, aplica as regras aprovadas d
 
 | Critério/regra | Caso de uso/classe | Nome(s) planejado(s) do teste/display name | Caminho no projeto de testes | Estado |
 |---|---|---|---|---|
-| `AC-RCP-001` a `AC-RCP-004` | Resolução/cadastro do produto | `AC-RCP-001 — Registrar produto informado`<br>`AC-RCP-002 — Manter conceitos separados`<br>`AC-RCP-003 — Não fundir identidades conflitantes`<br>`AC-RCP-004 — Preservar identificador validado` | `tests/Modules/ProductCatalog.Tests/Features/ResolveCanonicalProduct/` | Pendente da implementação |
+| `AC-RCP-001` a `AC-RCP-005`; `DR-011`/`DR-012` | Resolução/cadastro do produto | `AC-RCP-001 — Registrar produto informado`<br>`AC-RCP-002 — Manter conceitos separados`<br>`AC-RCP-003 — Não fundir identidades conflitantes`<br>`AC-RCP-004 — Preservar identificador validado`<br>`AC-RCP-005 — Manter catálogo privado por conta` | `tests/Modules/ProductCatalog.Tests/Features/ResolveCanonicalProduct/` | Pendente da implementação |
 | `AC-RCP-001` a `AC-RCP-004`, `DR-001`/`DR-006` | `Product` | `AC-RCP-001 — Product — Registrar produto informado`<br>`AC-RCP-002 — Product — Manter conceitos separados`<br>`AC-RCP-003 — Product — Não fundir identidades conflitantes`<br>`AC-RCP-004 — Product — Preservar identificador validado` | `tests/Modules/ProductCatalog.Tests/Domain/Product/` | Pendente da implementação |
 
 ## Dados e integrações

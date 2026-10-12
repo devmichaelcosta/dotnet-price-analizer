@@ -85,6 +85,12 @@ Este critério aplicava à captura manual a regra aprovada para consultas autom�
 **Quando** o usuário tenta registrar observação<br>
 **Então** a operação é recusada sem revelar ou alterar a oferta
 
+### AC-RPO-008 — Não consultar fontes externas
+
+**Dado** que o usuário registra manualmente uma observação para uma oferta<br>
+**Quando** o caso de uso salva os dados informados<br>
+**Então** não consulta URL, loja, API ou feed e não cria job de coleta
+
 ## Regras de domínio aplicáveis
 
 - `DR-002`, `DR-003`, `DR-004`, `DR-005`, `DR-011`, `DR-012`, `DR-017`, `DR-018`.
@@ -100,7 +106,7 @@ Este critério aplicava à captura manual a regra aprovada para consultas autom�
 
 | Critério/regra | Caso de uso relacionado | Nome(s) planejado(s) do teste/display name | Caminho no projeto de testes | Estado |
 |---|---|---|---|---|
-| `AC-RPO-001`/`AC-RPO-002`/`AC-RPO-003`/`AC-RPO-005`/`AC-RPO-006`/`AC-RPO-007` | Registrar atualização manual | `AC-RPO-001 — Registrar primeira atualização válida`<br>`AC-RPO-002 — Registrar mudança de preço`<br>`AC-RPO-003 — Registrar mudança de disponibilidade`<br>`AC-RPO-005 — Não representar indisponibilidade como zero`<br>`AC-RPO-006 — Rejeitar dado inválido`<br>`AC-RPO-007 — Impedir atualização de oferta de outra conta` | `tests/Modules/PriceTracking.Tests/Features/RecordPriceObservation/` | Pendente da implementação |
+| `AC-RPO-001`/`AC-RPO-002`/`AC-RPO-003`/`AC-RPO-005`/`AC-RPO-006`/`AC-RPO-007`/`AC-RPO-008`; `DR-011`/`DR-012`/`DR-017`/`DR-018` | Registrar atualização manual | `AC-RPO-001 — Registrar primeira atualização válida`<br>`AC-RPO-002 — Registrar mudança de preço`<br>`AC-RPO-003 — Registrar mudança de disponibilidade`<br>`AC-RPO-005 — Não representar indisponibilidade como zero`<br>`AC-RPO-006 — Rejeitar dado inválido`<br>`AC-RPO-007 — Impedir atualização de oferta de outra conta`<br>`AC-RPO-008 — Não consultar fontes externas` | `tests/Modules/PriceTracking.Tests/Features/RecordPriceObservation/` | Pendente da implementação |
 | `AC-RPO-004` | Critério histórico substituído; polling não pertence a esta fatia manual | — (sem teste; ver F0-16) | Não aplicável | Substituído; sem teste |
 | `AC-RPO-001`/`AC-RPO-002`/`AC-RPO-003`/`AC-RPO-005`/`AC-RPO-006`, `DR-002`/`DR-003`/`DR-004`/`DR-005`/`DR-018` | `PriceObservation` | `AC-RPO-001 — PriceObservation — Registrar primeira atualização válida`<br>`AC-RPO-002 — PriceObservation — Registrar mudança de preço`<br>`AC-RPO-003 — PriceObservation — Registrar mudança de disponibilidade`<br>`AC-RPO-005 — PriceObservation — Não representar indisponibilidade como zero`<br>`AC-RPO-006 — PriceObservation — Rejeitar dado inválido` | `tests/Modules/PriceTracking.Tests/Domain/PriceObservation/` | Pendente da implementação |
 | `AC-RPO-002`/`AC-RPO-003`/`AC-RPO-005` | `Offer` | `AC-RPO-002 — Offer — Registrar mudança de preço`<br>`AC-RPO-003 — Offer — Registrar mudança de disponibilidade`<br>`AC-RPO-005 — Offer — Não representar indisponibilidade como zero` | `tests/Modules/PriceTracking.Tests/Domain/Offer/` | Pendente da implementação |

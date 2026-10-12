@@ -18,7 +18,7 @@ Exibir a evolução observada do preço de uma oferta ao longo do tempo para res
 
 - `DR-002`/`DR-004`/`DR-018`: histórico datado, instante UTC e origem manual identificada.
 - `DR-003`/`DR-005`: decimal/moeda; indisponibilidade não é zero.
-- `DR-012`/`DR-013`: privacidade por conta e retenção vinculada ao acompanhamento.
+- `DR-012`: privacidade por conta.
 
 ## Escopo
 
@@ -70,7 +70,7 @@ O usuário seleciona oferta e período. O sistema retorna observações válidas
 
 ## Regras de domínio aplicáveis
 
-- `DR-002`, `DR-003`, `DR-004`, `DR-005`, `DR-012`, `DR-013`, `DR-018`.
+- `DR-002`, `DR-003`, `DR-004`, `DR-005`, `DR-012`, `DR-018`.
 
 ## Classes de domínio afetadas
 

@@ -1,6 +1,6 @@
 # Backlog de planejamento
 
-**Estado:** o pacote de planejamento para o escopo C está publicado na branch [`docs/phase-0-hybrid`](https://github.com/devmichaelcosta/dotnet-price-analizer/tree/docs/phase-0-hybrid), atualmente no commit `0125327`, ainda sem PR. A leitura do GitHub funciona, mas a tentativa atual de atualizar issue retornou `403 Resource not accessible by integration`; o `gh` local tem token inválido. Os issues #1–#10 permanecem desatualizados e PLAN-010 a PLAN-012 ainda não foram publicados. Não há tarefas de implementação.
+**Estado:** o pacote de planejamento para o escopo C está publicado na branch [`docs/phase-0-hybrid`](https://github.com/devmichaelcosta/dotnet-price-analizer/tree/docs/phase-0-hybrid), ainda sem PR. A leitura do GitHub funciona, mas as operações de escrita em issues retornaram `403 Resource not accessible by integration`. A tentativa de usar a interface web foi interrompida antes de editar qualquer issue porque o controle não conseguiu confirmar a URL atual do navegador. Os corpos remotos #1–#10 permanecem desatualizados e PLAN-010 a PLAN-012 ainda não foram publicados. Não há tarefas de implementação.
 **Situação atual:** núcleo manual escolhido; nenhum domínio HTML foi aprovado. As decisões manuais restantes estão no [registro da Fase 0](../decisions/registro-fase-0.md), e a direção consta no [documento de revisão do MVP](../research/revisao-escopo-mvp.md). Consulte o [relatório de fontes](../research/validacao-fontes-fase-0.md) como pesquisa histórica.
 **Fonte de verdade:** roadmap, contexto do domínio e specs aprovadas.<br>
 **Repositório:** [devmichaelcosta/dotnet-price-analizer](https://github.com/devmichaelcosta/dotnet-price-analizer), branch de revisão `docs/phase-0-hybrid`.
@@ -77,22 +77,22 @@ Um item fica **Done** quando os critérios foram conferidos, a evidência/artefa
 
 ## Estado do GitHub
 
-Os documentos de planejamento iniciais foram publicados na branch `main`. A revisão para a opção C está publicada na branch [`docs/phase-0-hybrid`](https://github.com/devmichaelcosta/dotnet-price-analizer/tree/docs/phase-0-hybrid), commit `0125327`, mas não foi possível abrir o PR porque a integração recusou escrita em pull requests com HTTP 403. Uma busca atual não encontrou PR para essa branch; o `gh` local informa token inválido.
+Os documentos de planejamento iniciais foram publicados na branch `main`. A revisão para a opção C está publicada na branch [`docs/phase-0-hybrid`](https://github.com/devmichaelcosta/dotnet-price-analizer/tree/docs/phase-0-hybrid), mas ainda não há PR. Uma busca anterior não encontrou PR para essa branch. A integração permite leitura do repositório, porém recusou a atualização de issues com HTTP 403; a tentativa de edição via navegador foi encerrada antes de qualquer alteração.
 
 O marco [Fase 0 — Planejamento e validação de fontes](https://github.com/devmichaelcosta/dotnet-price-analizer/milestone/1) e as labels da taxonomia foram criados. Os dez issues originais existem e estão vinculados ao marco. As tentativas atuais de atualizar/criar issues pela integração retornaram HTTP 403; a revisão de conteúdo segue no arquivo local de issue drafts e na branch acima. Use [esta página do GitHub](https://github.com/devmichaelcosta/dotnet-price-analizer/pull/new/docs/phase-0-hybrid) para abrir o PR quando o owner estiver autenticado.
 
 | ID | Issue |
 |---|---|
-| PLAN-000 | [Concluir planejamento e aprovar as specs do MVP](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/1) |
-| PLAN-001 | [Comprovar APIs oficiais elegíveis e selecionar o piloto](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/2) — conteúdo remoto desatualizado |
-| PLAN-002 | [Analisar documentação e respostas de APIs elegíveis](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/3) — pesquisa histórica, conteúdo remoto desatualizado |
-| PLAN-003 | [Fechar regras de produto, correspondência e observações](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/4) |
-| PLAN-004 | [Definir política de autenticação, conta e autorização](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/5) |
-| PLAN-005 | [Fechar arquitetura modular, contratos, dados e fluxos](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/6) |
-| PLAN-006 | [Definir estratégia SDD, testes e rastreabilidade](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/7) |
-| PLAN-007 | [Escrever e revisar as specs do MVP](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/8) |
-| PLAN-008 | [Estimar carga, frequência, armazenamento e custo](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/9) |
-| PLAN-009 | [Revisar e aprovar o gate da Fase 0](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/10) |
+| PLAN-000 | [Concluir planejamento e aprovar as specs do MVP](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/1) — corpo remoto desatualizado |
+| PLAN-001 | [Concluir triagem HTML e registrar o gate futuro](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/2) — corpo remoto desatualizado |
+| PLAN-002 | [Encerrar análise de páginas sem fontes elegíveis](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/3) — corpo remoto desatualizado |
+| PLAN-003 | [Fechar regras de produto, correspondência e observações](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/4) — corpo remoto desatualizado |
+| PLAN-004 | [Definir política de autenticação, conta e autorização](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/5) — corpo remoto desatualizado |
+| PLAN-005 | [Fechar arquitetura modular, contratos, dados e fluxos](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/6) — corpo remoto desatualizado |
+| PLAN-006 | [Definir estratégia SDD, testes e rastreabilidade](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/7) — corpo remoto desatualizado |
+| PLAN-007 | [Escrever e revisar as specs do MVP](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/8) — corpo remoto desatualizado |
+| PLAN-008 | [Estimar carga manual e armazenamento; automação condicional](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/9) — corpo remoto desatualizado |
+| PLAN-009 | [Revisar e aprovar o gate da Fase 0](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/10) — corpo remoto desatualizado |
 | PLAN-010 | Estratégia API-first substituída por HTML condicionado — publicação pendente |
 | PLAN-011 | Registrar opção C e alinhar artefatos — publicação pendente |
 | PLAN-012 | Fechar regras de oferta e observação manual — publicação pendente |

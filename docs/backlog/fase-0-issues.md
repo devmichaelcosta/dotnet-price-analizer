@@ -1,6 +1,6 @@
 # GitHub Issues — Fase 0
 
-**Estado:** os drafts revisados para C estão na branch publicada `docs/phase-0-hybrid` (commit `0125327`). A leitura do repositório funciona, mas a tentativa atual de `update_issue` retornou HTTP 403; o `gh` local tem token inválido. PLAN-000 a PLAN-009 continuam com os corpos remotos antigos; PLAN-010 a PLAN-012 não foram criados. Não há PR aberto; a página para criá-lo é [esta](https://github.com/devmichaelcosta/dotnet-price-analizer/pull/new/docs/phase-0-hybrid).
+**Estado:** os rascunhos revisados para C estão na branch publicada `docs/phase-0-hybrid`. A leitura do repositório funciona, mas a tentativa de `update_issue` retornou HTTP 403. A tentativa de edição via navegador foi interrompida antes de qualquer alteração porque o controle não conseguiu confirmar a URL atual. PLAN-000 a PLAN-009 continuam com os corpos remotos antigos; PLAN-010 a PLAN-012 não foram criados. Não há PR aberto; a página para criá-lo é [esta](https://github.com/devmichaelcosta/dotnet-price-analizer/pull/new/docs/phase-0-hybrid).
 **Épico:** [`PLAN-000` — Concluir planejamento e aprovar as specs do MVP](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/1).
 
 ---
