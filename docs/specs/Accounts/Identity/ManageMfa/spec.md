@@ -77,6 +77,12 @@ O usuário inicia o cadastro e recebe secret/URI de provisioning uma única vez 
 **Quando** tenta remover MFA da conta de outra pessoa<br>
 **Então** não existe fluxo de reset pelo app e nenhuma credencial MFA alheia é alterada
 
+### AC-MFA-007 — Permitir ao usuário comum desativar sua MFA opcional
+
+**Dado** que a conta é de usuário comum e sua MFA está habilitada<br>
+**Quando** o titular confirma a desativação após reautenticação válida<br>
+**Então** a MFA é desativada somente para essa conta e os códigos de recuperação existentes deixam de funcionar
+
 ## Regras de domínio aplicáveis
 
 - MFA administrativa obrigatória; MFA de usuários comuns opcional.
@@ -93,7 +99,7 @@ O usuário inicia o cadastro e recebe secret/URI de provisioning uma única vez 
 
 | Critério/regra | Caso de uso relacionado | Nome(s) planejado(s) do teste/display name | Caminho no projeto de testes | Estado |
 |---|---|---|---|---|
-| `AC-MFA-001` a `AC-MFA-006` | Configuração e uso de MFA | `AC-MFA-001 — Validar cadastro TOTP antes de habilitar`<br>`AC-MFA-002 — Rejeitar código inválido`<br>`AC-MFA-003 — Exigir MFA para administrador`<br>`AC-MFA-004 — Emitir códigos de recuperação de uso único`<br>`AC-MFA-005 — Não permitir desativar MFA obrigatória`<br>`AC-MFA-006 — Não permitir reset de terceiro no app` | `tests/Modules/Accounts.Identity.Tests/Features/ManageMfa/` | Pendente da implementação |
+| `AC-MFA-001` a `AC-MFA-007` | Configuração e uso de MFA | `AC-MFA-001 — Validar cadastro TOTP antes de habilitar`<br>`AC-MFA-002 — Rejeitar código inválido`<br>`AC-MFA-003 — Exigir MFA para administrador`<br>`AC-MFA-004 — Emitir códigos de recuperação de uso único`<br>`AC-MFA-005 — Não permitir desativar MFA obrigatória`<br>`AC-MFA-006 — Não permitir reset de terceiro no app`<br>`AC-MFA-007 — Permitir ao usuário comum desativar sua MFA opcional` | `tests/Modules/Accounts.Identity.Tests/Features/ManageMfa/` | Pendente da implementação |
 
 ## Dados e integrações
 
@@ -110,11 +116,12 @@ O usuário inicia o cadastro e recebe secret/URI de provisioning uma única vez 
 ## Questões em aberto
 
 - Qual mecanismo Microsoft suportado e versão do Identity serão adotados para TOTP/recovery codes?
-- Exigir reautenticação para cadastrar, renovar ou desativar MFA?
+- A proposta F0-04 exige reautenticação para cadastrar, renovar ou desativar MFA; confirmar ou ajustar essa regra.
 - Como mostrar URI/QR sem transmitir segredo além da sessão local autenticada?
 - A troca de senha temporária precede o cadastro MFA obrigatório?
 
 ## Decisões e referências
 
+- [`docs/decisions/registro-fase-0.md`](../../../../decisions/registro-fase-0.md) — proposta F0-04.
 - [`docs/domain/context.md`](../../../../domain/context.md)
 - [MFA no ASP.NET Core](https://learn.microsoft.com/aspnet/core/security/authentication/mfa)
