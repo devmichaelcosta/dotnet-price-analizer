@@ -24,13 +24,13 @@ A unidade acompanhada é o **produto**; a unidade que tem preço e vendedor é a
 - **Hospedagem inicial:** host ASP.NET Core e PostgreSQL são executados localmente; host/API escutam somente em loopback/localhost e PostgreSQL não é exposto à rede. A aplicação não aceita conexões de outros dispositivos da rede local.
 - **Seleção de bibliotecas:** priorizar bibliotecas e componentes oficiais/suportados pela Microsoft quando atenderem aos requisitos. MudBlazor é uma escolha explícita do usuário para a camada de UI e uma exceção aprovada a essa preferência geral; acompanhar sua compatibilidade, manutenção e licença. Para outras dependências de terceiros, exigir uma lacuna concreta, justificativa e avaliação de suporte, manutenção, segurança e licença.
 
-Com Interactive Server, eventos e componentes interativos são executados no servidor através de um circuito em tempo real. No MVP, os componentes Blazor chamam os casos de uso no servidor; não fazem uma chamada HTTP de volta ao próprio host. A Web API REST é parte privada do sistema e não será oferecida a clientes terceiros neste momento. Essa organização mantém uma única origem e uma sessão ASP.NET Core Identity baseada em cookie. Todos os endpoints REST ainda validam autenticação, autorização e propriedade dos dados. Se futuramente houver clientes externos ou a UI for separada do host, reavaliar OIDC/JWT e proteção CSRF/CORS antes de mudar a implantação.
+Com Interactive Server, eventos e componentes interativos são executados no servidor através de um circuito em tempo real. A proposta inicial é que componentes chamem os casos de uso no servidor, enquanto endpoints REST privados exponham os mesmos slices como outra entrada do próprio sistema; os componentes não fariam HTTP de volta ao host. Essa proposta ainda depende de F0-18, pois o usuário definiu Web API .NET no backend e acesso apenas pelo próprio sistema. Em qualquer opção, a API não será oferecida a clientes terceiros; manter uma única origem e sessão ASP.NET Core Identity baseada em cookie. Todos os endpoints REST validam autenticação, autorização e propriedade. Se futuramente houver clientes externos ou UI separada, reavaliar OIDC/JWT e proteção CSRF/CORS antes de mudar a implantação.
 
 ### 2.1. Base de autenticação e autorização
 
 - **Identidade:** ASP.NET Core Identity é o sistema de usuários e contas locais, persistido em PostgreSQL. MFA é obrigatória para administradores e opcional para os demais usuários, usando TOTP em app autenticador e códigos de recuperação de uso único, sem depender de e-mail. Cada código é consumido quando usado. Se a pessoa perder o autenticador e todos os códigos, a MFA de qualquer conta só pode ser recuperada por comando local no host, disponível a qualquer pessoa com acesso local ao terminal; não há redefinição pelo app nem por e-mail. O comando solicita o login, exibe a conta correspondente e exige confirmação explícita antes do reset. Depois do reset, a conta deve cadastrar novamente o TOTP antes do acesso normal quando MFA for obrigatória ou estiver habilitada. Auditar o instante UTC, a conta alvo, o usuário do sistema operacional que executou o comando e o resultado, sem registrar segredos. O administrador local provisiona contas e redefine credenciais pelo app, definindo uma senha temporária e entregando-a diretamente ao usuário. No próximo login, esse usuário deve escolher uma nova senha antes de continuar. A senha temporária não pode ser exposta em logs nem mantida em texto puro; usar os mecanismos suportados pelo Identity. Não há cadastro público. O primeiro administrador é criado por comando local de uso único, executado no host, com senha informada sem valor padrão. O comando só pode inicializar essa conta uma vez; seu fluxo deve proteger a senha e não gravá-la em argumentos, logs ou arquivos versionados. A recuperação administrativa da credencial usa comando local no host, sem depender de e-mail, e deve usar os mecanismos suportados pelo Identity para redefinir a credencial; não gravar a senha em argumentos, logs ou arquivos versionados. Usar os mecanismos suportados do framework para senhas, bloqueio após tentativas inválidas, MFA, gestão de sessões e redefinição administrativa; não reimplementar hash/sal de senha nem o ciclo de login.
 - **Blazor no navegador:** autenticação por cookie Identity, com HTTPS e atributos `Secure`, `HttpOnly` e `SameSite` apropriados. A Microsoft recomenda cookies para apps de navegador; evitar bearer tokens no `localStorage`. Páginas/fluxos de conta devem seguir a integração oficial Identity do Blazor e não executar operações de Identity diretamente em componentes interativos.
-- **Web API:** a API é de uso interno pelo próprio sistema e não terá consumidores terceiros no MVP. Exigir autenticação por padrão e liberar endpoints públicos explicitamente. Se uma requisição HTTP autenticada por cookie alterar dados, aplicar proteção antifalsificação (CSRF). Os componentes Interactive Server chamam os casos de uso no servidor, sem fazer uma chamada HTTP para a própria API.
+- **Web API:** a API é privada, de uso interno e sem consumidores terceiros no MVP. Exigir autenticação por padrão e liberar endpoints públicos explicitamente. Se uma requisição HTTP autenticada por cookie alterar dados, aplicar proteção antifalsificação (CSRF). A proposta é que Blazor Interactive Server invoque os mesmos casos de uso em processo; F0-18 confirma se a UI deve chamar endpoints REST.
 - **Tokens:** não emitir JWT nem hospedar servidor OAuth/OIDC no MVP. ASP.NET Core Identity com cookie protegido cobre a autenticação do navegador e os fluxos internos planejados. OpenIddict não é necessário para esse escopo. Se forem adicionados clientes externos, mobile ou uma UI separada que precise de Bearer JWT, avaliar primeiro as opções oficiais/suportadas pela Microsoft. Se elas não atenderem ao requisito, selecionar um emissor OIDC confiável de terceiros com justificativa técnica e revisão de suporte, manutenção, segurança e licença. A API deve validar assinatura, emissor (`iss`), audiência (`aud`), expiração e claims; não criar endpoint artesanal para emitir JWT. Os tokens Bearer das Identity API são proprietários, não JWT padrão.
 - **Autorização:** combinar políticas/claims para capacidades com autorização baseada no recurso. Toda consulta de dados privados filtra pelo usuário autenticado no servidor; não aceitar `UserId` enviado pelo navegador como prova de propriedade. Roles ficam para funções amplas (por exemplo, administração); acesso a produtos/acompanhamentos exige verificar o dono do recurso no caso de uso.
 - **Identificador do usuário:** associar os dados de negócio a um identificador interno estável; se houver emissor externo, mapear o par emissor/sujeito (`iss`/`sub`) para essa conta local. Não usar e-mail como chave de propriedade nem confiar em claims de identidade que o cliente possa editar.
@@ -56,7 +56,7 @@ Referências técnicas para o planejamento do segundo fator: [MFA no ASP.NET Cor
 2. **Catálogo de produto** — identidade do item informado manualmente: texto, EAN/GTIN e atributos de variante decididos na spec.
 3. **Acompanhamento** — vínculo privado entre conta e produto; não cria busca ou job no MVP manual.
 4. **Ofertas manuais** — cadastro pelo usuário de uma referência de oferta/loja, sem consultar ou validar a página pela rede.
-5. **Observações** — entrada manual de preço, moeda, disponibilidade, autoria e horário; manter histórico e deduplicar estado sem mudança segundo DR-016.
+5. **Observações** — entrada manual de preço, moeda, disponibilidade, autoria e horário; preservar o histórico. A deduplicação de leituras sem mudança por `DR-016` só se aplica à automação futura; a política de uma nova captura manual repetida permanece pendente em F0-16.
 6. **Comparação e análise** — comparar preços entre ofertas compatíveis e calcular a variação de cada oferta no período.
 7. **WebDiscovery condicional** — futura descoberta e extração de páginas HTML públicas de domínios aprovados; não faz parte do MVP manual.
 8. **Operations condicional** — gestão e estado de conectores HTML/jobs, somente quando um incremento automatizado for aprovado.
@@ -115,6 +115,34 @@ Modules/PriceTracking/
 
 No MVP manual, somente `Server` e PostgreSQL são necessários. Um `Worker` poderá ser adicionado após gate e spec de automação; compartilhar a base PostgreSQL não transforma os módulos em microserviços nem permite acesso cruzado às tabelas internas.
 
+### 4.3. Visão de módulos e chamadas do MVP
+
+O diagrama descreve a implantação local e as fronteiras do monólito. A rota de chamada da UI para os casos de uso está marcada como pendente F0-18. A API permanece privada e autenticada; nenhum componente da interface contém regras de negócio.
+
+```mermaid
+flowchart LR
+    User[Usuário local] --> Browser[Navegador]
+    Browser <-->|HTTPS localhost + SignalR| Server
+
+    subgraph Server[PriceAnalyzer.Server — mesmo processo ASP.NET Core]
+        UI[Blazor Interactive Server + MudBlazor]
+        API[Web API REST privada]
+        Slices[Casos de uso / vertical slices]
+        Modules[Domínios dos módulos]
+        EF[EF Core + Npgsql]
+        UI -. "F0-18: chamada em processo ou HTTP à API?" .-> Slices
+        API --> Slices
+        Slices --> Modules
+        Modules --> EF
+    end
+
+    EF --> DB[(PostgreSQL local)]
+    Worker[Worker futuro, somente após gate e spec] -. "mesmos casos de uso" .-> Slices
+    Worker -. "HTML público permitido por domínio" .-> Stores[Domínios de lojas aprovados]
+```
+
+No MVP manual, `Worker` e `Stores` não são iniciados nem consultados. A seta tracejada representa evolução condicionada, não uma dependência ativa.
+
 ### 4.1. Spec-Driven Development e artefatos de domínio
 
 O projeto seguirá Spec-Driven Development (SDD): especificações aprovadas, contexto do domínio e decisões registradas guiam o desenho e a implementação. O objetivo é manter linguagem, regras e critérios de aceite rastreáveis fora do código e evitar que decisões de negócio fiquem implícitas em componentes ou handlers.
@@ -138,6 +166,19 @@ O projeto seguirá Spec-Driven Development (SDD): especificações aprovadas, co
 - **Estado:** proposta registrada em [`ADR-001`](decisions/ADR-001-framework-de-testes.md), ainda sujeita à revisão no gate da Fase 0.
 
 ## 5. Modelo de dados conceitual
+
+O modelo abaixo distingue identidade de produto, acompanhamento privado, oferta manual e observações. A cardinalidade final e a possível reutilização de produto dentro da mesma conta dependem de F0-05; não implica compartilhamento entre contas.
+
+```mermaid
+erDiagram
+    LOCAL_USER ||--o{ TRACKED_PRODUCT : owns
+    TRACKED_PRODUCT ||--|| PRODUCT : identifies
+    TRACKED_PRODUCT ||--o{ OFFER : contains
+    OFFER ||--o{ PRICE_OBSERVATION : records
+    LOCAL_USER ||--o{ PRICE_OBSERVATION : authors
+    OFFER }o--o| SOURCE_CONNECTOR : "future automated source"
+    SOURCE_CONNECTOR ||--o{ COLLECTION_JOB : schedules
+```
 
 | Entidade | Finalidade | Campos relevantes |
 |---|---|---|

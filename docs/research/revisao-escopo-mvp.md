@@ -53,7 +53,7 @@ O usuário escolheu essa direção; isso **não aprova** os detalhes das novas s
 
 ## Questões ainda abertas
 
-As decisões detalhadas para o fluxo manual e outros aspectos do MVP estão em [`docs/decisions/registro-fase-0.md`](../decisions/registro-fase-0.md). Em especial, precisam ser fechados os campos obrigatórios de produto/oferta, como informar a loja e URL, qual horário será usado para a observação, as regras de comparação entre ofertas e os períodos do histórico.
+As decisões detalhadas para o fluxo manual e outros aspectos do MVP estão em [`docs/decisions/registro-fase-0.md`](../decisions/registro-fase-0.md). Em especial, precisam ser fechados os campos obrigatórios de produto/oferta, como informar a loja e URL, qual horário será usado para a observação, as regras de comparação entre ofertas, os períodos do histórico e se a UI chama os casos de uso em processo ou a API REST privada.
 
 ## Referências
 

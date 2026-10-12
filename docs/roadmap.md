@@ -19,7 +19,7 @@ O MVP não pesquisa a Internet. Uma etapa futura poderá automatizar a leitura d
 - **Dependências:** priorizar bibliotecas oficiais/suportadas pela Microsoft; MudBlazor é a exceção explícita da interface. Qualquer outra dependência externa precisa de justificativa e revisão de suporte, manutenção, segurança e licença.
 - **MVP manual:** entrada de produto por texto e/ou EAN/GTIN, cadastro manual de ofertas e preços, comparação sem frete, análise temporal e dados privados por conta. Detalhes dos campos e do horário da observação ainda estão em decisão F0-16.
 - **Proveniência:** observações manuais precisam ficar marcadas como informadas por usuário e não podem ser apresentadas como verificadas pela loja. URL informada é referência e não dispara requisição de rede.
-- **Histórico:** manter observações enquanto o acompanhamento existir e apagá-las junto com ele. Para a mesma oferta, gravar nova observação somente quando preço ou disponibilidade mudar.
+- **Histórico:** manter observações enquanto o acompanhamento existir e apagá-las junto com ele. Para leituras automáticas futuras, `DR-016` suprime observações quando preço e disponibilidade não mudam; essa regra não define o que fazer quando o usuário salva manualmente uma nova conferência com o mesmo valor. A política manual permanece em F0-16.
 - **Fontes automáticas futuras:** somente páginas HTML públicas do próprio domínio, com permissão expressa nos termos aplicáveis. Não usar APIs, feeds, agregadores ou integrações de terceiros como fonte. Não contatar lojas; `robots.txt` sozinho não autoriza coleta.
 - **Automação:** atualização desejada a cada seis horas, condicionada aos termos e limites do domínio; não faz parte do MVP manual. Nenhum domínio foi aprovado.
 - **Notificações:** fora do escopo local atual.
@@ -32,7 +32,7 @@ O MVP não pesquisa a Internet. Uma etapa futura poderá automatizar a leitura d
 
 - Contexto do domínio alinhado à escolha C e à diretriz vigente de fontes HTML somente em etapa futura.
 - Decisões F0 restantes resolvidas ou explicitamente adiadas, em especial campos de produto/oferta, proveniência, horário da observação, comparabilidade e períodos de análise.
-- Arquitetura inicial, modelo conceitual e fluxos atualizados para o núcleo manual. Worker e fila ficam condicionais à automação futura.
+- Arquitetura inicial, diagramas de módulos/chamadas, modelo conceitual e fluxos atualizados para o núcleo manual; a rota Blazor/API aguarda F0-18. Worker e fila ficam condicionais à automação futura.
 - Inventário separado entre specs do MVP manual e specs condicionais de descoberta/coleta.
 - Specs do MVP revisadas, com critérios `AC-...`, regras `DR-...`, classes de domínio e matriz de testes rastreáveis.
 - Roadmap e conjunto de specs aprovados explicitamente pelo usuário antes de criar aplicação, scaffolding ou código de produção.
@@ -60,7 +60,7 @@ O MVP não pesquisa a Internet. Uma etapa futura poderá automatizar a leitura d
 
 **Objetivo:** entregar a análise manual de variação e comparação entre lojas.
 
-**Escopo:** registrar observação manual inicial e atualizações; registrar autoria/proveniência e instante conforme decisão aprovada; preservar observações imutáveis; evitar duplicação quando preço e disponibilidade não mudarem; consultar série por período; calcular diferença absoluta e percentual entre datas válidas; comparar os últimos preços informados para ofertas do mesmo produto quando moeda, variante, condição e demais critérios aprovados forem compatíveis. Exibir a data de cada valor e não afirmar que uma observação manual ainda está vigente na loja. Comparação considera apenas preço do item, sem frete.
+**Escopo:** registrar observação manual inicial e atualizações; registrar autoria/proveniência e instante conforme decisão aprovada; preservar observações imutáveis; aplicar a política ainda pendente para uma conferência manual explícita que repita preço e disponibilidade; consultar série por período; calcular diferença absoluta e percentual entre datas válidas; comparar os últimos preços informados para ofertas do mesmo produto quando moeda, variante, condição e demais critérios aprovados forem compatíveis. Exibir a data de cada valor e não afirmar que uma observação manual ainda está vigente na loja. Comparação considera apenas preço do item, sem frete.
 
 **Critério de saída:** UI diferencia registro manual de qualquer origem futura; mostra preço, moeda, disponibilidade, origem e data; apresenta ofertas comparáveis sem misturar variantes/condições/moedas; indica aumentos, reduções e estabilidade sem inventar pontos; todo critério tem testes aprovados.
 
@@ -102,4 +102,4 @@ O MVP não pesquisa a Internet. Uma etapa futura poderá automatizar a leitura d
 
 ## Aberturas para concluir a Fase 0
 
-As propostas e seus impactos estão em [`docs/decisions/registro-fase-0.md`](decisions/registro-fase-0.md). A direção C já foi escolhida; permanecem pendentes os detalhes do fluxo manual, políticas de segurança ainda não aprovadas, estrutura/diagramas, estratégia final de testes e revisão integral das specs. Até a aprovação explícita do roadmap e do conjunto MVP, o trabalho continua em planejamento.
+As propostas e seus impactos estão em [`docs/decisions/registro-fase-0.md`](decisions/registro-fase-0.md). A direção C já foi escolhida; permanecem pendentes os detalhes do fluxo manual, políticas de segurança ainda não aprovadas, decisão F0-18 sobre chamada da UI/API, estratégia final de testes e revisão integral das specs. Até a aprovação explícita do roadmap e do conjunto MVP, o trabalho continua em planejamento.

@@ -36,7 +36,7 @@ O roadmap exige fechar as decisões do MVP manual, arquitetura e segurança, est
 - [ ] PLAN-005 — Fechar arquitetura modular, contratos, dados e fluxos.
 - [ ] PLAN-006 — Definir estratégia de specs, testes e rastreabilidade.
 - [ ] PLAN-007 — Escrever e revisar as specs do MVP.
-- [ ] PLAN-008 — Estimar volume e armazenamento do fluxo manual; adiar carga de automação até haver fonte elegível.
+- [x] PLAN-008 — Estimar volume e armazenamento do fluxo manual; adiar carga de automação até haver fonte elegível.
 - [ ] PLAN-009 — Revisar e aprovar o gate Fase 0.
 - [x] PLAN-010 — Estratégia API-first substituída por núcleo manual e futura automação HTML condicionada.
 - [ ] PLAN-011 — Registrar escolha C e alinhar roadmap/specs/backlog; decisão de direção tomada, alinhamento ainda em curso.
@@ -132,7 +132,7 @@ Definir a identidade de produto e oferta manual, proveniência de observações 
 - Campos mínimos de produto/oferta manual, loja/URL, variante, condição e tratamento de duplicatas.
 - Como identificar a autoria e o instante de uma observação informada pelo usuário; mostrar claramente que não foi verificada pela loja.
 - Regras para comparar ofertas de lojas distintas e determinar a atualidade do último preço.
-- **Decisão aprovada pelo usuário:** para a mesma oferta, criar observação somente quando preço ou disponibilidade mudarem; leituras idênticas não criam duplicatas. Regra registrada como `DR-016` em `docs/domain/context.md`.
+- **Decisão aprovada para coleta automatizada futura:** na mesma oferta, registrar observação somente quando preço ou disponibilidade mudarem; leituras automáticas idênticas não criam duplicatas (`DR-016`). Isso não define se uma ação manual explícita com o mesmo valor cria nova observação; fechar em F0-16.
 - Como tratar preço PIX, parcelamento, preço promocional, faixas de preço, moeda e indisponibilidade na entrada manual.
 - O que acontece ao remover um acompanhamento e os dados manuais associados.
 
@@ -214,14 +214,15 @@ Produzir um desenho revisável do monólito modular, módulos, dependências, pe
 
 ### Critérios de conclusão
 
-- [ ] Fronteiras e responsabilidades dos módulos foram definidas.
-- [ ] Diagramas mostram cadastro manual de produto/oferta, observação, comparação, histórico, remoção e autorização.
-- [ ] Modelo conceitual preserva Produto, Página, Oferta, Acompanhamento e Observação como conceitos distintos.
-- [ ] Ownership/isolamento por usuário local está representado; estados de job, retentativas e idempotência são tratados como condicionais à automação futura.
-- [ ] A topologia manual executa Server e PostgreSQL localmente; host/API ficam restritos a loopback/localhost e não aceitam acesso pela rede local. Worker é condicional.
-- [ ] A fatia vertical mantém juntos os arquivos específicos de cada use case; dependências respeitam as decisões Clean Architecture/DDD.
-- [ ] Contratos e modelo foram atualizados após as decisões de domínio/fontes.
-- [ ] Fontes e Worker condicionais estão separados do MVP manual; API/feed/agregador não aparece como origem de dados.
+- [x] Fronteiras e responsabilidades dos módulos foram definidas.
+- [x] O diagrama mostra entradas Blazor/API e os mesmos casos de uso; a escolha de caminho da UI aguarda F0-18.
+- [x] O modelo conceitual preserva Produto, Página, Oferta, Acompanhamento e Observação como conceitos distintos.
+- [x] Ownership/isolamento por usuário local está representado; jobs, retentativas e idempotência são condicionais à automação futura.
+- [x] A topologia manual executa Server e PostgreSQL localmente; host/API ficam restritos a loopback/localhost, sem acesso remoto. Worker é condicional.
+- [x] A regra de fatias verticais mantém os arquivos específicos de cada use case juntos; dependências seguem os limites Clean Architecture/DDD.
+- [x] Contratos e modelo foram atualizados após as decisões de domínio/fontes disponíveis.
+- [x] Fontes e Worker condicionais estão separados do MVP manual; API/feed/agregador não aparecem como origem de dados.
+- [ ] Resolver F0-18: componentes Blazor chamam casos de uso em processo ou consomem a Web API REST privada.
 
 ### Dependências
 
@@ -320,10 +321,10 @@ Estimar o volume local de acompanhamentos/ofertas/observações manuais para o p
 
 ### Critérios de conclusão
 
-- [ ] Foram calculadas requisições e armazenamento de observações por dia/mês em cenários baixo, esperado e alto.
-- [ ] A estimativa manual informa volume e retenção no banco local.
-- [ ] Frequência, concorrência e custo de crawler são explicitamente adiados até existir fonte aprovada; o alvo de seis horas não é requisito do MVP manual.
-- [ ] Premissas e fórmulas estão registradas e ligadas ao roadmap.
+- [x] Consultas externas no MVP manual são zero; observações e armazenamento por dia/mês estão estimados em cenários baixo, esperado e de estresse.
+- [x] A estimativa informa volume e retenção no banco local, com premissas claramente identificadas como hipóteses.
+- [x] Frequência, concorrência e custo de crawler são adiados até existir fonte aprovada; o alvo de seis horas não é requisito do MVP manual.
+- [x] Premissas e fórmulas estão registradas em `docs/research/estimativa-capacidade-mvp.md`.
 
 ### Dependências
 
@@ -334,6 +335,7 @@ Estimar o volume local de acompanhamentos/ofertas/observações manuais para o p
 
 - `docs/roadmap.md`
 - `docs/research/validacao-fontes-fase-0.md`
+- `docs/research/estimativa-capacidade-mvp.md`
 
 ---
 
