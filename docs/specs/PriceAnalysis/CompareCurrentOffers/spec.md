@@ -87,9 +87,9 @@ Para um produto autorizado, o sistema apresenta a observação mais recente por 
 
 | Classe/conceito | Responsabilidade/invariante | Critérios/regras |
 |---|---|---|
-| `Offer` (proposta) | Identidade, atributos e vínculo ao produto | `AC-CCO-001` a `AC-CCO-005`, `DR-001`, `DR-006` |
+| `Offer` (proposta) | Identidade, atributos e vínculo ao produto | `AC-CCO-001`/`AC-CCO-002`, `DR-001`, `DR-006` |
 | `PriceObservation` (proposta) | Último preço, moeda, disponibilidade, instante e proveniência | `AC-CCO-001`, `AC-CCO-004`, `AC-CCO-006`, `DR-003` a `DR-005`, `DR-018` |
-| `OfferComparison` (proposta) | Resultado apenas entre valores comparáveis | `AC-CCO-001` a `AC-CCO-006`, `DR-006`, `DR-007` |
+| `OfferComparison` (proposta) | Resultado apenas entre valores comparáveis | `AC-CCO-001`/`AC-CCO-002`/`AC-CCO-003`/`AC-CCO-004`, `DR-003`, `DR-006`, `DR-007` |
 
 ## Rastreabilidade dos testes
 
@@ -98,7 +98,7 @@ Para um produto autorizado, o sistema apresenta a observação mais recente por 
 | `AC-CCO-001` a `AC-CCO-006`; `DR-001`/`DR-003`/`DR-004`/`DR-005`/`DR-006`/`DR-007`/`DR-012`/`DR-018` | Comparação dos últimos preços informados | `AC-CCO-001 — Comparar ofertas compatíveis`<br>`AC-CCO-002 — Excluir ofertas incompatíveis da comparação direta`<br>`AC-CCO-003 — Identificar menor preço comparável`<br>`AC-CCO-004 — Tratar ausência ou indisponibilidade`<br>`AC-CCO-005 — Isolar dados por conta`<br>`AC-CCO-006 — Identificar observações manuais` | `tests/Modules/PriceAnalysis.Tests/Features/CompareCurrentOffers/` | Pendente da implementação |
 | `AC-CCO-001`/`AC-CCO-002`, `DR-001`/`DR-006` | `Offer` (propriedade de PriceTracking) | `AC-CCO-001 — Offer — Comparar ofertas compatíveis`<br>`AC-CCO-002 — Offer — Excluir ofertas incompatíveis da comparação direta` | `tests/Modules/PriceTracking.Tests/Domain/Offer/` | Pendente da implementação |
 | `AC-CCO-001`/`AC-CCO-004`/`AC-CCO-006`, `DR-003`/`DR-004`/`DR-005`/`DR-018` | `PriceObservation` (propriedade de PriceTracking) | `AC-CCO-001 — PriceObservation — Comparar ofertas compatíveis`<br>`AC-CCO-004 — PriceObservation — Tratar ausência ou indisponibilidade`<br>`AC-CCO-006 — PriceObservation — Identificar observações manuais` | `tests/Modules/PriceTracking.Tests/Domain/PriceObservation/` | Pendente da implementação |
-| `AC-CCO-001`/`AC-CCO-002`/`AC-CCO-003`/`AC-CCO-004`/`AC-CCO-006`, `DR-003`/`DR-006`/`DR-007` | `OfferComparison` | `AC-CCO-001 — OfferComparison — Comparar ofertas compatíveis`<br>`AC-CCO-002 — OfferComparison — Excluir ofertas incompatíveis da comparação direta`<br>`AC-CCO-003 — OfferComparison — Identificar menor preço comparável`<br>`AC-CCO-004 — OfferComparison — Tratar ausência ou indisponibilidade`<br>`AC-CCO-006 — OfferComparison — Identificar observações manuais` | `tests/Modules/PriceAnalysis.Tests/Domain/OfferComparison/` | Pendente da implementação |
+| `AC-CCO-001`/`AC-CCO-002`/`AC-CCO-003`/`AC-CCO-004`, `DR-003`/`DR-006`/`DR-007` | `OfferComparison` | `AC-CCO-001 — OfferComparison — Comparar ofertas compatíveis`<br>`AC-CCO-002 — OfferComparison — Excluir ofertas incompatíveis da comparação direta`<br>`AC-CCO-003 — OfferComparison — Identificar menor preço comparável`<br>`AC-CCO-004 — OfferComparison — Tratar ausência ou indisponibilidade` | `tests/Modules/PriceAnalysis.Tests/Domain/OfferComparison/` | Pendente da implementação |
 
 ## Dados e integrações
 

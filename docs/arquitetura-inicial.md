@@ -87,11 +87,14 @@ Modules/PriceTracking/
       StartTrackingValidator.cs
       StartTrackingHandler.cs
       StartTrackingResult.cs
-    ConfirmOffer/
-    GetPriceHistory/
+    AddManualOffer/         # cadastro de oferta e observação inicial
+    RecordPriceObservation/ # registro manual de uma nova observação
+    RemoveTracking/         # remoção do acompanhamento e dados vinculados
   Infrastructure/           # mapeamento EF Core e persistência do módulo
   Contracts/                 # contratos públicos necessários a outros módulos
 ```
+
+`GetPriceHistory` pertence ao módulo `PriceAnalysis`; a listagem pertence a `PriceTracking/ListTrackedProducts`. Os nomes seguem o inventário em [`docs/specs/README.md`](specs/README.md).
 
 **Regra de co-localização:** todos os arquivos específicos de um caso de uso ficam dentro da pasta desse caso de uso. Não espalhar endpoints, requests, validators, handlers, resultados, mapeamentos ou componentes correspondentes em pastas globais organizadas apenas pelo tipo do arquivo. Se a fatia crescer, podem existir subpastas técnicas dentro da própria pasta do caso de uso, sem mover parte dela para fora. Só extrair um arquivo para uma área compartilhada quando ele for realmente usado por mais de uma fatia e tiver um dono claro no módulo.
 

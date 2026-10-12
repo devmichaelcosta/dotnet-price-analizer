@@ -90,7 +90,7 @@ Para uma mesma oferta e moeda, o sistema seleciona duas observações manuais v�
 
 | Classe/conceito | Responsabilidade/invariante | Critérios/regras |
 |---|---|---|
-| `PriceObservation` (proposta) | Fornecer amostras válidas, comparáveis e com origem identificada | `AC-CPV-001` a `AC-CPV-005`, `DR-018` |
+| `PriceObservation` (proposta) | Fornecer amostras válidas, comparáveis e com origem identificada | `AC-CPV-001` a `AC-CPV-005`/`AC-CPV-007`, `DR-018` |
 | `PriceVariation` (proposta) | Resultado com diferença, percentual, direção e intervalo | `AC-CPV-001` a `AC-CPV-005`, `DR-003`, `DR-007` |
 | `Offer` (proposta) | Garantir mesma identidade de anúncio/variante | `AC-CPV-004`, `DR-006` |
 
