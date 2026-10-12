@@ -66,7 +66,7 @@ Identificar no mínimo três lojas que permitam expressamente, nos termos aplic�
 
 ### Situação atual
 
-A revisão manual de oito candidatos não comprovou três fontes elegíveis. Carrefour e Fast Shop têm proibições explícitas nos termos consultados; para os demais, há falta de autorização comprovada ou incerteza sobre o escopo dos documentos. O relatório registra evidências e três caminhos para revisão de viabilidade. Há também um [modelo de solicitação de autorização escrita](../research/modelo-solicitacao-autorizacao-coleta.md), ainda não enviado. Este issue permanece aberto até obter três autorizações válidas ou revisar com o usuário os critérios de cobertura/fontes.
+A revisão manual de oito candidatos não comprovou três fontes elegíveis. Carrefour e Fast Shop têm proibições explícitas nos termos consultados; para os demais, há falta de autorização comprovada ou incerteza sobre o escopo dos documentos. Em 12/10/2026, foram mapeados canais oficiais para pedir esclarecimento/autorização a Pichau, TerabyteShop, KaBuM!, Magazine Luiza, Mercado Livre e Amazon Brasil. O [relatório de fontes](../research/validacao-fontes-fase-0.md) registra evidências, canais e a ordem sugerida; o [modelo de solicitação](../research/modelo-solicitacao-autorizacao-coleta.md) continua em rascunho e nenhum pedido foi enviado. Este issue permanece aberto até obter três autorizações válidas ou revisar com o usuário os critérios de cobertura/fontes.
 
 ### Critérios de conclusão
 

@@ -1,7 +1,7 @@
 # Pesquisa preliminar de fontes — Fase 0
 
 **Estado:** rascunho; análise documental/manual, não é autorização para coletar.  
-**Consulta:** 11/10/2026. Revalidar termos, `robots.txt` e páginas antes de habilitar qualquer fonte.
+**Consulta:** análise documental em 11/10/2026; canais oficiais de contato revalidados em 12/10/2026. Revalidar termos, `robots.txt` e páginas antes de habilitar qualquer fonte.
 
 ## Objetivo e limite
 
@@ -60,6 +60,23 @@ Nenhuma opção de mudança de escopo está aprovada. A Fase 0 e a implementaç�
 2. Confirmar acesso permitido a página de busca/catálogo e página de produto, sem autenticação e sem contornar mecanismos técnicos.
 3. Inspecionar manualmente exemplos representativos e registrar URL, data, campos visíveis/estruturados e variantes/vendedor, sem automatizar requisições.
 4. Somente então classificar cada domínio como elegível para coleta automatizada de HTML público ou descartado; escolher pelo menos três elegíveis antes de aprovar a saída da Fase 0. Se não houver três, rever a viabilidade do MVP antes de qualquer implementação.
+
+## Canais para solicitar autorização — 12/10/2026
+
+Foram localizados canais oficiais para encaminhar pedidos de esclarecimento/autorização. A existência de um canal de atendimento não demonstra que a loja autorizou a coleta; a resposta precisa ser escrita e cobrir o uso proposto. Os dois domínios cujos termos consultados proíbem automação (Carrefour e Fast Shop) ficam fora desta rodada.
+
+| Candidata | Motivo do contato | Canal oficial localizado | Como encaminhar |
+|---|---|---|---|
+| Pichau | Os termos consultados tratam de bots/scripts para automatizar compras e não esclarecem o uso para comparação de preços. | [Atendimento da loja virtual](https://www.pichau.com.br/atendimento) e [portal SAC para abrir ticket](https://sac.pichau.com.br/support/home). | Pedir que a solicitação seja encaminhada ao responsável por termos, conteúdo do site ou jurídico. Usar o canal oficial atual, pois o endereço de e-mail é protegido contra extração automatizada nesta consulta. |
+| TerabyteShop | Os termos de venda não esclarecem coleta automatizada de páginas de produto. | [Fale Conosco/Suporte](https://suporte.tera.com.br/), ligado no rodapé oficial da loja. | Abrir solicitação pedindo encaminhamento ao responsável por termos/autorização de uso do site. O e-mail `politicas@terabyteshop.com.br` é indicado para assuntos de dados pessoais; não é o canal primário para este pedido de conteúdo. |
+| KaBuM! | Os termos e `robots.txt` não puderam ser confirmados na consulta anterior; não há autorização expressa registrada. | [Contato/atendimento oficial](https://www.kabum.com.br/contato), com atendimento via chat. | Pedir encaminhamento ao responsável por políticas do site/conteúdo. O endereço `vendas@kabum.com.br` é indicado para vendas a pessoa jurídica e não será usado como canal primário para esta solicitação. |
+| Magazine Luiza | A página integral dos termos não pôde ser confirmada e não há autorização expressa registrada. | [Central oficial de atendimento](https://atendimento.magazineluiza.com.br/hc/pt-br), que apresenta a opção “Fale com a gente”. | Solicitar os termos aplicáveis e o encaminhamento à área responsável por autorizar uso automatizado de páginas públicas. O canal B2B de parcerias não é o canal primário para esta solicitação. |
+| Mercado Livre | A regra localizada pertence aos termos do Programa de Desenvolvedores; sua aplicação a uma navegação HTML independente não foi esclarecida. | [Central oficial de Ajuda](https://www.mercadolivre.com.br/ajuda), com opções de contato conforme a conta/assunto. | Pedir esclarecimento sobre os termos aplicáveis a um projeto independente que não usará APIs nem participará do programa. Não abrir cadastro no Programa de Desenvolvedores para esse fim. |
+| Amazon Brasil | As evidências anteriores são de programas/serviços específicos e não confirmam os termos aplicáveis às páginas do varejo. | [Ajuda e contato de pedidos da Amazon Brasil](https://www.amazon.com.br/gp/help/customer/contact-us); páginas oficiais do varejo também exibem “Fale conosco”. | Solicitar encaminhamento à equipe responsável pelos termos do site Amazon.com.br e autorização de uso de conteúdo público. Não usar o formulário de Associados, pois o projeto não participará desse programa. |
+
+**Rodada de contato sugerida:** enviar o modelo individualmente às seis candidatas acima, começando por Pichau, TerabyteShop e KaBuM! e mantendo Magazine Luiza, Mercado Livre e Amazon Brasil como alternativas para ampliar categorias/modelos de loja. Esta ordem é apenas operacional; não seleciona uma fonte única nem altera as regras de elegibilidade.
+
+**Estado dos pedidos:** nenhum pedido foi enviado e nenhuma resposta/autorização foi recebida. O modelo continua em rascunho. Antes do envio, o responsável pelo projeto deve preencher nome e e-mail de contato e, se disponível, o domínio do projeto. Até existir autorização escrita válida, todos os domínios permanecem desabilitados para coleta automatizada.
 
 ## Critério de autorização aprovado pelo usuário
 
