@@ -169,8 +169,8 @@ Definir os fluxos do ASP.NET Core Identity para uma aplicação local com vário
 
 - O primeiro administrador será criado por comando local de uso único no host, com senha informada sem valor padrão. Detalhar a guarda que impede reuso do bootstrap e como proteger a senha para que não apareça em argumentos, logs ou arquivos versionados.
 - Decisão aprovada: recuperação administrativa por comando local no host, sem depender de e-mail. Detalhar a precondição de uso, os mecanismos do Identity e a proteção da senha contra exposição em argumentos, logs ou arquivos versionados.
-- Provisionamento/desativação de usuários sem cadastro público e regras para redefinir credenciais dessas contas.
-- Identificador de login, política de senha, redefinição das credenciais dos usuários provisionados e resposta a perda de acesso dessas contas.
+- Decisão aprovada: administrador inicia pelo app a redefinição da senha de outro usuário, que deve escolher uma nova senha no próximo login. Definir ativação segura do fluxo e proteção de qualquer credencial temporária.
+- Provisionamento/desativação de usuários sem cadastro público, identificador de login, política de senha e resposta a perda de acesso dessas contas.
 - MFA: obrigatório ou opcional; recuperação de segundo fator.
 - Política de senha compatível com Identity, lockout, sessão/cookie e encerramento de sessão.
 - Exclusão/desativação de conta e dos acompanhamentos/históricos privados.
@@ -181,6 +181,7 @@ Definir os fluxos do ASP.NET Core Identity para uma aplicação local com vário
 - [ ] O administrador provisiona contas; não há cadastro público, e os fluxos de login, gestão, redefinição e desativação estão descritos.
 - [ ] O comando local cria o primeiro administrador apenas quando o bootstrap ainda não foi concluído, solicita senha sem valor padrão e não expõe a senha em argumentos, logs ou arquivos versionados.
 - [ ] O comando local de recuperação permite redefinir a credencial administrativa no host, sem depender de e-mail, e protege a senha contra exposição em argumentos, logs ou arquivos versionados.
+- [ ] Pelo app, o administrador inicia a redefinição da senha de outro usuário; esse usuário deve definir uma nova senha antes de seguir no próximo login, e qualquer etapa de ativação protege credenciais temporárias.
 - [ ] Defaults de segurança têm justificativa e usam os mecanismos suportados do ASP.NET Core Identity.
 - [ ] Host e API aceitam conexões somente por loopback/localhost e não ficam acessíveis pela rede local.
 - [ ] Decisões estão registradas no contexto/ADR adequado e são referenciadas pelas specs de conta.
