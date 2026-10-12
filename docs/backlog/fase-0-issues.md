@@ -171,7 +171,7 @@ Definir os fluxos do ASP.NET Core Identity para uma aplicação local com vário
 - Decisão aprovada: recuperação administrativa por comando local no host, sem depender de e-mail. Detalhar a precondição de uso, os mecanismos do Identity e a proteção da senha contra exposição em argumentos, logs ou arquivos versionados.
 - Decisão aprovada: administrador define pelo app uma senha temporária e a entrega diretamente ao usuário. No próximo login, o usuário precisa definir uma nova senha antes de continuar. Não expor nem manter a senha temporária em texto puro; usar os mecanismos suportados pelo Identity.
 - Provisionamento/desativação de usuários sem cadastro público, identificador de login, política de senha e resposta a perda de acesso dessas contas.
-- Decisão aprovada: MFA obrigatória para administradores e opcional para os demais usuários. Definir o método de segundo fator, sua ativação e o processo de recuperação.
+- Decisão aprovada: MFA TOTP obrigatória para administradores e opcional para os demais usuários, com códigos de recuperação de uso único e sem dependência de e-mail. Detalhar ativação, exibição segura e consumo dos códigos; decidir o procedimento para perda do autenticador e de todos os códigos.
 - Política de senha compatível com Identity, lockout, sessão/cookie e encerramento de sessão.
 - Exclusão/desativação de conta e dos acompanhamentos/históricos privados.
 - Política padrão dos endpoints locais, proteção antifalsificação e autorização por proprietário; acesso limitado à máquina hospedeira por loopback/localhost.
@@ -182,7 +182,8 @@ Definir os fluxos do ASP.NET Core Identity para uma aplicação local com vário
 - [ ] O comando local cria o primeiro administrador apenas quando o bootstrap ainda não foi concluído, solicita senha sem valor padrão e não expõe a senha em argumentos, logs ou arquivos versionados.
 - [ ] O comando local de recuperação permite redefinir a credencial administrativa no host, sem depender de e-mail, e protege a senha contra exposição em argumentos, logs ou arquivos versionados.
 - [ ] Pelo app, o administrador define uma senha temporária e a entrega diretamente ao usuário; no próximo login, esse usuário deve definir uma nova senha antes de continuar, e a senha temporária não é exposta nem mantida em texto puro.
-- [ ] MFA é exigida em todas as contas administrativas e pode ser habilitada por usuários comuns; o método e a recuperação do segundo fator estão definidos e cobertos pelas specs.
+- [ ] MFA TOTP é exigida em todas as contas administrativas e pode ser habilitada por usuários comuns; códigos de recuperação são de uso único, exibidos com segurança e sem dependência de e-mail.
+- [ ] Há um procedimento autorizado e coberto pelas specs para recuperar o acesso quando a pessoa perde o app autenticador e todos os códigos.
 - [ ] Defaults de segurança têm justificativa e usam os mecanismos suportados do ASP.NET Core Identity.
 - [ ] Host e API aceitam conexões somente por loopback/localhost e não ficam acessíveis pela rede local.
 - [ ] Decisões estão registradas no contexto/ADR adequado e são referenciadas pelas specs de conta.
