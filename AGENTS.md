@@ -73,3 +73,9 @@ Este repositório está na fase de planejamento. Não crie a aplicação, scaffo
 - Converse com o usuário e escreva documentação de produto em português. Mantenha nomes de APIs, tipos, classes, namespaces e termos de código em inglês conforme as convenções .NET.
 - Ao alterar comportamento, atualize a spec, contexto de domínio, roadmap ou ADR pertinente na mesma mudança.
 - Não marque hipótese como decisão aprovada nem prometa suporte de um domínio sem validação documentada.
+
+## Operações Git
+
+- O usuário autorizou gravar alterações e executar comandos Git neste repositório, incluindo `status`, `diff`, `log`, `add`, `commit`, `fetch`, `pull` e `push` para o remote configurado, quando necessários à tarefa solicitada. Não peça autorização a cada operação rotineira.
+- Antes de preparar ou registrar alterações, confira o estado e o diff; selecione apenas arquivos pertencentes à tarefa atual e preserve alterações não relacionadas.
+- Para apagar alterações locais, reescrever histórico publicado, usar `push --force` ou remover branches/tags, solicite autorização específica para a ação.
