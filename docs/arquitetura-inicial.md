@@ -1,6 +1,7 @@
 # Planejamento e arquitetura inicial — Analisador de preços
 
 **Estado:** planejamento; nenhuma aplicação foi criada.  
+**Nota de escopo:** o usuário definiu o produto como uma aplicação local para uso próprio, sem hospedagem pública, com vários usuários autenticados e contas provisionadas pelo administrador local. A inicialização do administrador e o acesso apenas na máquina hospedeira ou também na rede local ainda precisam ser definidos. O sistema não contata lojas: as únicas chamadas externas previstas são requisições HTTP GET de leitura a páginas públicas elegíveis.
 **Data da pesquisa:** 11/10/2026.  
 **Região inicial considerada:** Brasil; idioma pt-BR; moeda BRL.
 **Direção do MVP:** buscar por texto ou EAN/GTIN em páginas públicas de vários sites de compras. O sistema manterá seu próprio índice de páginas e ofertas normalizadas, usando crawler e parsers; nenhuma API comercial de busca nem marketplace específico será requisito. Comparar apenas o preço do item; atualização desejada a cada seis horas, sujeita às regras de cada site.
@@ -8,7 +9,7 @@
 
 ## 1. Objetivo do produto
 
-Uma pessoa cria uma conta, informa um produto por nome ou EAN/GTIN, escolhe os anúncios que correspondem ao produto e acompanha preços em diferentes lojas. O sistema preserva leituras datadas para mostrar comparação atual e variação de preço. URL não faz parte da entrada inicial.
+O administrador local provisiona contas. Cada usuário entra no app local, informa um produto por nome ou EAN/GTIN, escolhe os anúncios correspondentes e acompanha preços em diferentes lojas. O sistema preserva leituras datadas para mostrar comparação atual e variação de preço. URL não faz parte da entrada inicial.
 
 A unidade acompanhada é o **produto**; a unidade que tem preço e vendedor é a **oferta/anúncio**. Um produto pode ter várias ofertas, em vários vendedores e sites. Cada oferta tem seu próprio histórico.
 
@@ -20,14 +21,14 @@ A unidade acompanhada é o **produto**; a unidade que tem preço e vendedor é a
 - **Coleta e busca:** processo Worker .NET separado, que descobre páginas por sitemaps/catálogos públicos, coleta páginas elegíveis e alimenta um índice próprio; executa jobs persistidos sem deixar uma requisição HTTP aberta.
 - **Organização:** solução modular, inicialmente um monólito modular com um host Server (Blazor + API) e um processo Worker. Não iniciar com microserviços.
 - **Interface Blazor:** Blazor Web App com renderização interativa no servidor (Interactive Server), conforme escolha do usuário.
-- **Hospedagem inicial:** um host ASP.NET Core na mesma origem hospeda Blazor, endpoints REST versionados e Identity. O Worker é outro processo; ambos usam Application/Domain e PostgreSQL.
+- **Hospedagem inicial:** um host ASP.NET Core e PostgreSQL são executados localmente; o Worker também roda localmente. Definir se o host aceita conexões somente da máquina hospedeira ou também da rede local antes de fechar regras de firewall e implantação.
 - **Seleção de bibliotecas:** priorizar bibliotecas e componentes oficiais/suportados pela Microsoft quando atenderem aos requisitos. MudBlazor é uma escolha explícita do usuário para a camada de UI e uma exceção aprovada a essa preferência geral; acompanhar sua compatibilidade, manutenção e licença. Para outras dependências de terceiros, exigir uma lacuna concreta, justificativa e avaliação de suporte, manutenção, segurança e licença.
 
 Com Interactive Server, eventos e componentes interativos são executados no servidor através de um circuito em tempo real. No MVP, os componentes Blazor chamam os casos de uso no servidor; não fazem uma chamada HTTP de volta ao próprio host. A Web API REST é parte privada do sistema e não será oferecida a clientes terceiros neste momento. Essa organização mantém uma única origem e uma sessão ASP.NET Core Identity baseada em cookie. Todos os endpoints REST ainda validam autenticação, autorização e propriedade dos dados. Se futuramente houver clientes externos ou a UI for separada do host, reavaliar OIDC/JWT e proteção CSRF/CORS antes de mudar a implantação.
 
 ### 2.1. Base de autenticação e autorização
 
-- **Identidade:** ASP.NET Core Identity é o sistema de usuários e contas locais, persistido em PostgreSQL. Usar os fluxos suportados do framework para confirmação de e-mail, recuperação de senha, bloqueio após tentativas inválidas, MFA e gestão de sessões; não reimplementar hash/sal de senha nem o ciclo de login.
+- **Identidade:** ASP.NET Core Identity é o sistema de usuários e contas locais, persistido em PostgreSQL. O administrador local provisiona contas; não há cadastro público. Usar os mecanismos suportados do framework para senhas, bloqueio após tentativas inválidas, MFA, gestão de sessões e redefinição administrativa; não reimplementar hash/sal de senha nem o ciclo de login. Bootstrap do administrador e recuperação de acesso ficam para decisão da Fase 0.
 - **Blazor no navegador:** autenticação por cookie Identity, com HTTPS e atributos `Secure`, `HttpOnly` e `SameSite` apropriados. A Microsoft recomenda cookies para apps de navegador; evitar bearer tokens no `localStorage`. Páginas/fluxos de conta devem seguir a integração oficial Identity do Blazor e não executar operações de Identity diretamente em componentes interativos.
 - **Web API:** a API é de uso interno pelo próprio sistema e não terá consumidores terceiros no MVP. Exigir autenticação por padrão e liberar endpoints públicos explicitamente. Se uma requisição HTTP autenticada por cookie alterar dados, aplicar proteção antifalsificação (CSRF). Os componentes Interactive Server chamam os casos de uso no servidor, sem fazer uma chamada HTTP para a própria API.
 - **Tokens:** não emitir JWT nem hospedar servidor OAuth/OIDC no MVP. ASP.NET Core Identity com cookie protegido cobre a autenticação do navegador e os fluxos internos planejados. OpenIddict não é necessário para esse escopo. Se forem adicionados clientes externos, mobile ou uma UI separada que precise de Bearer JWT, avaliar primeiro as opções oficiais/suportadas pela Microsoft. Se elas não atenderem ao requisito, selecionar um emissor OIDC confiável de terceiros com justificativa técnica e revisão de suporte, manutenção, segurança e licença. A API deve validar assinatura, emissor (`iss`), audiência (`aud`), expiração e claims; não criar endpoint artesanal para emitir JWT. Os tokens Bearer das Identity API são proprietários, não JWT padrão.
@@ -49,10 +50,10 @@ No MVP, ASP.NET Core Identity local e cookie protegido atendem a autenticação 
 
 ## 3. Módulos de negócio e plataforma
 
-1. **Identidade e acesso** — cadastro, login, recuperação de senha e autorização. Todo produto acompanhado e todo alerta pertence a um usuário.
+1. **Identidade e acesso** — login, provisionamento administrativo de usuários, recuperação de acesso e autorização. Todo produto acompanhado pertence ao usuário que o criou.
 2. **Catálogo canônico** — identidade do produto: EAN/GTIN quando disponível, marca, modelo, categoria e características que distinguem versões.
 3. **Acompanhamento** — vínculo entre usuário e produto, consulta de origem, frequência, status ativo/pausado e preferências básicas. O intervalo desejado no MVP é de seis horas, sujeito às regras e limites do domínio.
-4. **Descoberta e índice web próprio** — aceita texto ou EAN/GTIN e pesquisa o índice local alimentado pelo crawler. Pode receber adaptadores opcionais para provedores de busca, mas nenhum deles é obrigatório nem central para o produto.
+4. **Descoberta e índice web próprio** — aceita texto ou EAN/GTIN e pesquisa o índice local alimentado pelo crawler; não depende de provedores externos de busca.
 5. **Cadastro de domínios e conectores** — configura vários sites de compras, políticas de coleta, sitemaps, limites, capacidades e exceções específicas de cada site. A arquitetura não presume um marketplace único.
 6. **Crawler e extração** — descobre URLs por sitemaps, catálogos, páginas de busca públicas dos próprios sites e links públicos; lê páginas elegíveis; extrai dados estruturados (`Product`/`Offer` em JSON-LD, Microdata ou RDFa) e usa parsers específicos por domínio como fallback.
 7. **Correspondência e confirmação** — associa páginas e ofertas ao produto canônico. Prioriza GTIN/EAN e identificadores estáveis; correspondência apenas por título é sugestão e deve ser confirmada quando houver dúvida.
@@ -60,7 +61,7 @@ No MVP, ASP.NET Core Identity local e cookie protegido atendem a autenticação 
 9. **Normalização** — converte os dados extraídos para um formato comum, mantendo moeda, preço do item, condição, variante, disponibilidade, URL e origem. Frete não participa das comparações do MVP.
 10. **Ofertas e histórico** — mantém o anúncio/página de origem e grava cada coleta como observação histórica. Uma nova leitura cria um registro novo; não apaga a anterior.
 11. **Comparação e análise** — preço atual por oferta, menor preço válido, diferença em R$ e percentual, mínimo/máximo do período e série temporal.
-12. **Alertas** — regra por preço-alvo ou queda percentual e entrega de notificação. A entrega entra depois do histórico e da coleta agendada.
+12. **Alertas** — fora do escopo local atual; qualquer alerta externo ou canal de notificação exige nova decisão do usuário.
 13. **Operação e administração** — saúde do crawler e parsers, erros e latência por domínio, jobs atrasados, métricas, configuração segura e política de retenção.
 
 ## 4. Monólito modular, Clean Architecture e vertical slices
@@ -72,7 +73,7 @@ Organizar primeiro por capacidade de negócio, não por um conjunto global de pa
 - **WebDiscovery:** domínios, crawler, índice próprio, extração e adaptadores por domínio.
 - **PriceTracking:** acompanhamentos, ofertas confirmadas e observações de preço.
 - **PriceAnalysis:** comparação, métricas e séries históricas.
-- **Notifications:** regras e entrega de alertas.
+- **Notifications:** não incluído no MVP local; só adicionar mediante decisão futura do usuário.
 - **Operations:** estado do crawler, jobs, saúde e configuração operacional.
 
 Dentro de cada módulo, organizar a aplicação por fatias verticais (casos de uso), mantendo o domínio e a infraestrutura sob a fronteira do módulo. Exemplo ilustrativo:
@@ -140,7 +141,7 @@ O projeto seguirá Spec-Driven Development (SDD): especificações aprovadas, co
 
 | Entidade | Finalidade | Campos relevantes |
 |---|---|---|
-| `User` | Conta gerenciada pelo Identity | ID, e-mail e estado |
+| `User` | Conta local provisionada pelo administrador e gerenciada pelo Identity | ID, identificador de login e estado |
 | `Product` | Produto canônico | GTIN/EAN, marca, modelo, atributos/variante |
 | `TrackedProduct` | Produto seguido por uma conta | UserId, ProductId, texto ou EAN/GTIN da busca, frequência, ativo |
 | `WebSource` | Site/domínio de compras e política de coleta | domínio, nome, sitemap, estado, frequência/limites, última coleta |
@@ -148,8 +149,7 @@ O projeto seguirá Spec-Driven Development (SDD): especificações aprovadas, co
 | `Offer` | Oferta extraída de uma página | WebSourceId, ID externo se existir, URL, vendedor se disponível, ProductId, condição/variante |
 | `PriceObservation` | Uma leitura histórica da oferta | OfferId, coletadoEmUtc, preço do item, moeda, disponibilidade |
 | `CollectionJob` | Descoberta, crawl ou atualização a processar | tipo, domínio/URL/produto, estado, tentativas, agendadoEmUtc, erro resumido |
-| `PriceAlert` | Regra de alerta | usuário/produto, preço-alvo ou queda percentual, ativo |
-| `Notification` | Entrega e estado de um alerta | regra, canal, criadoEmUtc, enviadoEmUtc, estado |
+| `PriceAlert` / `Notification` | Conceitos futuros, fora do escopo atual | Só serão detalhados após nova decisão do usuário |
 
 ### Regras importantes dos dados
 
@@ -202,20 +202,20 @@ A API deve conferir propriedade do recurso pelo usuário autenticado em cada lei
 |---|---|---|
 | Crawler e índice próprios | Descobrir páginas públicas de vários domínios e pesquisar localmente por texto/EAN/GTIN. Sitemaps, páginas de busca dos próprios sites, catálogos, links e dados estruturados ajudam a localizar e interpretar páginas. A cobertura depende dos domínios conhecidos, das regras de acesso e da capacidade de atualização. | Caminho principal do MVP; meta de piloto em pelo menos três domínios, expansível por configuração e adaptadores. Nenhum serviço pago de busca é requisito. |
 | Dados estruturados `schema.org` | `Product` e `Offer` podem expor identificadores, preço, moeda e disponibilidade em JSON-LD/Microdata/RDFa. Nem todo site publica esses dados e a presença deles não garante que sejam completos ou atuais. | Usar parser genérico primeiro; adaptar por domínio quando necessário e validar os valores extraídos contra a página visível. |
-| APIs de busca web opcionais | Um provedor pode ajudar a descobrir URLs fora dos domínios já indexados, mas cria custo, condições de uso, disponibilidade e possível restrição à retenção de resultados. Brave, por exemplo, exige um plano com direitos de armazenamento para persistir resultados de busca; também não concede direitos sobre o conteúdo dos sites listados. | Manter como plugin opcional/substituível; resultados externos não são fonte canônica de preço nem requisito para pesquisar ou manter o histórico. |
-| APIs de marketplace e feeds de lojistas | Podem oferecer dados estruturados e estáveis para alguns domínios, mas cobertura, autenticação, cotas e direitos variam. | Usar somente como otimização opcional por domínio quando for permitido e útil; nunca acoplar o domínio ao modelo de produto ou à busca central. |
+| APIs de busca web | Podem ajudar a descobrir URLs fora dos domínios já indexados, mas criam custo, dependência e condições de armazenamento. | Fora do escopo atual; a cobertura usa o índice próprio e não depende de provedores externos. |
+| APIs de marketplace e feeds de lojistas | Podem oferecer dados estruturados, mas têm condições, cotas e dependências próprias. | Fora do escopo atual; não usar como fonte de dados sem nova decisão aprovada do usuário. |
 | Google Merchant API | Gerencia produtos da própria conta Merchant Center; não é uma busca geral de preços entre lojas. | Não usar como índice da web. |
 
 APIs públicas de busca mudam e não são uma base segura para o produto: a Custom Search JSON API do Google está fechada para novos clientes e a Microsoft encerrou as Bing Search APIs em 11/08/2025. A arquitetura deve operar sem essas APIs. Um índice próprio também não cobre automaticamente a Internet inteira: o produto deve comunicar quais domínios foram pesquisados e permitir expandir a cobertura.
 
 ### Gate obrigatório por domínio
 
-Antes de habilitar crawling em um domínio, registrar: forma de descoberta (sitemap, catálogo ou busca pública); estrutura e campos; frequência/limites; termos de uso e política de coleta; `robots.txt`; dados que podem ser armazenados; sinais de bloqueio; comportamento em erro; e forma de desabilitar/reprocessar. Identificar o crawler com User-Agent informativo, limitar concorrência, respeitar recusas e não contornar login, CAPTCHA ou controles de acesso. O Robots Exclusion Protocol orienta crawlers, mas não substitui autorização ou controles de acesso.
+Antes de habilitar crawling em um domínio, registrar: forma de descoberta (sitemap, catálogo ou busca pública); estrutura e campos; frequência/limites; termos de uso e política de coleta; `robots.txt`; dados que podem ser armazenados; sinais de bloqueio; comportamento em erro; e forma de desabilitar/reprocessar. Só habilitar se os termos públicos aplicáveis permitirem expressamente a coleta automatizada; se forem silenciosos ou ambíguos, manter desabilitado. Não contatar lojas por mensagens, formulários, chamados ou pedidos. As únicas chamadas externas da aplicação serão requisições HTTP GET de leitura a páginas HTML públicas elegíveis. Identificar o crawler com User-Agent informativo, limitar concorrência, respeitar recusas e não contornar login, CAPTCHA ou controles de acesso. O Robots Exclusion Protocol orienta crawlers, mas não substitui autorização ou controles de acesso.
 
 ## 9. Requisitos não funcionais
 
 - **Segurança:** senha e sessão tratadas por Identity; acesso por usuário conferido na API; segredos fora do código e protegidos; HTTPS; limites de requisição; logs sem tokens.
-- **Privacidade:** coletar apenas dados pessoais necessários; incluir exclusão de conta/dados e canal de contato no desenho; revisar requisitos da LGPD antes do lançamento.
+- **Privacidade:** coletar apenas dados pessoais necessários, proteger o isolamento entre contas locais, permitir exclusão de dados e revisar requisitos aplicáveis antes da distribuição.
 - **Resiliência:** chamadas HTTP com timeout, limite de concorrência por domínio, retentativas com espera crescente e circuit breaker quando apropriado; erro ou bloqueio de um domínio não derruba a busca inteira.
 - **Consistência:** jobs duráveis e idempotentes; não perder coletas se a API ou Worker reiniciar.
 - **Rastreabilidade:** cada preço apresentado inclui fonte e instante da última leitura.

@@ -17,7 +17,7 @@ Concluir a definição do MVP antes de criar aplicação ou código de produçã
 
 ### Contexto
 
-O roadmap exige análise manual de páginas, validação de fontes, decisões de domínio, arquitetura e segurança, estratégia de testes e especificações aprovadas. A coleta usará somente HTML público cuja automação seja permitida expressamente nos termos aplicáveis ou por autorização escrita. APIs, feeds e integrações de terceiros não serão fontes de dados.
+O roadmap exige análise manual de páginas, validação de fontes, decisões de domínio, arquitetura e segurança, estratégia de testes e especificações aprovadas. A coleta usará somente HTML público cuja automação seja permitida expressamente nos termos públicos aplicáveis. O projeto não contatará lojas; APIs, feeds e integrações de terceiros não serão fontes de dados.
 
 ### Critérios de conclusão
 
@@ -56,22 +56,22 @@ O roadmap exige análise manual de páginas, validação de fontes, decisões de
 
 ### Objetivo
 
-Identificar no mínimo três lojas que permitam expressamente, nos termos aplicáveis, ou autorizem por escrito o acesso automatizado a páginas HTML públicas para comparação de preços.
+Identificar no mínimo três lojas cujos termos públicos aplicáveis permitam expressamente o acesso automatizado a páginas HTML públicas para comparação de preços.
 
 ### Escopo
 
 - Revisar candidatos com formatos e categorias variados, incluindo os já registrados no relatório de pesquisa.
-- Guardar URL e data dos termos, política de coleta, `robots.txt` e resposta da loja, quando necessária.
+- Guardar URL e data dos termos, política de coleta e `robots.txt`; não contatar lojas nem solicitar autorização ou esclarecimento.
 - Não usar páginas que exijam login, não automatizar API/feed, nem contornar CAPTCHA, bloqueio ou limite técnico.
 
 ### Situação atual
 
-A revisão manual de oito candidatos não comprovou três fontes elegíveis. Carrefour e Fast Shop têm proibições explícitas nos termos consultados; para os demais, há falta de autorização comprovada ou incerteza sobre o escopo dos documentos. Em 12/10/2026, foram mapeados canais oficiais para pedir esclarecimento/autorização a Pichau, TerabyteShop, KaBuM!, Magazine Luiza, Mercado Livre e Amazon Brasil. O [relatório de fontes](../research/validacao-fontes-fase-0.md) registra evidências, canais e a ordem sugerida; o [modelo de solicitação](../research/modelo-solicitacao-autorizacao-coleta.md) continua em rascunho e nenhum pedido foi enviado. Este issue permanece aberto até obter três autorizações válidas ou revisar com o usuário os critérios de cobertura/fontes.
+A revisão manual de oito candidatos não comprovou três fontes elegíveis. Carrefour e Fast Shop têm proibições explícitas nos termos consultados; para os demais, não foi encontrada permissão expressa nos termos. Em 12/10/2026, canais de atendimento chegaram a ser mapeados, mas a decisão atual é não contatar lojas; esses canais e o modelo de solicitação estão arquivados e não devem ser usados. O [relatório de fontes](../research/validacao-fontes-fase-0.md) registra a decisão e as evidências. Este issue permanece aberto até identificar fontes cujos termos públicos autorizem expressamente a coleta ou registrar inviabilidade e revisar o escopo com o usuário.
 
 ### Critérios de conclusão
 
-- [ ] Existe uma ficha de evidências para cada candidato, classificando-o como elegível, aguardando autorização ou descartado.
-- [ ] Para cada elegível, há permissão expressa nos termos ou autorização escrita arquivada/referenciada.
+- [ ] Existe uma ficha de evidências para cada candidato, classificando-o como elegível, desabilitado por falta de permissão expressa ou descartado por proibição.
+- [ ] Para cada elegível, os termos públicos aplicáveis permitem expressamente a coleta automatizada e a retenção pretendida.
 - [ ] A regra `robots.txt`, limites técnicos e retenção da fonte foram registrados separadamente da evidência de autorização.
 - [ ] Foram selecionados pelo menos três domínios elegíveis; se isso não for possível, a limitação e opções de revisão do escopo foram documentadas.
 - [ ] `docs/research/validacao-fontes-fase-0.md` e `docs/roadmap.md` refletem os resultados.
@@ -163,19 +163,20 @@ Definir os comportamentos de domínio que determinam se uma oferta pode entrar n
 
 ### Objetivo
 
-Definir os fluxos de ASP.NET Core Identity local e controles de autorização para contas e recursos privados.
+Definir os fluxos do ASP.NET Core Identity para uma aplicação local com vários usuários provisionados por um administrador, sem cadastro público, e os controles de autorização dos recursos privados.
 
 ### Decisões a documentar
 
-- Cadastro por e-mail/senha, confirmação de e-mail e recuperação sem revelar se a conta existe.
+- Bootstrap seguro do administrador local e provisionamento de usuários sem cadastro público.
+- Identificador de login, política de senha, redefinição administrativa de credenciais e resposta a perda de acesso do administrador.
 - MFA: obrigatório ou opcional; recuperação de segundo fator.
 - Política de senha compatível com Identity, lockout, sessão/cookie e encerramento de sessão.
-- Exclusão de conta e dos acompanhamentos/históricos privados.
-- Política padrão dos endpoints internos, proteção antifalsificação e autorização por proprietário.
+- Exclusão/desativação de conta e dos acompanhamentos/históricos privados.
+- Política padrão dos endpoints locais, eventual acesso pela rede local, proteção antifalsificação e autorização por proprietário.
 
 ### Critérios de conclusão
 
-- [ ] Fluxos e estados de conta estão descritos, incluindo falhas e abuso relevantes.
+- [ ] O administrador provisiona contas; não há cadastro público, e os fluxos de login, gestão, redefinição e desativação estão descritos.
 - [ ] Defaults de segurança têm justificativa e usam os mecanismos suportados do ASP.NET Core Identity.
 - [ ] Decisões estão registradas no contexto/ADR adequado e são referenciadas pelas specs de conta.
 - [ ] Nenhum emissor JWT/OIDC foi incluído no escopo sem cliente externo aprovado.
@@ -207,7 +208,7 @@ Produzir um desenho revisável do monólito modular, módulos, dependências, pe
 - [ ] Fronteiras e responsabilidades dos módulos foram definidas.
 - [ ] Diagramas mostram caminho principal de consulta, descoberta, confirmação, observação, histórico e autorização.
 - [ ] Modelo conceitual preserva Produto, Página, Oferta, Acompanhamento e Observação como conceitos distintos.
-- [ ] Ownership/isolamento por conta, estados de job, retentativas e idempotência estão representados.
+- [ ] Ownership/isolamento por usuário local, estados de job, retentativas e idempotência estão representados.
 - [ ] A fatia vertical mantém juntos os arquivos específicos de cada use case; dependências respeitam as decisões Clean Architecture/DDD.
 - [ ] Contratos e modelo foram atualizados após as decisões de domínio/fontes.
 
@@ -299,8 +300,8 @@ Estimar se um intervalo-alvo de seis horas é viável para as fontes elegíveis 
 
 ### Entradas necessárias
 
-- Usuários previstos no início e horizonte de crescimento.
-- Acompanhamentos médios e máximos por conta.
+- Número de usuários locais previstos.
+- Acompanhamentos médios e máximos por usuário local.
 - Número de ofertas confirmadas por acompanhamento e páginas a verificar.
 - Limites por domínio comprovados no PLAN-001.
 

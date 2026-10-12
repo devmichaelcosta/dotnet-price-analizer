@@ -1,25 +1,25 @@
 # Roadmap inicial — Analisador de preços
 
 **Estado:** rascunho para planejamento; não há aplicação implementada.  
-**Sequência proposta:** concluir decisões e acesso às fontes antes de iniciar a implementação.
+**Sequência proposta:** concluir decisões e validação documental das fontes antes de iniciar a implementação.
 
 ## Premissas do primeiro lançamento
 
 - Mercado inicial: Brasil, interface pt-BR, preço principal em BRL.
-- Conta obrigatória para acompanhar produtos.
+- Uso e implantação: aplicação local para uso próprio, sem hospedagem pública. Há múltiplos usuários autenticados; o administrador local provisiona suas contas, sem cadastro público.
 - Não usar APIs, feeds ou integrações de terceiros para coletar dados de produtos.
 - Entradas aceitas no primeiro corte: texto e EAN/GTIN. URL fica fora do primeiro escopo.
 - Comparação inicial usa somente o preço anunciado do item, sem somar frete e sem pedir CEP.
 - Frequência desejada de atualização: a cada seis horas, configurável e sujeita às regras e limites de cada domínio. Atualização manual também deve existir.
-- O caminho de descoberta e coleta é um crawler e índice próprios, com parsers genéricos e adaptadores por domínio, limitado a páginas HTML públicas cuja coleta automatizada seja expressamente permitida pelos termos ou por autorização escrita da loja. Se os termos forem silenciosos, pedir autorização escrita; se proibirem, descartar a fonte. `robots.txt` sozinho não prova autorização.
+- O caminho de descoberta e coleta é um crawler e índice próprios, com parsers genéricos e adaptadores por domínio, limitado a páginas HTML públicas cuja coleta automatizada seja expressamente permitida pelos termos públicos aplicáveis. O projeto não contata lojas por mensagens, formulários, chamados ou pedidos de autorização. Se os termos forem silenciosos ou ambíguos, manter a fonte desabilitada; se proibirem a coleta, descartá-la. `robots.txt` sozinho não prova autorização.
 - O primeiro corte deve pesquisar e comparar ofertas em vários domínios públicos elegíveis; a meta de validação é pelo menos três domínios, escolhidos na Fase 0 e não codificados como dependência fixa.
 - O sistema não promete indexar toda a Internet: a cobertura começa nos domínios configurados e se expande conforme páginas acessíveis, regras de coleta e capacidade.
 - Interface escolhida: Blazor Web App Interactive Server com MudBlazor, no mesmo host ASP.NET Core que expõe a Web API.
-- A Web API é privada e será consumida apenas pelo próprio sistema no MVP; não haverá clientes terceiros nem aplicativos externos neste momento.
+- A Web API é privada, exposta apenas para uso local do próprio sistema; sem clientes terceiros, aplicativos externos ou hospedagem pública no MVP.
 - O usuário confirma anúncios ambíguos; correspondência errada comprometeria a análise de preço.
 - Histórico: para a mesma oferta, criar uma nova observação somente quando preço ou disponibilidade mudarem; não duplicar leituras idênticas.
-- Acompanhamentos e históricos são privados por conta. As observações são mantidas enquanto o acompanhamento existir e apagadas com ele, respeitados limites ou requisitos aplicáveis à fonte.
-- Alertas por e-mail ficam depois da coleta e do histórico.
+- Acompanhamentos e históricos são privados por conta local. As observações são mantidas enquanto o acompanhamento existir e apagadas com ele, respeitados limites ou requisitos aplicáveis à fonte.
+- Alertas e notificações externas ficam fora do escopo da instalação local planejada; qualquer canal de notificação exige nova decisão do usuário.
 - Arquitetura: monólito modular organizado por capacidades de negócio e fatias verticais; Clean Architecture/DDD orientam dependências e regras de domínio.
 - Processo de desenvolvimento: Spec-Driven Development (SDD), com contexto persistente do domínio, especificações por caso de uso, planos/tarefas co-localizados e decisões transversais registradas.
 - Testes: derivados dos critérios de aceite da spec; cada caso de uso e cada classe de domínio deve ter testes automatizados associados e rastreáveis.
@@ -42,20 +42,20 @@
 - Diagrama/contratos, modelo de dados e fluxos aprovados.
 - Lista piloto de pelo menos três domínios de compras, não codificada como fonte única.
 - Inventariar por domínio sitemaps, páginas HTML de busca/catálogo acessíveis, dados `schema.org/Product`/`Offer`, campos de preço/moeda/disponibilidade, frequência e termos que permitam coleta automatizada.
-- Registrar achados e evidências por fonte em [`docs/research/validacao-fontes-fase-0.md`](research/validacao-fontes-fase-0.md); não considerar um domínio piloto elegível sem permissão expressa nos termos ou autorização escrita para coleta automatizada de HTML público, e sem confirmar que a retenção está dentro dos limites.
-- Situação da pesquisa manual: oito lojas candidatas foram revisadas e nenhuma tem autorização comprovada para este projeto; duas têm proibição explícita nos termos consultados. Em 12/10/2026 foram mapeados canais oficiais para solicitar esclarecimento/autorização a seis candidatas; os pedidos ainda não foram enviados e nenhum domínio está habilitado. Manter a Fase 0 aberta enquanto se buscam autorizações escritas ou o usuário revisa a meta de cobertura e as restrições de fonte.
+- Registrar achados e evidências por fonte em [`docs/research/validacao-fontes-fase-0.md`](research/validacao-fontes-fase-0.md); só considerar elegível um domínio cujos termos públicos permitam expressamente a coleta automatizada de HTML público e cuja retenção esteja dentro dos limites.
+- Situação da pesquisa manual: oito lojas candidatas foram revisadas e nenhuma tem permissão expressa comprovada para este projeto; duas têm proibição explícita nos termos consultados. Nenhum domínio está habilitado. A decisão de produto é não contatar lojas: domínios com termos silenciosos ou ambíguos permanecem desabilitados, e a viabilidade deve ser revista se não houver fontes elegíveis.
 - Analisar manualmente páginas de exemplo em pelo menos três domínios: registrar como URLs podem ser descobertas, se as páginas são acessíveis, quais campos estruturados/visíveis existem, se o parser genérico parece suficiente e que exceções exigiriam adaptador. Guardar URLs de referência e evidências/documentação, sem escrever crawler ou parser nesta fase.
 - Estimar custo e escala de crawler, indexação própria e atualização a cada seis horas, sem fonte de dados por API ou feed.
 - Fechar fronteiras dos módulos, convenção das fatias verticais e regras de dependência entre Domain, Application/Features e Infrastructure.
 - Definir padrões visuais compartilhados do MudBlazor (tema, tipografia, responsividade, acessibilidade, comportamento de formulários, feedback, loading/empty/error states) sem colocar regras de negócio nos componentes.
 - Definir a estrutura dos projetos de teste e selecionar o framework priorizando tooling Microsoft; cada classe de domínio e cada caso de uso terão arquivos de teste organizados pela própria unidade funcional no projeto de testes.
-- Formalizar a autenticação do MVP: ASP.NET Core Identity local, cookie seguro para Blazor e Web API privada, sem consumidores terceiros.
-- Definir políticas e autorização por recurso/usuário, MFA, confirmação de conta, recuperação, lockout, antifalsificação e proteção das chaves Data Protection.
+- Definir o bootstrap seguro do administrador local, provisionamento de usuários e recuperação de credenciais, sem cadastro público.
+- Definir políticas locais de autenticação e sessão, MFA, lockout, antifalsificação, autorização dos endpoints e proteção das chaves Data Protection; determinar se o host aceitará conexões só da máquina ou também da rede local.
 - Registrar como decisão futura que qualquer cliente externo (mobile, frontend separado ou integração de terceiro) exige reavaliar OAuth/OIDC e emissão/validação de JWT; priorizar opções Microsoft e só adotar emissor de terceiros quando houver justificativa. Não criar emissor JWT caseiro nem tratar os tokens proprietários da Identity API como JWT padrão.
 - Documentar como a UI Blazor e endpoints internos usam a identidade autenticada e cookies, aplicando antifalsificação quando requisições por cookie alterarem dados.
 - Verificar, por domínio piloto, se os termos/limites permitem a retenção prevista: observações permanecem enquanto o acompanhamento existir e são apagadas junto com ele.
 
-**Critério de saída:** para pelo menos três domínios elegíveis há evidência documental/manual da forma de descoberta, acessibilidade e campos de produto/preço, com limites, permissões e estratégia de extração registrados; frequência de seis horas e custo/escala foram estimados e ajustados quando necessário; usuários, casos de uso e decisões de privacidade/retenção do MVP estão definidos; o modelo Identity local/cookie e a condição para reavaliar OIDC/JWT estão documentados; o contexto do domínio, a estratégia de testes e todas as especificações do MVP estão aprovados. Nenhum código de aplicação, crawler ou parser é escrito antes desse gate.
+**Critério de saída:** para pelo menos três domínios elegíveis há evidência documental/manual de que os termos públicos permitem expressamente a coleta, além da forma de descoberta, acessibilidade e campos de produto/preço; limites e estratégia de extração estão registrados; frequência de seis horas e custo/escala foram estimados e ajustados quando necessário; administração segura das contas locais, privacidade e retenção estão definidos; o contexto do domínio, a estratégia de testes e todas as especificações do MVP estão aprovados. Nenhuma loja é contatada. Nenhum código de aplicação, crawler ou parser é escrito antes desse gate.
 
 **Risco prioritário:** não existe uma forma simples de pesquisar exaustivamente toda a web sem consultar um índice externo ou construir e manter um índice próprio. O plano evita dependência de API comercial mantendo um crawler/indexador próprio, mas a cobertura será incremental e limitada a domínios públicos acessíveis e compatíveis com as regras de coleta.
 
@@ -63,9 +63,9 @@
 
 **Objetivo:** estabelecer a aplicação, a autenticação confiável, as fronteiras modulares, a fila durável, o crawler e o índice próprio.
 
-**Escopo:** solução .NET organizada em módulos e slices co-localizadas por caso de uso (endpoint/entrada, validação, handler, resultado e componente relacionado no mesmo diretório da fatia); `Server` hospeda Blazor Interactive Server com MudBlazor, endpoints REST e Identity no mesmo host; registrar os serviços MudBlazor, assets e providers no mesmo modo interativo dos componentes consumidores; centralizar tema e padrões visuais; PostgreSQL/EF Core; ASP.NET Core Identity e fluxos de conta suportados; cookie com HTTPS, `Secure`, `HttpOnly` e `SameSite` apropriados; confirmação de e-mail, recuperação de senha, lockout e política MFA; antifalsificação em operações cookie-authenticated; política padrão de autorização e checagem de propriedade no servidor; API interna sem emissão JWT/OIDC no MVP; fila/job persistente; cadastro de domínios e políticas de coleta; contratos versionados da API; log sem segredos e status de saúde. Preparar projetos de teste separados, selecionar o framework priorizando tooling Microsoft, organizar os testes espelhando módulo/caso de uso e classe de domínio, e configurar sua execução automática no pipeline; as specs fornecem IDs de aceite e domínio para a matriz de rastreabilidade.
+**Escopo:** solução .NET organizada em módulos e slices co-localizadas por caso de uso (endpoint/entrada, validação, handler, resultado e componente relacionado no mesmo diretório da fatia); `Server` hospeda Blazor Interactive Server com MudBlazor, endpoints REST e Identity no mesmo host; registrar os serviços MudBlazor, assets e providers no mesmo modo interativo dos componentes consumidores; centralizar tema e padrões visuais; PostgreSQL/EF Core local; ASP.NET Core Identity para contas provisionadas pelo administrador local, sem cadastro público; cookie com HTTPS, `Secure`, `HttpOnly` e `SameSite` apropriados; fluxo seguro de criação e redefinição administrativa de credenciais, lockout e política MFA; antifalsificação em operações cookie-authenticated; política padrão de autorização e checagem de propriedade por usuário no servidor; API interna sem emissão JWT/OIDC no MVP; fila/job persistente; cadastro de domínios e políticas de coleta; contratos versionados da API; log sem segredos e status de saúde. Preparar projetos de teste separados, selecionar o framework priorizando tooling Microsoft, organizar os testes espelhando módulo/caso de uso e classe de domínio, e configurar sua execução automática no pipeline; as specs fornecem IDs de aceite e domínio para a matriz de rastreabilidade.
 
-**Critério de saída:** fluxos de cadastro/login/recuperação funcionam; sessão do Blazor usa cookie protegido; endpoints internos exigem autenticação e autorização apropriadas; usuário não acessa dados de outra conta; operações autenticadas por cookie têm proteção antifalsificação; MudBlazor está integrado conforme seu modo de renderização e padrões visuais, formulários têm validação apropriada e a UI trata estados de carregamento, vazio e erro; cada classe de domínio e caso de uso desta fase tem testes associados; todos os critérios de aceite e regras de domínio aplicáveis apontam para testes aprovados; nenhum componente Blazor contém regra de negócio ou acesso direto ao banco; cada caso de uso tem sua pasta e mantém nela todos os arquivos específicos do fluxo; módulos e slices respeitam as dependências definidas; aplicação e Worker conectam ao banco; segredos/chaves não estão em arquivos versionados.
+**Critério de saída:** administrador local consegue provisionar usuários sem cadastro público; usuários conseguem entrar e sair; sessão do Blazor usa cookie protegido; endpoints internos exigem autenticação e autorização apropriadas; um usuário não acessa dados de outra conta; operações autenticadas por cookie têm proteção antifalsificação; MudBlazor está integrado conforme seu modo de renderização e padrões visuais, formulários têm validação apropriada e a UI trata estados de carregamento, vazio e erro; cada classe de domínio e caso de uso desta fase tem testes associados; todos os critérios de aceite e regras de domínio aplicáveis apontam para testes aprovados; nenhum componente Blazor contém regra de negócio ou acesso direto ao banco; cada caso de uso tem sua pasta e mantém nela todos os arquivos específicos do fluxo; módulos e slices respeitam as dependências definidas; aplicação e Worker conectam ao banco; segredos/chaves não estão em arquivos versionados.
 
 ## Fase 2 — Produto acompanhado e primeira busca
 
@@ -93,11 +93,11 @@
 
 ## Fase 5 — Alertas para o usuário
 
-**Objetivo:** notificar uma condição de preço sem exigir que a pessoa abra o sistema.
+**Objetivo:** fase futura opcional, fora da instalação local planejada atualmente.
 
-**Escopo:** regra de preço-alvo ou percentual de queda; preferências e pausa de alertas; fila de notificações; integração de e-mail; histórico de envio e deduplicação para evitar mensagens repetidas.
+**Escopo:** não incluído no escopo atual. Alertas externos, fila de notificações e integração de e-mail só serão planejados mediante nova decisão do usuário.
 
-**Critério de saída:** uma condição gera uma notificação rastreável, respeita pausa/preferências e não envia repetidamente para a mesma observação. Cada use case e classe de domínio desta fase tem testes associados, cobrindo seus critérios `AC-...` e regras `DR-...` aplicáveis.
+**Critério de saída:** nenhum no escopo atual. Se a fase for aprovada futuramente, seus critérios serão especificados antes de qualquer implementação.
 
 ## Fase 6 — Novas lojas e preparação para produção
 
@@ -146,8 +146,8 @@
 - Entrada: texto + EAN/GTIN; URL fica para uma fase futura.
 - Comparação: preço do item, sem frete.
 - Coleta: intervalo-alvo de seis horas, a confirmar com as cotas reais.
-- Privacidade e retenção: acompanhamentos/históricos privados por conta; apagar observações e dados do acompanhamento junto com sua remoção, respeitando condições mais restritivas da fonte.
-- Fontes: nenhum domínio está aprovado ainda; a revisão de oito candidatos e as opções para revisar a viabilidade estão em `docs/research/validacao-fontes-fase-0.md`. Exigir permissão expressa nos termos ou autorização escrita para automatizar o acesso ao HTML público antes de habilitar cada domínio.
+- Privacidade e retenção: vários usuários na instalação local; acompanhamentos/históricos privados por conta; apagar observações e dados do acompanhamento junto com sua remoção, respeitando condições mais restritivas da fonte.
+- Fontes: nenhum domínio está aprovado ainda; a revisão de oito candidatos e a decisão de não contatar lojas estão em `docs/research/validacao-fontes-fase-0.md`. Exigir permissão expressa nos termos públicos aplicáveis antes de habilitar cada domínio; termos silenciosos ou ambíguos mantêm a fonte desabilitada.
 - Interface: Blazor Web App Interactive Server com MudBlazor; tema e padrões de UI centralizados, providers configurados no modo interativo e componentes sem lógica de negócio.
 - UI e Web API ficam no mesmo host ASP.NET Core e na mesma origem no MVP; o Worker é um processo separado.
 - Estrutura: monólito modular organizado por módulo de negócio e fatias verticais; Clean Architecture/DDD/SOLID guiam dependências, sem lógica de negócio nos componentes Blazor.
@@ -162,7 +162,9 @@
 
 ## Decisões ainda abertas para fechar na Fase 0
 
-1. Quais domínios devem compor a amostra piloto de validação? Escolher vários sites com volume e formatos variados, sem torná-los dependência exclusiva do sistema e com permissão expressa nos termos ou autorização escrita.
+1. Quais domínios devem compor a amostra piloto de validação? Escolher vários sites com volume e formatos variados, sem torná-los dependência exclusiva do sistema e com permissão expressa nos termos públicos aplicáveis.
+2. Como será inicializada e recuperada a conta administradora local, e como ocorrerá a redefinição de credenciais dos usuários provisionados?
+3. O app será acessível apenas na máquina hospedeira ou também na rede local?
 
 ## Próxima etapa recomendada
 

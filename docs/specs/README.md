@@ -19,9 +19,10 @@ Os arquivos `plan.md` e `tasks.md` só são criados quando a especificação os 
 
 | Módulo | Spec/caso de uso proposto | Resultado esperado |
 |---|---|---|
-| Accounts/Identity | `RegisterAccount` | Criar uma conta local e iniciar confirmação de e-mail conforme a política aprovada. |
-| Accounts/Identity | `SignIn` | Autenticar a conta e estabelecer sessão segura do Blazor. |
-| Accounts/Identity | `RecoverPassword` | Solicitar e concluir recuperação sem expor se uma conta existe. |
+| Accounts/Identity | `BootstrapLocalAdministrator` | Inicializar com segurança o administrador da instalação local. |
+| Accounts/Identity | `ProvisionLocalUser` | Administrador cria/desativa contas locais; não há cadastro público. |
+| Accounts/Identity | `SignIn` | Autenticar um usuário provisionado e estabelecer sessão segura do Blazor. |
+| Accounts/Identity | `ResetLocalUserCredentials` | Administrador redefine credenciais usando fluxos suportados pelo Identity. |
 | Accounts/Identity | `ManageMfa` | Configurar, validar e recuperar segundo fator, se a política MFA do MVP o exigir. |
 | PriceTracking | `StartTracking` | Criar acompanhamento a partir de texto ou EAN/GTIN e solicitar busca assíncrona. |
 | WebDiscovery | `FindProductCandidates` | Pesquisar o índice próprio e devolver candidatos com origem, dados observados e estado da busca. |
