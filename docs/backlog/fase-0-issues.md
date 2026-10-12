@@ -134,7 +134,7 @@ Definir a identidade de produto e oferta manual, proveniência de observações 
 - Regras para comparar ofertas de lojas distintas e determinar a atualidade do último preço.
 - **Decisão aprovada para coleta automatizada futura:** na mesma oferta, registrar observação somente quando preço ou disponibilidade mudarem; leituras automáticas idênticas não criam duplicatas (`DR-016`). Isso não define se uma ação manual explícita com o mesmo valor cria nova observação; fechar em F0-16.
 - Como tratar preço PIX, parcelamento, preço promocional, faixas de preço, moeda e indisponibilidade na entrada manual.
-- O que acontece ao remover um acompanhamento e os dados manuais associados.
+- [x] Ao remover um acompanhamento, apagar imediatamente seus dados privados vinculados, sem lixeira/desfazer (`F0-10`, `DR-013`); retenção de backups locais continua pendente em F0-12.
 
 ### Critérios de conclusão
 

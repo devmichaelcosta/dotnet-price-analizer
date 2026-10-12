@@ -95,6 +95,7 @@ O MVP não pesquisa a Internet. Uma etapa futura poderá automatizar a leitura d
 
 - **Coleta sem permissão:** não há automação no MVP. Para cada domínio futuro, exigir evidência expressa nos termos e avaliar `robots.txt`, limites, campos e retenção; termos silenciosos ou ambíguos mantêm o domínio desabilitado.
 - **Dados manuais imprecisos:** identificar autoria e proveniência e não rotular como confirmação da loja; fechar os campos e horário de observação em spec.
+- **Exclusão e restauração local:** ao remover um acompanhamento, apagar os dados privados vinculados. Definir antes da implementação se backups/restauração compõem o MVP e evitar que uma restauração reintroduza acompanhamentos já removidos.
 - **Comparação incorreta:** separar produto, oferta e observação; não misturar condição, variante ou moeda incompatível.
 - **Privacidade entre contas:** identidade deriva do principal autenticado; filtros e autorização no backend em toda operação.
 - **Exposição local:** host e API restritos a loopback; sem cadastro público, sem cliente externo e sem implantação de rede.
