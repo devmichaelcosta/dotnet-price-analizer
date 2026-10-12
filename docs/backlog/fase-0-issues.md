@@ -167,7 +167,8 @@ Definir os fluxos do ASP.NET Core Identity para uma aplicação local com vário
 
 ### Decisões a documentar
 
-- Bootstrap seguro do administrador local e provisionamento de usuários sem cadastro público.
+- O primeiro administrador será criado por comando local de uso único no host, com senha informada sem valor padrão. Detalhar a guarda que impede reuso do bootstrap e como proteger a senha para que não apareça em argumentos, logs ou arquivos versionados.
+- Recuperação de acesso do administrador local e provisionamento/desativação de usuários sem cadastro público.
 - Identificador de login, política de senha, redefinição administrativa de credenciais e resposta a perda de acesso do administrador.
 - MFA: obrigatório ou opcional; recuperação de segundo fator.
 - Política de senha compatível com Identity, lockout, sessão/cookie e encerramento de sessão.
@@ -177,6 +178,7 @@ Definir os fluxos do ASP.NET Core Identity para uma aplicação local com vário
 ### Critérios de conclusão
 
 - [ ] O administrador provisiona contas; não há cadastro público, e os fluxos de login, gestão, redefinição e desativação estão descritos.
+- [ ] O comando local cria o primeiro administrador apenas quando o bootstrap ainda não foi concluído, solicita senha sem valor padrão e não expõe a senha em argumentos, logs ou arquivos versionados.
 - [ ] Defaults de segurança têm justificativa e usam os mecanismos suportados do ASP.NET Core Identity.
 - [ ] Host e API aceitam conexões somente por loopback/localhost e não ficam acessíveis pela rede local.
 - [ ] Decisões estão registradas no contexto/ADR adequado e são referenciadas pelas specs de conta.

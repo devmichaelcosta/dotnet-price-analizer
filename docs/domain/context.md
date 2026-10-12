@@ -50,7 +50,7 @@ Permitir que uma pessoa acompanhe um produto, encontre ofertas públicas em dife
 - Comparação de preço do item, sem frete.
 - Aplicação de uso próprio em implantação local, sem hospedagem pública; há várias contas locais autenticadas.
 - Acesso restrito à máquina hospedeira: host e API não devem aceitar conexões pela rede local ou pela Internet.
-- O administrador local provisiona contas. Não há cadastro público. A forma de inicialização e recuperação da conta administradora ainda precisa ser definida.
+- O administrador local provisiona contas, sem cadastro público. A primeira conta administradora é criada por comando local de uso único, executado no host, com senha informada sem valor padrão; recuperação da conta ainda precisa ser definida.
 - API privada, usada pelo próprio sistema; sem cliente terceiro ou aplicativo externo neste momento.
 - Autenticação com ASP.NET Core Identity para contas locais e cookie protegido no navegador. Contas são provisionadas pelo administrador local; JWT/OIDC não são necessários para o escopo atual.
 - Acompanhamentos e históricos são privados por conta local; observações e dados do acompanhamento são removidos ao excluir o acompanhamento, observadas as restrições aplicáveis da fonte.
@@ -60,7 +60,7 @@ Permitir que uma pessoa acompanhe um produto, encontre ofertas públicas em dife
 
 Estes itens não devem ser tratados como regras confirmadas até serem resolvidos nas especificações ou decisões de produto:
 
-- Como inicializar e recuperar com segurança a conta administradora local e administrar credenciais de usuários sem depender de cadastro público.
+- Como recuperar com segurança a conta administradora local e administrar credenciais de usuários sem depender de cadastro público.
 - Como lidar com GTIN/EAN inválido, ausente, duplicado ou conflitante entre páginas.
 - Qual nível de confiança exige confirmação explícita da oferta e quais campos participam da correspondência.
 - Retenção de dados coletados por domínio: a regra do produto é apagar observações e dados do acompanhamento junto com sua remoção; cada domínio ainda precisa ser verificado para limites ou requisitos adicionais.
