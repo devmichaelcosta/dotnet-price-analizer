@@ -1,8 +1,8 @@
 # Backlog de planejamento
 
-**Estado:** rascunho para revisão; cobre planejamento e Fase 0, sem tarefas de implementação.  
+**Estado:** backlog da Fase 0 preparado; issues ainda não publicados. Não há tarefas de implementação.  
 **Fonte de verdade:** roadmap, contexto do domínio e specs aprovadas.  
-**Destino planejado:** GitHub Issues e GitHub Projects, após conectar este workspace ao repositório correto.
+**Repositório:** [devmichaelcosta/dotnet-price-analizer](https://github.com/devmichaelcosta/dotnet-price-analizer), branch `main`.
 
 ## Organização no GitHub
 
@@ -75,4 +75,6 @@ Um item fica **Done** quando os critérios foram conferidos, a evidência/artefa
 
 ## Estado do GitHub
 
-O diretório de trabalho não contém `.git` nem remote configurado. A integração GitHub conectada também não retornou repositórios acessíveis. Portanto os issues abaixo ainda são rascunhos locais; não foram publicados em nenhum repositório. Para publicar, é necessário conectar/indicar o repositório do projeto.
+O planejamento está versionado no repositório indicado pelo usuário. O push inicial dos documentos foi publicado na branch `main` (commit `248ae3c`).
+
+Os dez issues da Fase 0 ainda não foram publicados. A integração GitHub recusou a criação do primeiro issue com `403 Resource not accessible by integration`; o GitHub CLI local também não está autenticado. O backlog permanece pronto em `fase-0-issues.md`. Para concluir a publicação, a integração precisa de permissão de escrita em Issues ou o GitHub CLI precisa ser autenticado.
