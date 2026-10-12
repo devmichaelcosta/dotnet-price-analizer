@@ -83,6 +83,12 @@ O usuário inicia o cadastro e recebe secret/URI de provisioning uma única vez 
 **Quando** o titular confirma a desativação após reautenticação válida<br>
 **Então** a MFA é desativada somente para essa conta e os códigos de recuperação existentes deixam de funcionar
 
+### AC-MFA-008 — Proteger dados MFA persistidos
+
+**Dado** que a chave TOTP e códigos de recuperação foram persistidos pelo Identity<br>
+**Quando** os dados são lidos diretamente do banco PostgreSQL<br>
+**Então** os valores sensíveis não estão armazenados em texto legível e podem ser recuperados apenas pelo mecanismo Data Protection configurado no host
+
 ## Regras de domínio aplicáveis
 
 - MFA administrativa obrigatória; MFA de usuários comuns opcional.
@@ -100,6 +106,7 @@ O usuário inicia o cadastro e recebe secret/URI de provisioning uma única vez 
 | Critério/regra | Caso de uso relacionado | Nome(s) planejado(s) do teste/display name | Caminho no projeto de testes | Estado |
 |---|---|---|---|---|
 | `AC-MFA-001` a `AC-MFA-007` | Configuração e uso de MFA | `AC-MFA-001 — Validar cadastro TOTP antes de habilitar`<br>`AC-MFA-002 — Rejeitar código inválido`<br>`AC-MFA-003 — Exigir MFA para administrador`<br>`AC-MFA-004 — Emitir códigos de recuperação de uso único`<br>`AC-MFA-005 — Não permitir desativar MFA obrigatória`<br>`AC-MFA-006 — Não permitir reset de terceiro no app`<br>`AC-MFA-007 — Permitir ao usuário comum desativar sua MFA opcional` | `tests/Modules/Accounts.Identity.Tests/Features/ManageMfa/` | Pendente da implementação |
+| `AC-MFA-008` | Persistência protegida dos dados MFA | `AC-MFA-008 — Proteger dados MFA persistidos` | `tests/Modules/Accounts.Identity.IntegrationTests/Features/ManageMfa/` | Pendente da implementação |
 
 ## Dados e integrações
 
@@ -112,6 +119,7 @@ O usuário inicia o cadastro e recebe secret/URI de provisioning uma única vez 
 
 - Segredos TOTP e códigos de recuperação não são registrados nem exibidos novamente após a configuração.
 - A UI deve explicar como guardar os códigos sem salvá-los no servidor em texto puro.
+- F0-04 propõe `IdentityOptions.Stores.ProtectPersonalData` com `ILookupProtector` apoiado pelo ASP.NET Core Data Protection; seu key ring criptográfico deve persistir sob ACL adequada para que os dados continuem legíveis após reiniciar.
 
 ## Questões em aberto
 
