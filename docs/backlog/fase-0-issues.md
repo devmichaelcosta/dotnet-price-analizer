@@ -251,11 +251,11 @@ Definir como critérios de aceite das specs e regras de domínio serão cobertos
 
 - [ ] Framework e tooling de testes foram escolhidos priorizando suporte oficial/Microsoft, com justificativa para eventuais dependências externas.
 - [ ] A proposta MSTest + `MSTest.Sdk`/`Microsoft.Testing.Platform` em `docs/decisions/ADR-001-framework-de-testes.md` foi revisada no gate da Fase 0.
-- [ ] A convenção está definida para testes unitários de domínio, testes de use case e testes de integração.
-- [ ] A matriz liga `AC-...`/`DR-...` a classes de domínio, use cases e testes esperados.
-- [ ] A localização dos testes espelha módulo/use case/classe e permanece em projetos separados.
+- [x] A convenção está definida para testes unitários de domínio, testes de use case e testes de integração.
+- [x] A matriz das specs manuais liga `AC-...`/`DR-...` a classes de domínio, use cases e testes esperados.
+- [x] A localização planejada dos testes espelha módulo/use case/classe e permanece em projetos separados.
 - [ ] Gates de revisão/CI estão definidos sem exigir testes para critérios fora do escopo do incremento.
-- [ ] `docs/specs/README.md` e `docs/specs/_template.md` foram atualizados.
+- [x] `docs/specs/README.md` e `docs/specs/_template.md` contêm o ciclo SDD e as regras de rastreabilidade.
 
 ### Dependências
 
@@ -281,12 +281,12 @@ Criar uma especificação aprovada para cada use case incluído no MVP, co-local
 
 ### Critérios de conclusão
 
-- [ ] O inventário separa specs do MVP manual de specs condicionais de automação HTML.
+- [x] O inventário separa specs do MVP manual de specs condicionais de automação HTML.
 - [ ] Specs do MVP cobrem cadastro de produto/oferta, autoria/proveniência, atualidade e comparação de preços entre ofertas.
 - [ ] Cada spec define objetivo, atores, autorização, regras, validações, cenários de sucesso/alternativos/falha e dados observáveis.
 - [ ] Cada critério tem ID estável `AC-...`, critérios usam Given/When/Then quando adequado, e apontam para `DR-...` relevantes.
-- [ ] A matriz de rastreabilidade identifica classes de domínio, use case e testes derivados.
-- [ ] Cada artefato tem status Rascunho/Em revisão/Aprovado; nenhuma spec em rascunho autoriza implementação.
+- [x] A matriz de rastreabilidade das specs manuais identifica classes de domínio, use case e testes derivados.
+- [x] Cada spec tem status explícito; nenhuma spec em rascunho autoriza implementação.
 - [ ] As specs não deixam decisão crítica implícita; itens adiados estão explicitamente fora do MVP.
 
 ### Dependências

@@ -1,6 +1,7 @@
 # Especificação — ResetLocalUserCredentials
 
 **Estado:** Rascunho — 2026-10-12<br>
+**Escopo:** MVP manual<br>
 **Módulo:** Accounts/Identity<br>
 **Responsável pelo domínio:** Produto e segurança
 

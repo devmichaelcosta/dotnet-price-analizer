@@ -68,9 +68,9 @@ O usuário confirma a remoção. O sistema remove o acompanhamento e seus dados 
 
 | Classe/conceito | Responsabilidade/invariante | Critérios/regras |
 |---|---|---|
-| `TrackedProduct` (proposta) | Remoção do agregado de acompanhamento | `AC-DTR-001` a `AC-DTR-004`, `DR-013` |
+| `TrackedProduct` (proposta) | Propriedade e ciclo de vida do agregado de acompanhamento | `AC-DTR-001`/`AC-DTR-004`, `DR-011`/`DR-012`/`DR-013` |
 | `PriceObservation` (proposta) | Retenção vinculada ao acompanhamento | `AC-DTR-001`, `DR-013` |
-| `Offer` (proposta) | Remover ofertas privadas vinculadas | `AC-DTR-001`, `AC-DTR-002`, `DR-013` |
+| `Offer` (proposta) | Vinculação privada da oferta ao acompanhamento removido | `AC-DTR-001`, `DR-013` |
 
 ## Rastreabilidade dos testes
 
