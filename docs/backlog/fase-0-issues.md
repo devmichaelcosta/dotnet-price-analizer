@@ -132,7 +132,7 @@ Definir os comportamentos de domínio que determinam se uma oferta pode entrar n
 
 - Regras para EAN/GTIN inválido, ausente, duplicado ou conflitante.
 - Como identificar variantes, kits, condição do produto e vendedor; quando exigir confirmação da pessoa.
-- Se toda leitura válida gera observação, inclusive quando preço e disponibilidade não mudam.
+- **Decisão aprovada pelo usuário:** para a mesma oferta, criar observação somente quando preço ou disponibilidade mudarem; leituras idênticas não criam duplicatas. Regra registrada como `DR-016` em `docs/domain/context.md`.
 - Como tratar preço PIX, parcelamento, preço promocional, faixas de preço e indisponibilidade.
 - O que acontece ao remover um acompanhamento e os dados associados, inclusive falhas de exclusão por limites da fonte.
 

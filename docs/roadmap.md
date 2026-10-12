@@ -17,6 +17,7 @@
 - Interface escolhida: Blazor Web App Interactive Server com MudBlazor, no mesmo host ASP.NET Core que expõe a Web API.
 - A Web API é privada e será consumida apenas pelo próprio sistema no MVP; não haverá clientes terceiros nem aplicativos externos neste momento.
 - O usuário confirma anúncios ambíguos; correspondência errada comprometeria a análise de preço.
+- Histórico: para a mesma oferta, criar uma nova observação somente quando preço ou disponibilidade mudarem; não duplicar leituras idênticas.
 - Acompanhamentos e históricos são privados por conta. As observações são mantidas enquanto o acompanhamento existir e apagadas com ele, respeitados limites ou requisitos aplicáveis à fonte.
 - Alertas por e-mail ficam depois da coleta e do histórico.
 - Arquitetura: monólito modular organizado por capacidades de negócio e fatias verticais; Clean Architecture/DDD orientam dependências e regras de domínio.

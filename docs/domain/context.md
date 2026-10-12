@@ -34,6 +34,7 @@ Permitir que uma pessoa acompanhe um produto, encontre ofertas públicas em dife
 - **DR-008:** O sistema pesquisa um índice próprio formado por páginas HTML públicas de múltiplos domínios configuráveis cuja coleta automatizada seja permitida. A cobertura é incremental e não promete indexar toda a Internet.
 - **DR-014:** O sistema não usa APIs, feeds ou integrações de terceiros para coletar dados de produtos. A visibilidade pública de uma página ou ausência de bloqueio em `robots.txt` não prova permissão; domínios com permissão proibida são descartados e os de permissão incerta ficam desabilitados até esclarecimento.
 - **DR-015:** Um domínio só pode ser habilitado quando os termos aplicáveis permitirem expressamente a coleta automatizada de HTML público ou houver autorização escrita da loja. Se os termos forem silenciosos, solicitar autorização escrita; não inferir autorização do silêncio ou do `robots.txt`.
+- **DR-016:** Para a mesma oferta, registrar uma nova observação de preço somente quando o preço do item ou a disponibilidade diferir da última observação válida. Leituras sem essas mudanças não criam observações duplicadas.
 - **DR-009:** Ao iniciar um acompanhamento, o sistema procura candidatos no índice e pode descobrir novas páginas. Atualizações periódicas usam páginas/ofertas confirmadas; não repetem uma varredura ampla da web a cada ciclo.
 - **DR-010:** A frequência pretendida é de seis horas, mas cada coleta deve respeitar as políticas e limites do domínio.
 - **DR-011:** Dados do acompanhamento são associados à conta proprietária no backend; a UI não define nem prova a propriedade de um recurso.
@@ -58,7 +59,6 @@ Estes itens não devem ser tratados como regras confirmadas até serem resolvido
 - Se produtos canônicos podem ser compartilhados internamente entre contas. Acompanhamentos e históricos permanecem privados por conta.
 - Como lidar com GTIN/EAN inválido, ausente, duplicado ou conflitante entre páginas.
 - Qual nível de confiança exige confirmação explícita da oferta e quais campos participam da correspondência.
-- Se cada tentativa de coleta válida grava uma observação mesmo quando preço e disponibilidade não mudaram.
 - Retenção de dados coletados por domínio: a regra do produto é apagar observações e dados do acompanhamento junto com sua remoção; cada domínio ainda precisa ser verificado para limites ou requisitos adicionais.
 - Domínios piloto que comprovem permissão para coleta automatizada de HTML público, conteúdo armazenável e formato disponível em cada fonte.
 - Como representar preço promocional, preço parcelado, faixa de preço, condição do produto, variante e vendedores múltiplos quando as páginas divergirem.

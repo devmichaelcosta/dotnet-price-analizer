@@ -75,6 +75,6 @@ Um item fica **Done** quando os critérios foram conferidos, a evidência/artefa
 
 ## Estado do GitHub
 
-O planejamento está versionado no repositório indicado pelo usuário. O push inicial dos documentos foi publicado na branch `main` (commit `248ae3c`).
+Os documentos de planejamento estão publicados na branch `main` do repositório indicado pelo usuário.
 
-Os dez issues da Fase 0 ainda não foram publicados. A integração GitHub recusou a criação do primeiro issue com `403 Resource not accessible by integration`; o GitHub CLI local também não está autenticado. O backlog permanece pronto em `fase-0-issues.md`. Para concluir a publicação, a integração precisa de permissão de escrita em Issues ou o GitHub CLI precisa ser autenticado.
+Os dez issues da Fase 0 continuam sem publicação. Em 12/10/2026, a integração GitHub permitiu consultar o repositório e listar issues, mas recusou `create_issue` com `403 Resource not accessible by integration`. O push Git funciona por SSH; o GitHub CLI local continua sem autenticação. O backlog está pronto em `fase-0-issues.md`. Para publicar os issues, é necessário habilitar permissão de escrita em Issues na integração GitHub ou autenticar o GitHub CLI.
