@@ -1,6 +1,6 @@
 # GitHub Issues — Fase 0
 
-**Estado:** os drafts revisados para C estão na branch publicada `docs/phase-0-hybrid` (commit `a7a592f`). A leitura do repositório funciona, mas `create_issue`, `update_issue` e `create_pull_request` retornaram HTTP 403; o `gh` local tem token inválido. PLAN-000 a PLAN-009 continuam com os corpos remotos antigos; PLAN-010 a PLAN-012 não foram criados. O PR pode ser aberto por [esta página](https://github.com/devmichaelcosta/dotnet-price-analizer/pull/new/docs/phase-0-hybrid).
+**Estado:** os drafts revisados para C estão na branch publicada `docs/phase-0-hybrid` (commit `0125327`). A leitura do repositório funciona, mas a tentativa atual de `update_issue` retornou HTTP 403; o `gh` local tem token inválido. PLAN-000 a PLAN-009 continuam com os corpos remotos antigos; PLAN-010 a PLAN-012 não foram criados. Não há PR aberto; a página para criá-lo é [esta](https://github.com/devmichaelcosta/dotnet-price-analizer/pull/new/docs/phase-0-hybrid).
 **Épico:** [`PLAN-000` — Concluir planejamento e aprovar as specs do MVP](https://github.com/devmichaelcosta/dotnet-price-analizer/issues/1).
 
 ---
@@ -392,7 +392,7 @@ O ADR-002 registra a decisão API-first anterior e está substituído pelo ADR-0
 
 - [x] A estratégia API-first foi substituída por ADR-003; APIs, feeds e agregadores não são fontes vigentes.
 - [x] Núcleo manual primeiro e coleta HTML futura condicionada foram registrados.
-- [ ] Contexto, `AGENTS.md`, roadmap, specs e backlog local estão consistentes; sincronização GitHub ainda depende de escrita da integração.
+- [x] Contexto, `AGENTS.md`, roadmap, specs e backlog local estão consistentes; sincronização GitHub ainda depende de escrita da integração.
 
 ### Dependências
 
@@ -433,7 +433,7 @@ A triagem de HTML não aprovou domínio; a pesquisa de APIs é histórica e APIs
 
 - [x] O usuário escolheu a opção C e a direção está registrada.
 - [ ] Detalhes de produto/oferta/observação manual e comparação dos últimos preços informados estão resolvidos ou explicitamente adiados.
-- [ ] Roadmap, contexto, arquitetura, inventário de specs e backlog descrevem o mesmo escopo.
+- [x] Roadmap, contexto, arquitetura, inventário de specs e backlog descrevem o mesmo escopo; detalhes manuais e aprovações permanecem em aberto nos critérios separados.
 - [x] Nenhum domínio HTML ou permissão de coleta foi presumido; nenhum domínio está habilitado.
 - [ ] Roadmap e specs revisados recebem aprovação explícita antes da implementação.
 
